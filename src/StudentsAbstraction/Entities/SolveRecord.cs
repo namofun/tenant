@@ -11,6 +11,11 @@
         public int Id { get; set; }
 
         /// <summary>
+        /// The affiliation ID
+        /// </summary>
+        public int AffiliationId { get; set; }
+
+        /// <summary>
         /// The grade
         /// </summary>
         public int Grade { get; set; }
