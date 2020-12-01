@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="SatelliteSite.Abstraction" Version="$(SubstrateVersion)" />
+    <PackageReference Include="SatelliteSite.IdentityCore" Version="$(SubstrateVersion)" />
   </ItemGroup>
 
 </Project>

@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Students.Abstraction
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Groups.Abstraction", "src\GroupsAbstraction\Tenant.Groups.Abstraction.csproj", "{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Groups.Storage", "src\GroupsStorage\Tenant.Groups.Storage.csproj", "{765B105B-7D58-4030-860E-58EE90FCD236}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{765B105B-7D58-4030-860E-58EE90FCD236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{765B105B-7D58-4030-860E-58EE90FCD236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{765B105B-7D58-4030-860E-58EE90FCD236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{765B105B-7D58-4030-860E-58EE90FCD236}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{20761690-25BC-424D-B237-ACE6E43B059D} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 		{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
+		{765B105B-7D58-4030-860E-58EE90FCD236} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {000EA67D-DBD2-448C-9B2E-6393348CC090}

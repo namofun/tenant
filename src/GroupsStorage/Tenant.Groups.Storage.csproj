@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DescriptionAttach>The groups storage implementation</DescriptionAttach>
+    <RootNamespace>Tenant</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <Import Project="..\..\build\NugetPackage.Backend.props" />
+
+  <ItemGroup>
+    <PackageReference Include="SatelliteSite.DataAccess" Version="$(SubstrateVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GroupsAbstraction\Tenant.Groups.Abstraction.csproj" />
+  </ItemGroup>
+
+</Project>
