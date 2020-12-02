@@ -1,0 +1,75 @@
+﻿@model GroupTeam
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Edit team " + Model.Id;
+    IUser user = ViewBag.User;
+    ICollection<Affiliation> affs = ViewBag.Affiliations;
+    var sels = affs.Select(a => new SelectListItem(a.Name, a.Id.ToString()));
+}
+
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+@{ TempData["StatusMessage"] = null; }
+
+<div class="row ml-0 mr-0 ml-md-4 mr-md-4 mt-4 pb-5">
+<div class="col-12 col-md-6">
+
+<form asp-action="Edit">
+    <h4 class="mb-3">Team info</h4>
+    <div class="form-group">
+        <label asp-for="TeamName">Team Name</label>
+        <input asp-for="TeamName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="AffiliationId">Team Affiliation</label>
+        <select asp-for="AffiliationId" class="form-control" asp-items="sels"></select>
+    </div>
+    <p class="mb-0">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </p>
+</form>
+
+<hr class="mt-4 mb-3" />
+
+<form asp-action="Invite">
+    <h5 class="mb-3">Invite user</h5>
+    <input required name="username" id="ipt-username" class="form-control mb-3" />
+    <button type="submit" class="btn btn-info">Invite</button>
+</form>
+
+</div>
+<div class="col-12 col-md-6">
+
+<h4 class="mb-3 mt-4 mt-md-0">Members</h4>
+<table class="table table-sm data-table">
+    <thead>
+        <tr>
+            <th>user</th>
+            <th>status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model.Users)
+        {
+        <tr>
+            <td class="pt-2 pb-2">
+                <a asp-controller="Profile" asp-action="Show" asp-route-username="@u.UserName" style="width:6em;text-decoration:none;color:black">
+                    <img gravatar-email="@u.UserEmail" style="width:3em;margin-right:0.5em" />
+                    @u.UserName
+                </a>
+            </td>
+            <td style="vertical-align:middle">
+                <razor asp-show-if="u.Accepted ?? false">Active</razor>
+                <razor asp-show-if="u.Accepted.HasValue && !u.Accepted.Value">Rejected</razor>
+                <razor asp-show-if="!u.Accepted.HasValue">Inviting</razor>
+            </td>
+            <td style="vertical-align:middle">
+                <a asp-action="Delete" asp-route-username="@u.UserName" data-toggle="ajaxWindow" data-target="removeMember"><i class="fas fa-times"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+</div>
+</div>

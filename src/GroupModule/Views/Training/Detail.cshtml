@@ -1,0 +1,50 @@
+﻿@model GroupTeam
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Team " + Model.Id;
+    IUser user = ViewBag.User;
+}
+
+<div class="row ml-0 mr-0 ml-md-4 mr-md-4 mt-4 pb-5">
+<div class="col-12">
+
+<h4>Members</h4>
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+@{ TempData["StatusMessage"] = null; }
+
+<div class="d-flex text-center mb-3">
+    @foreach (var u in Model.Users.Where(u => u.Accepted == true))
+    {
+        <a asp-area="Account" asp-controller="Profile" asp-action="Show" asp-route-username="@u.UserName" style="width:6em;margin-right:10px;text-decoration:none;color:black">
+            <img gravatar-email="@u.UserEmail" style="width:6em;margin-bottom:0.25em" />
+            @u.UserName
+        </a>
+    }
+</div>
+
+<razor asp-show-if="Model.Users.Any(u => u.Accepted != true) && Model.Users.Any(u => u.UserId == user.Id)">
+    <h4>Inactive Members</h4>
+
+    <div class="d-flex text-center mb-3">
+        @foreach (var u in Model.Users.Where(u => u.Accepted != true))
+        {
+            <a asp-area="Account" asp-controller="Profile" asp-action="Show" asp-route-username="@u.UserName" style="width:6em;margin-right:10px;text-decoration:none;color:black">
+                <img gravatar-email="@u.UserEmail" style="width:6em;margin-bottom:0.25em" />
+                @u.UserName <razor asp-show-if="u.Accepted.HasValue">(&times;)</razor><razor asp-show-if="!u.Accepted.HasValue">(?)</razor>
+            </a>
+        }
+    </div>
+</razor>
+
+<p asp-show-if="Model.UserId == user.Id" class="mt-4 mb-0">
+    <a asp-action="Edit" class="btn btn-primary">Edit team</a>
+    <a asp-action="Dismiss" data-toggle="ajaxWindow" data-target="dismissTeam" class="btn btn-danger">Delete team</a>
+</p>
+
+<form asp-show-if="Model.UserId != user.Id && Model.Users.Any(u => u.UserId == user.Id)" method="post" class="mt-4 mb-0">
+    <button type="submit" asp-action="Accept" class="btn btn-success">Accept invitation</button>
+    <button type="submit" asp-action="Reject" class="btn btn-danger">Reject invitation</button>
+</form>
+
+</div>
+</div>

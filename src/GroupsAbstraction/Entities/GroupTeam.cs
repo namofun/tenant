@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Tenant.Entities
 {
@@ -33,9 +34,14 @@ namespace Tenant.Entities
         public DateTimeOffset Time { get; set; }
 
         /// <summary>
-        /// The navigation to affiliation.
+        /// The navigation to affiliation
         /// </summary>
         public Affiliation Affiliation { get; set; }
+
+        /// <summary>
+        /// The navigation to users
+        /// </summary>
+        public ICollection<GroupUser> Users { get; set; }
 
 #pragma warning disable CS8618
         /// <summary>

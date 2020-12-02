@@ -62,25 +62,24 @@ namespace Tenant.Services
             return item < MaxMembers;
         }
 
-        public async Task<GroupTeam> CreateAsync(string teamName, IUser user, Affiliation affiliation)
+        public Task<GroupTeam> CreateAsync(string teamName, IUser user, Affiliation affiliation)
         {
-            var t = await CreateEntityAsync(new GroupTeam
+            return CreateEntityAsync(new GroupTeam
             {
                 AffiliationId = affiliation.Id,
                 TeamName = teamName,
                 UserId = user.Id,
                 Time = DateTimeOffset.Now,
                 Affiliation = affiliation,
+                Users = new List<GroupUser>
+                {
+                    new GroupUser
+                    {
+                        UserId = user.Id,
+                        Accepted = true,
+                    }
+                }
             });
-
-            await CreateEntityAsync(new GroupUser
-            {
-                TeamId = t.Id,
-                UserId = user.Id,
-                Accepted = true,
-            });
-
-            return t;
         }
 
         public Task<GroupTeam> FindByIdAsync(int id)
