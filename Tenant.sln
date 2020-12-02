@@ -15,13 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{37978533-6CE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{ADA4B71F-A85F-44D6-969A-976C34A660A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Students.Abstraction", "src\StudentsAbstraction\Tenant.Students.Abstraction.csproj", "{20761690-25BC-424D-B237-ACE6E43B059D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenant.Students.Abstraction", "src\StudentsAbstraction\Tenant.Students.Abstraction.csproj", "{20761690-25BC-424D-B237-ACE6E43B059D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Groups.Abstraction", "src\GroupsAbstraction\Tenant.Groups.Abstraction.csproj", "{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenant.Groups.Abstraction", "src\GroupsAbstraction\Tenant.Groups.Abstraction.csproj", "{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Groups.Storage", "src\GroupsStorage\Tenant.Groups.Storage.csproj", "{765B105B-7D58-4030-860E-58EE90FCD236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenant.Groups.Storage", "src\GroupsStorage\Tenant.Groups.Storage.csproj", "{765B105B-7D58-4030-860E-58EE90FCD236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Students.Storage", "src\StudentsStorage\Tenant.Students.Storage.csproj", "{4C46AADE-23F6-447B-BFA2-FE53C9318BB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenant.Students.Storage", "src\StudentsStorage\Tenant.Students.Storage.csproj", "{4C46AADE-23F6-447B-BFA2-FE53C9318BB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatelliteSite.StudentModule", "src\StudentModule\SatelliteSite.StudentModule.csproj", "{35DAD147-8457-49A8-B7C6-B795C016EC3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatelliteSite.GroupModule", "src\GroupModule\SatelliteSite.GroupModule.csproj", "{5859956B-FFBD-44B6-BB6B-37C1FCE28509}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatelliteSite.Host", "src\Host\SatelliteSite.Host.csproj", "{0E6C4392-717C-4F4A-8657-8A9AA1463B55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,18 @@ Global
 		{4C46AADE-23F6-447B-BFA2-FE53C9318BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C46AADE-23F6-447B-BFA2-FE53C9318BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C46AADE-23F6-447B-BFA2-FE53C9318BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DAD147-8457-49A8-B7C6-B795C016EC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DAD147-8457-49A8-B7C6-B795C016EC3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DAD147-8457-49A8-B7C6-B795C016EC3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DAD147-8457-49A8-B7C6-B795C016EC3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5859956B-FFBD-44B6-BB6B-37C1FCE28509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5859956B-FFBD-44B6-BB6B-37C1FCE28509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5859956B-FFBD-44B6-BB6B-37C1FCE28509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5859956B-FFBD-44B6-BB6B-37C1FCE28509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E6C4392-717C-4F4A-8657-8A9AA1463B55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E6C4392-717C-4F4A-8657-8A9AA1463B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E6C4392-717C-4F4A-8657-8A9AA1463B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E6C4392-717C-4F4A-8657-8A9AA1463B55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +72,9 @@ Global
 		{0888D7D0-7FB6-4BC8-8C60-2B83BBF3539E} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 		{765B105B-7D58-4030-860E-58EE90FCD236} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 		{4C46AADE-23F6-447B-BFA2-FE53C9318BB4} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
+		{35DAD147-8457-49A8-B7C6-B795C016EC3D} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
+		{5859956B-FFBD-44B6-BB6B-37C1FCE28509} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
+		{0E6C4392-717C-4F4A-8657-8A9AA1463B55} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {000EA67D-DBD2-448C-9B2E-6393348CC090}
