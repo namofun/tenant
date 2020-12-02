@@ -23,7 +23,7 @@
         /// <summary>
         /// The country code like <c>CHN</c>
         /// </summary>
-        public string CountryCode { get; set; } = "CHN";
+        public string? CountryCode { get; set; } = "CHN";
 
 #pragma warning disable CS8618
         /// <summary>

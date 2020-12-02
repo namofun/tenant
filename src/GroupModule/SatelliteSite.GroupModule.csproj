@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -12,6 +12,11 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="SatelliteSite.Substrate" Version="$(SubstrateVersion)" />
     <PackageReference Include="SatelliteSite.IdentityModule" Version="$(SubstrateVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GroupsAbstraction\Tenant.Groups.Abstraction.csproj" />
+    <ProjectReference Include="..\GroupsStorage\Tenant.Groups.Storage.csproj" />
   </ItemGroup>
 
 </Project>

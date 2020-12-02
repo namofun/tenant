@@ -20,6 +20,7 @@ namespace SatelliteSite
             Host.CreateDefaultBuilder(args)
                 .MarkDomain<Program>()
                 .AddModule<IdentityModule.IdentityModule<User, Role, DefaultContext>>()
+                .AddModule<GroupModule.GroupModule<DefaultContext>>()
                 .AddDatabaseMssql<DefaultContext>("UserDbConnection")
                 .ConfigureSubstrateDefaults<DefaultContext>();
     }
