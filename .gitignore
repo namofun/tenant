@@ -434,3 +434,4 @@ $RECYCLE.BIN/
 
 # Project Files
 /src/Host/Migrations
+/src/Host/wwwroot/images/affiliations
