@@ -9,10 +9,7 @@ namespace SatelliteSite.GroupModule
 
         public void Apply(ControllerModel controller)
         {
-            if (!Enabled)
-            {
-                
-            }
+            if (!Enabled) controller.Actions.Clear();
         }
     }
 }
