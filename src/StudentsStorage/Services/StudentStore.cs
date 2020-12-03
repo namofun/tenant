@@ -44,6 +44,7 @@ namespace Tenant.Services
         {
             return Classes
                 .Where(c => c.AffiliationId == affiliation.Id)
+                .Select(c => new Class { AffiliationId = c.AffiliationId, Count = c.Students.Count, Id = c.Id, Name = c.Name })
                 .ToListAsync();
         }
 

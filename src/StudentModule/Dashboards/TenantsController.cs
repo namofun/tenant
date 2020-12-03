@@ -13,6 +13,7 @@ namespace SatelliteSite.StudentModule.Dashboards
         private IAffiliationStore Store { get; }
         public TenantsController(IAffiliationStore store) => Store = store;
 
+
         [HttpGet]
         public async Task<IActionResult> Switch(string returnUrl)
         {

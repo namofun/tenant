@@ -1,0 +1,16 @@
+﻿@model BatchAddModel
+@{
+    Layout = "_WindowLayout";
+    ViewData["Title"] = "Create groups";
+    ViewData["FormAjaxUpload"] = Url.Action("Create");
+}
+
+<div class="text-danger" asp-validation-summary="All"></div>
+<div class="form-group">
+    <label asp-for="Batch"></label>
+    <input asp-for="Batch" class="form-control" />
+</div>
+
+@section Footer {
+    <button type="submit" class="btn-primary btn">Save</button>
+}
