@@ -62,10 +62,9 @@ namespace Tenant.Services
         /// <summary>
         /// Find the student.
         /// </summary>
-        /// <param name="affiliationId">The affiliation ID.</param>
-        /// <param name="id">The student ID.</param>
+        /// <param name="id">The interpolated student ID.</param>
         /// <returns>The task for finding student.</returns>
-        Task<Student> FindStudentAsync(int affiliationId, int id);
+        Task<Student?> FindStudentAsync(string id);
 
         /// <summary>
         /// Find the teaching class.
@@ -73,6 +72,22 @@ namespace Tenant.Services
         /// <param name="id">The teaching class ID.</param>
         /// <returns>The teaching class.</returns>
         Task<Class> FindClassAsync(int id);
+
+        /// <summary>
+        /// Find the student.
+        /// </summary>
+        /// <param name="affiliation">The affiliation.</param>
+        /// <param name="rawId">The raw student ID.</param>
+        /// <returns>The task for finding student.</returns>
+        Task<Student?> FindStudentAsync(Affiliation affiliation, string rawId);
+
+        /// <summary>
+        /// Batch create or update a student entity.
+        /// </summary>
+        /// <param name="affiliation">The affiliation.</param>
+        /// <param name="students">The dictionary for raw ID to name.</param>
+        /// <returns>The task for batch creating student.</returns>
+        Task<int> MergeAsync(Affiliation affiliation, Dictionary<string, string> students);
 
         //Task<int> MergeStudentListAsync(List<Student> students);
 

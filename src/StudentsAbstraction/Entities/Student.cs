@@ -8,7 +8,7 @@
         /// <summary>
         /// The student ID
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// The affiliation ID
@@ -23,12 +23,12 @@
         /// <summary>
         /// [Ignore] The corresponding student name
         /// </summary>
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         /// <summary>
         /// [Ignore] The corresponding student email
         /// </summary>
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// [Ignore] The corresponding user ID

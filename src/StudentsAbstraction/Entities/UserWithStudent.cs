@@ -8,19 +8,14 @@ namespace Tenant.Entities
     public interface IUserWithStudent
     {
         /// <summary>
-        /// The affiliation ID
-        /// </summary>
-        int? AffiliationId { get; set; }
-
-        /// <summary>
         /// The student ID
         /// </summary>
-        int? StudentId { get; set; }
+        string? StudentId { get; set; }
 
         /// <summary>
         /// The student email
         /// </summary>
-        string StudentEmail { get; set; }
+        string? StudentEmail { get; set; }
 
         /// <summary>
         /// Whether this student has been verified

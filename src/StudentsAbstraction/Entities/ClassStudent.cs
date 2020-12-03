@@ -1,7 +1,7 @@
 ﻿namespace Tenant.Entities
 {
     /// <summary>
-    /// The entity class for classes and students.
+    /// The entity class for relation between classes and students.
     /// </summary>
     public class ClassStudent
     {
@@ -13,6 +13,15 @@
         /// <summary>
         /// The student ID
         /// </summary>
-        public int StudentId { get; set; }
+        public string StudentId { get; set; }
+
+#pragma warning disable CS8618
+        /// <summary>
+        /// Instantiate a pair of class and student.
+        /// </summary>
+        public ClassStudent()
+        {
+        }
+#pragma warning restore CS8618
     }
 }
