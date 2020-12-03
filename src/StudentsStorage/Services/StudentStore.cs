@@ -73,16 +73,10 @@ namespace Tenant.Services
                 .ToListAsync();
         }
 
-        public Task<Student?> FindStudentAsync(string id)
-        {
-            return Students
-                .Where(s => s.Id == id)
-                .SingleOrDefaultAsync()!;
-        }
-
         public Task<Student?> FindStudentAsync(Affiliation affiliation, string rawId)
         {
-            return FindStudentAsync($"{affiliation.Id}_{rawId}");
+            var id = $"{affiliation.Id}_{rawId}";
+            return Students.Where(s => s.Id == id).SingleOrDefaultAsync()!;
         }
 
         public Task<int> MergeAsync(Affiliation affiliation, Dictionary<string, string> students)
@@ -94,6 +88,66 @@ namespace Tenant.Services
                 updateExpression: (t, s) => new Student { Name = s.Name },
                 insertExpression: s => new Student { Id = s.Id, Name = s.Name, AffiliationId = s.Aff },
                 delete: false);
+        }
+
+        public Task DeleteAsync(Student student)
+        {
+            Students.Remove(student);
+            return Context.SaveChangesAsync();
+        }
+
+        public Task DeleteAsync(Class @class)
+        {
+            Classes.Remove(@class);
+            return Context.SaveChangesAsync();
+        }
+
+        public Task<Class> FindClassAsync(Affiliation affiliation, int id)
+        {
+            return Classes
+                .Where(s => s.Id == id && s.AffiliationId == affiliation.Id)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<Class> CreateAsync(Affiliation affiliation, string className)
+        {
+            var e = Classes.Add(new Class
+            {
+                Name = className,
+                AffiliationId = affiliation.Id,
+                Affiliation = affiliation,
+            });
+
+            await Context.SaveChangesAsync();
+            return e.Entity;
+        }
+
+        public Task<int> MergeAsync(Class @class, List<string> students)
+        {
+            return ClassStudents.MergeAsync(
+                sourceTable: students.Select(s => new { ClassId = @class.Id, StudentId = $"{@class.AffiliationId}_{s}" }),
+                targetKey: s => new { s.StudentId, s.ClassId },
+                sourceKey: s => new { s.StudentId, s.ClassId },
+                insertExpression: s => new ClassStudent { StudentId = s.StudentId, ClassId = s.ClassId },
+                updateExpression: null, delete: false);
+        }
+
+        public async Task<List<string>> CheckExistingStudentsAsync(Affiliation affiliation, List<string> students)
+        {
+            var prefix = $"{affiliation.Id}_";
+            var existing = students.Select(s => $"{affiliation.Id}_{s}").ToList();
+            var loaded = await Students.Where(s => existing.Contains(s.Id)).Select(s => s.Id).ToListAsync();
+            return loaded.Select(s => s[prefix.Length..]).ToList();
+        }
+
+        public async Task<bool> KickAsync(Class @class, Student student)
+        {
+            var classId = @class.Id;
+            var studentId = student.Id;
+            int count = await ClassStudents
+                .Where(cs => cs.ClassId == classId && cs.StudentId == studentId)
+                .BatchDeleteAsync();
+            return count > 0;
         }
     }
 }

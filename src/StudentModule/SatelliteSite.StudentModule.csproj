@@ -14,4 +14,9 @@
     <PackageReference Include="SatelliteSite.IdentityModule" Version="$(SubstrateVersion)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GroupModule\SatelliteSite.GroupModule.csproj" />
+    <ProjectReference Include="..\StudentsStorage\Tenant.Students.Storage.csproj" />
+  </ItemGroup>
+
 </Project>

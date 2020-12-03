@@ -59,6 +59,8 @@ namespace SatelliteSite.GroupModule
                     .HasTitle(string.Empty, "Team Categories")
                     .RequireRoles("Administrator");
             });
+
+            menus.Component(TenantDefaults.AffiliationAttach);
         }
     }
 }

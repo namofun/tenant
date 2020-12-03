@@ -60,18 +60,12 @@ namespace Tenant.Services
         Task<IReadOnlyList<IUser>> FindUserByStudentAsync(Student student);
 
         /// <summary>
-        /// Find the student.
-        /// </summary>
-        /// <param name="id">The interpolated student ID.</param>
-        /// <returns>The task for finding student.</returns>
-        Task<Student?> FindStudentAsync(string id);
-
-        /// <summary>
         /// Find the teaching class.
         /// </summary>
+        /// <param name="affiliation">The affiliation.</param>
         /// <param name="id">The teaching class ID.</param>
         /// <returns>The teaching class.</returns>
-        Task<Class> FindClassAsync(int id);
+        Task<Class> FindClassAsync(Affiliation affiliation, int id);
 
         /// <summary>
         /// Find the student.
@@ -89,12 +83,50 @@ namespace Tenant.Services
         /// <returns>The task for batch creating student.</returns>
         Task<int> MergeAsync(Affiliation affiliation, Dictionary<string, string> students);
 
-        //Task<int> MergeStudentListAsync(List<Student> students);
+        /// <summary>
+        /// Delete one student from store.
+        /// </summary>
+        /// <param name="student">The student.</param>
+        /// <returns>The task for deleting students.</returns>
+        Task DeleteAsync(Student student);
 
-        //Task<int[]> CheckStudentIdAsync(IEnumerable<int> ids);
+        /// <summary>
+        /// Delete one class from store.
+        /// </summary>
+        /// <param name="class">The class.</param>
+        /// <returns>The task for deleting classes.</returns>
+        Task DeleteAsync(Class @class);
 
-        //Task<int> MergeClassStudentAsync(Class @class, IEnumerable<int> studIds);
+        /// <summary>
+        /// Create a teaching class.
+        /// </summary>
+        /// <param name="affiliation">The affiliation.</param>
+        /// <param name="className">The class name.</param>
+        /// <returns>The task for creating class.</returns>
+        Task<Class> CreateAsync(Affiliation affiliation, string className);
 
-        //Task<bool> ClassKickAsync(int classId, int studentId);
+        /// <summary>
+        /// Batch add students to the class.
+        /// </summary>
+        /// <param name="class">The class.</param>
+        /// <param name="students">The student IDs.</param>
+        /// <returns>The task for merging.</returns>
+        Task<int> MergeAsync(Class @class, List<string> students);
+
+        /// <summary>
+        /// Check those existing students in store.
+        /// </summary>
+        /// <param name="affiliation">The affiliation.</param>
+        /// <param name="students">The student IDs.</param>
+        /// <returns>The task for fetching existing ones.</returns>
+        Task<List<string>> CheckExistingStudentsAsync(Affiliation affiliation, List<string> students);
+
+        /// <summary>
+        /// Remove the certain student from the certain class.
+        /// </summary>
+        /// <param name="class">The class.</param>
+        /// <param name="student">The student.</param>
+        /// <returns>Task for checking whether kick succeeded.</returns>
+        Task<bool> KickAsync(Class @class, Student student);
     }
 }

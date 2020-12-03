@@ -1,4 +1,5 @@
 ﻿@model Affiliation
+@inject IMenuProvider Menu
 @{
     ViewData["Title"] = "Affiliation: " + Model.Name;
 }
@@ -21,3 +22,5 @@
     <a asp-route-affid="@Model.Id" asp-action="Edit" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i>&nbsp;Edit</a>
     <a asp-route-affid="@Model.Id" asp-action="Delete" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i>&nbsp;Delete</a>
 </p>
+
+@await Menu.Extend(TenantDefaults.AffiliationAttach).RenderAsync(Component, new { aff = Model })
