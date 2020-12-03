@@ -15,6 +15,8 @@ namespace Tenant.Entities
     {
         public void Configure(EntityTypeBuilder<Student> entity)
         {
+            entity.ToTable("TenantStudents");
+
             entity.HasKey(e => e.Id);
 
             entity.Property(e => e.Id)
@@ -36,6 +38,8 @@ namespace Tenant.Entities
 
         public void Configure(EntityTypeBuilder<Class> entity)
         {
+            entity.ToTable("TenantTeachingClasses");
+
             entity.HasKey(e => e.Id);
 
             entity.Property(e => e.Name)
@@ -51,6 +55,8 @@ namespace Tenant.Entities
 
         public void Configure(EntityTypeBuilder<ClassStudent> entity)
         {
+            entity.ToTable("TenantClassStudents");
+
             entity.HasKey(e => new { e.StudentId, e.ClassId });
 
             entity.HasOne<Student>()
@@ -66,6 +72,8 @@ namespace Tenant.Entities
 
         public void Configure(EntityTypeBuilder<SolveRecord> entity)
         {
+            entity.ToTable("TenantSolveRecord");
+
             entity.HasKey(e => e.Id);
 
             entity.HasIndex(e => new { e.AffiliationId, e.Category });
