@@ -1,0 +1,23 @@
+﻿@model List<Affiliation>
+@{
+    Layout = "_WindowLayout";
+    string returnUrl = ViewBag.ReturnUrl;
+    var aff = ViewBag.Affiliation as Affiliation;
+    ViewData["Title"] = "Choose your affiliation";
+}
+
+<div class="form-group">
+    <label for="tenantId">Choose to continue operations</label>
+    <select id="tenantId" name="tenantId" class="form-control">
+@foreach (var affi in Model)
+{
+        <option value="@affi.Id" bs-selected-attr="@(affi.Id == aff?.Id)">@affi.Name</option>
+}
+    </select>
+    <label for="tenantId" class="text-muted mt-1"><small>Students and student groups are tenant-specified features.</small></label>
+</div>
+<input name="returnUrl" value="@returnUrl" type="hidden" />
+
+@section Footer {
+    <button asp-action="Switch" type="submit" class="btn-primary btn">Save</button>
+}

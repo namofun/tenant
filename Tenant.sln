@@ -23,11 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenant.Groups.Storage", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tenant.Students.Storage", "src\StudentsStorage\Tenant.Students.Storage.csproj", "{4C46AADE-23F6-447B-BFA2-FE53C9318BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatelliteSite.StudentModule", "src\StudentModule\SatelliteSite.StudentModule.csproj", "{35DAD147-8457-49A8-B7C6-B795C016EC3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.StudentModule", "src\StudentModule\SatelliteSite.StudentModule.csproj", "{35DAD147-8457-49A8-B7C6-B795C016EC3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatelliteSite.GroupModule", "src\GroupModule\SatelliteSite.GroupModule.csproj", "{5859956B-FFBD-44B6-BB6B-37C1FCE28509}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.GroupModule", "src\GroupModule\SatelliteSite.GroupModule.csproj", "{5859956B-FFBD-44B6-BB6B-37C1FCE28509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SatelliteSite.Host", "src\Host\SatelliteSite.Host.csproj", "{0E6C4392-717C-4F4A-8657-8A9AA1463B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.Host", "src\Host\SatelliteSite.Host.csproj", "{0E6C4392-717C-4F4A-8657-8A9AA1463B55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

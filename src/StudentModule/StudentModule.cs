@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SatelliteSite.IdentityModule.Entities;
 using Tenant.Entities;
+using Tenant.Services;
 
 namespace SatelliteSite.StudentModule
 {
@@ -22,6 +23,7 @@ namespace SatelliteSite.StudentModule
         public override void RegisterServices(IServiceCollection services)
         {
             services.AddDbModelSupplier<TContext, StudentEntityConfiguration<TUser, TContext>>();
+            services.AddScoped<IStudentStore, StudentStore<TUser, TContext>>();
         }
 
         public override void RegisterEndpoints(IEndpointBuilder endpoints)
@@ -31,7 +33,18 @@ namespace SatelliteSite.StudentModule
 
         public override void RegisterMenu(IMenuContributor menus)
         {
+            menus.Submenu(MenuNameDefaults.DashboardUsers, menu =>
+            {
+                menu.HasEntry(250)
+                    .HasLink("Dashboard", "Students", "List")
+                    .HasTitle(string.Empty, "Students")
+                    .RequireRoles("Administrator");
 
+                menu.HasEntry(251)
+                    .HasLink("Dashboard", "Classes", "List")
+                    .HasTitle(string.Empty, "Student Groups")
+                    .RequireRoles("Administrator");
+            });
         }
     }
 }

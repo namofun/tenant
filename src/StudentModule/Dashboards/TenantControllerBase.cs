@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -20,8 +21,7 @@ namespace SatelliteSite.StudentModule.Dashboards
         {
             if (context.Controller != this) throw new NotImplementedException();
 
-            if (Request.Cookies.TryGetValue(_cookieName, out var cookieValue) &&
-                int.TryParse(cookieValue, out int tenantId))
+            if (HttpContext.Session.GetInt32(_cookieName) is int tenantId)
             {
                 var service = HttpContext.RequestServices.GetRequiredService<IAffiliationStore>();
                 _affiliation = await service.FindAsync(tenantId);
@@ -33,7 +33,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             if (_affiliation == null && !isSwitcher)
             {
                 var returnUrl = context.HttpContext.Request.Path.Value;
-                context.Result = RedirectToAction("Switch", "Tenant", new { returnUrl });
+                context.Result = RedirectToAction("Switch", "Tenants", new { returnUrl });
             }
             else
             {
