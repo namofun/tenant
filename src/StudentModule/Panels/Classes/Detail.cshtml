@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = $"Group g{Model.Id}";
     IPagedList<Student> studs = ViewBag.Students;
+    var prefix = Model.AffiliationId + "_";
 }
 
 <h2 class="mt-2 mb-3">@ViewData["Title"]</h2>
@@ -16,7 +17,7 @@
     </div>
 </div>
 
-<h3 class="mt-3">Students in c@(Model.Id)</h3>
+<h3 class="mt-3">Students in g@(Model.Id)</h3>
 
 <div class="d-none" id="paging">
     <pagination bs-current-page="studs.CurrentPage" bs-total-page="studs.TotalPage" />
@@ -35,11 +36,12 @@
         <tbody>
             @foreach (var stu in studs)
             {
+                var stuid = stu.Id.StartsWith(prefix) ? stu.Id.Substring(prefix.Length) : stu.Id;
                 <tr asp-controller="Users" asp-action="Detail" asp-route-uid="@stu.UserId" role="row" data-toggle="gotoUrl">
-                    <td>@stu.Id</td>
+                    <td>@stuid</td>
                     <td>@stu.Name</td>
                     <td class="@(stu.IsVerified.GetValueOrDefault() ? "" : "text-decoration-del")" use-a>@stu.UserName</td>
-                    <td><a asp-action="Kick" asp-route-stuid="@stu.Id" title="kick this student from this group" data-toggle="ajaxWindow" data-target="deleteStud"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><a asp-action="Kick" asp-route-stuid="@stuid" title="kick this student from this group" data-toggle="ajaxWindow" data-target="deleteStud"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             }
         </tbody>

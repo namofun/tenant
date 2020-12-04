@@ -45,7 +45,7 @@ namespace SatelliteSite.StudentModule.Dashboards
 
             return AskPost(
                 title: $"Delete student {stuid}",
-                message: $"Are you sure to delete student {stuid}?",
+                message: $"Are you sure to delete student {stuid} - {stuId.Name}?",
                 area: "Dashboard", controller: "Students", action: "Delete",
                 routeValues: new { page },
                 type: BootstrapColor.warning);

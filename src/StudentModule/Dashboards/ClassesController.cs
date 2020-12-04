@@ -167,7 +167,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             var stud = await Store.FindStudentAsync(Affiliation, stuid);
 
             if (await Store.KickAsync(@class, stud))
-                StatusMessage = $"Kicked student {stuid} from class c{clsid}";
+                StatusMessage = $"Kicked student {stuid} from group g{clsid}.";
             else
                 StatusMessage = "Error occurred when kicking student.";
             return RedirectToAction(nameof(Detail));

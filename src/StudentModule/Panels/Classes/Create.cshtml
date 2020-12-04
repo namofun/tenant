@@ -1,13 +1,13 @@
 ﻿@model BatchAddModel
 @{
     Layout = "_WindowLayout";
-    ViewData["Title"] = "Create groups";
+    ViewData["Title"] = "Create student groups";
     ViewData["FormAjaxUpload"] = Url.Action("Create");
 }
 
 <div class="text-danger" asp-validation-summary="All"></div>
 <div class="form-group">
-    <label asp-for="Batch"></label>
+    <label asp-for="Batch">Student group name</label>
     <input asp-for="Batch" class="form-control" />
 </div>
 
