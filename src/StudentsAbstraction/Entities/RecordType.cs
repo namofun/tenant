@@ -1,4 +1,6 @@
-﻿namespace Tenant.Entities
+﻿using System;
+
+namespace Tenant.Entities
 {
     /// <summary>
     /// The enum for OJ record type.
@@ -19,5 +21,11 @@
         /// <c>vjudge.net</c>
         /// </summary>
         Vjudge,
+
+        /// <summary>
+        /// <c>poj.org</c>
+        /// </summary>
+        [Obsolete]
+        Poj,
     }
 }
