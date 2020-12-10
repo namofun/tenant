@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
+using System.Text.Json.Serialization;
 using Tenant.Entities;
 
 namespace Tenant.OjUpdate
 {
     /// <summary>
-    /// The update service for <see cref="RecordType.Hdoj"/>.
+    /// The update service for <see cref="RecordType.Codeforces"/>.
     /// </summary>
     public class CfUpdateService : OjUpdateService
     {
         /// <summary>
-        /// Construct a <see cref="HdojUpdateService"/>.
+        /// Construct a <see cref="CfUpdateService"/>.
         /// </summary>
         /// <param name="logger">The logger.</param>
         /// <param name="serviceProvider">The service provider.</param>
@@ -26,13 +27,19 @@ namespace Tenant.OjUpdate
 
         private class Rootobject
         {
-            public string status { get; set; }
-            public Result[] result { get; set; }
+            [JsonPropertyName("status")]
+            public string? Status { get; set; }
 
-            public class Result
+            [JsonPropertyName("result")]
+            public ResultValue[]? Result { get; set; }
+
+            internal class ResultValue
             {
-                public int? rating { get; set; }
-                public string handle { get; set; }
+                [JsonPropertyName("rating")]
+                public int? Rating { get; set; }
+
+                [JsonPropertyName("handle")]
+                public string? Handle { get; set; }
             }
         }
 
@@ -68,9 +75,9 @@ namespace Tenant.OjUpdate
         protected override int? MatchCount(string html)
         {
             var obj = html.AsJson<Rootobject>();
-            if (obj == null || obj.status != "OK" || obj.result.Length != 1)
+            if (obj == null || obj.Status != "OK" || obj.Result?.Length != 1)
                 return null; // User not ready?
-            return obj.result[0].rating ?? -1000;
+            return obj.Result[0].Rating ?? -1000;
         }
     }
 }

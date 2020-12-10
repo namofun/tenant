@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GroupModule\SatelliteSite.GroupModule.csproj" />
+    <ProjectReference Include="..\OjUpdate\Tenant.OjUpdate.csproj" />
     <ProjectReference Include="..\StudentsStorage\Tenant.Students.Storage.csproj" />
   </ItemGroup>
 

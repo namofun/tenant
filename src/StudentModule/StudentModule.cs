@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SatelliteSite.IdentityModule.Entities;
 using Tenant.Entities;
@@ -20,10 +21,16 @@ namespace SatelliteSite.StudentModule
         {
         }
 
-        public override void RegisterServices(IServiceCollection services)
+        public override void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbModelSupplier<TContext, StudentEntityConfiguration<TUser, TContext>>();
             services.AddScoped<IStudentStore, StudentStore<TUser, TContext>>();
+
+            if (configuration.GetValue<bool>("EnableOjUpdate"))
+            {
+                services.AddOjUpdateService<SolveRecordStore<TContext>>();
+                AvailabilityModelAttribute.Enabled = true;
+            }
         }
 
         public override void RegisterEndpoints(IEndpointBuilder endpoints)
