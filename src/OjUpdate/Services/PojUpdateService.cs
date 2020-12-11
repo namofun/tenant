@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿#nullable enable
+using Microsoft.Extensions.Logging;
+using SatelliteSite.OjUpdateModule.Entities;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Tenant.Entities;
 
-namespace Tenant.OjUpdate
+namespace SatelliteSite.OjUpdateModule.Services
 {
     /// <summary>
     /// The update service for <see cref="RecordType.Poj"/>.

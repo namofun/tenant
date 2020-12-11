@@ -1,4 +1,4 @@
-﻿namespace Tenant.Entities
+﻿namespace SatelliteSite.OjUpdateModule.Entities
 {
     /// <summary>
     /// The entity class for problem solving record.
@@ -9,11 +9,6 @@
         /// The internal item ID
         /// </summary>
         public int Id { get; set; }
-
-        /// <summary>
-        /// The affiliation ID
-        /// </summary>
-        public int AffiliationId { get; set; }
 
         /// <summary>
         /// The grade

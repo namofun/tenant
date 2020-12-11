@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201211073311_RemoveSolveRecordWithAffiliation.cs" />
+    <Compile Remove="Migrations\20201211073311_RemoveSolveRecordWithAffiliation.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SatelliteSite.Substrate" Version="$(SubstrateVersion)" />
     <PackageReference Include="SatelliteSite.HostBuilder" Version="$(SubstrateVersion)" />
     <PackageReference Include="SatelliteSite.IdentityModule" Version="$(SubstrateVersion)" />
@@ -18,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GroupModule\SatelliteSite.GroupModule.csproj" />
+    <ProjectReference Include="..\OjUpdate\SatelliteSite.OjUpdateModule.csproj" />
     <ProjectReference Include="..\StudentModule\SatelliteSite.StudentModule.csproj" />
   </ItemGroup>
 

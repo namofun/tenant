@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <DescriptionAttach>The student management module</DescriptionAttach>
+    <DescriptionAttach>The external OJ statistics</DescriptionAttach>
   </PropertyGroup>
 
   <Import Project="..\..\build\NugetPackage.props" />
@@ -15,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GroupModule\SatelliteSite.GroupModule.csproj" />
-    <ProjectReference Include="..\StudentsStorage\Tenant.Students.Storage.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(AspNetCoreVersion)" />
   </ItemGroup>
 
 </Project>

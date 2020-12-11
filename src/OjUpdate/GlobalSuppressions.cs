@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "No use.", Scope = "type", Target = "~T:Tenant.Models.OjAccount")]
+[assembly: SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "No use.", Scope = "type", Target = "~T:SatelliteSite.OjUpdateModule.Models.OjAccount")]

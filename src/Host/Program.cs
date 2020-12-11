@@ -21,6 +21,7 @@ namespace SatelliteSite
                 .MarkDomain<Program>()
                 .AddModule<IdentityModule.IdentityModule<AspNetUser, Role, DefaultContext>>()
                 .AddModule<GroupModule.GroupModule<DefaultContext>>()
+                .AddModule<OjUpdateModule.OjUpdateModule<DefaultContext>>()
                 .AddModule<StudentModule.StudentModule<AspNetUser, Role, DefaultContext>>()
                 .AddDatabaseMssql<DefaultContext>("UserDbConnection")
                 .ConfigureSubstrateDefaults<DefaultContext>();

@@ -1,7 +1,7 @@
-﻿using System;
-using Tenant.Entities;
+﻿using SatelliteSite.OjUpdateModule.Entities;
+using System;
 
-namespace Tenant.Models
+namespace SatelliteSite.OjUpdateModule.Models
 {
     /// <summary>
     /// The account model for result display.
@@ -43,6 +43,7 @@ namespace Tenant.Models
         /// <inheritdoc />
         public int CompareTo(OjAccount other)
         {
+            if (other == null) return 1;
             if (Solved == other.Solved)
                 return -Grade.CompareTo(other.Grade);
             if (Solved.HasValue && other.Solved.HasValue)

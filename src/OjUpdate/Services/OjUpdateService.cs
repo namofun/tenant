@@ -1,16 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿#nullable enable
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SatelliteSite.OjUpdateModule.Entities;
 using SatelliteSite.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Tenant.Entities;
-using Tenant.Services;
 
-namespace Tenant.OjUpdate
+namespace SatelliteSite.OjUpdateModule.Services
 {
     /// <summary>
     /// The abstract base for external OJ updating.

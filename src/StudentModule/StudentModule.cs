@@ -25,12 +25,6 @@ namespace SatelliteSite.StudentModule
         {
             services.AddDbModelSupplier<TContext, StudentEntityConfiguration<TUser, TContext>>();
             services.AddScoped<IStudentStore, StudentStore<TUser, TContext>>();
-
-            if (configuration.GetValue<bool>("EnableOjUpdate"))
-            {
-                services.AddOjUpdateService<SolveRecordStore<TContext>>();
-                AvailabilityModelAttribute.Enabled = true;
-            }
         }
 
         public override void RegisterEndpoints(IEndpointBuilder endpoints)

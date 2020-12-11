@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tenant.Entities
+namespace SatelliteSite.OjUpdateModule.Entities
 {
     /// <summary>
     /// The enum for OJ record type.

@@ -8,8 +8,7 @@ namespace Tenant.Entities
         EntityTypeConfigurationSupplier<TContext>,
         IEntityTypeConfiguration<Student>,
         IEntityTypeConfiguration<Class>,
-        IEntityTypeConfiguration<ClassStudent>,
-        IEntityTypeConfiguration<SolveRecord>
+        IEntityTypeConfiguration<ClassStudent>
         where TUser : User, IUserWithStudent
         where TContext : DbContext
     {
@@ -68,28 +67,6 @@ namespace Tenant.Entities
                 .WithMany(e => e.Students)
                 .HasForeignKey(e => e.ClassId)
                 .OnDelete(DeleteBehavior.Cascade);
-        }
-
-        public void Configure(EntityTypeBuilder<SolveRecord> entity)
-        {
-            entity.ToTable("TenantSolveRecord");
-
-            entity.HasKey(e => e.Id);
-
-            entity.HasIndex(e => new { e.AffiliationId, e.Category });
-
-            entity.HasIndex(e => new { e.AffiliationId, e.Category, e.Grade });
-
-            entity.Property(e => e.Account)
-                .IsRequired();
-
-            entity.Property(e => e.NickName)
-                .IsRequired();
-
-            entity.HasOne<Affiliation>()
-                .WithMany()
-                .HasForeignKey(e => e.AffiliationId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

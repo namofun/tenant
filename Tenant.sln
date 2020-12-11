@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.GroupModule",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.Host", "src\Host\SatelliteSite.Host.csproj", "{0E6C4392-717C-4F4A-8657-8A9AA1463B55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.OjUpdate", "src\OjUpdate\Tenant.OjUpdate.csproj", "{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.OjUpdateModule", "src\OjUpdate\SatelliteSite.OjUpdateModule.csproj", "{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

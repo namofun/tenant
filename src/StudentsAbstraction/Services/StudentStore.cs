@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tenant.Entities;
-using Tenant.Models;
 
 namespace Tenant.Services
 {
@@ -11,15 +10,6 @@ namespace Tenant.Services
     /// </summary>
     public interface IStudentStore
     {
-        /// <summary>
-        /// Get the solving record ranklist.
-        /// </summary>
-        /// <param name="affiliation">The affiliation.</param>
-        /// <param name="category">The record category.</param>
-        /// <param name="year">The student grade.</param>
-        /// <returns>The task for fetching models.</returns>
-        Task<List<OjAccount>> GetRanklistAsync(Affiliation affiliation, RecordType category, int? year = null);
-
         /// <summary>
         /// List students via affiliation.
         /// </summary>

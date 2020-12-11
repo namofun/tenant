@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tenant.Entities;
-using Tenant.Models;
 
 namespace Tenant.Services
 {
@@ -28,15 +27,6 @@ namespace Tenant.Services
         {
             return await Users
                 .Where(u => u.StudentId == student.Id)
-                .ToListAsync();
-        }
-
-        public Task<List<OjAccount>> GetRanklistAsync(Affiliation affiliation, RecordType category, int? year)
-        {
-            return Context.Set<SolveRecord>()
-                .Where(s => s.AffiliationId == affiliation.Id)
-                .WhereIf(year.HasValue, s => s.Grade == year)
-                .Select(p => new OjAccount(p))
                 .ToListAsync();
         }
 
