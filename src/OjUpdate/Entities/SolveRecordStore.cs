@@ -13,6 +13,14 @@ namespace SatelliteSite.OjUpdateModule.Services
     public interface ISolveRecordStore
     {
         /// <summary>
+        /// List the existing solve records.
+        /// </summary>
+        /// <param name="currentPage">The current page.</param>
+        /// <param name="takeCount">The count per page.</param>
+        /// <returns>The task for solve record list.</returns>
+        Task<IPagedList<SolveRecord>> ListAsync(int currentPage, int takeCount);
+
+        /// <summary>
         /// Find all solve record for category.
         /// </summary>
         /// <param name="type">The category.</param>
@@ -39,7 +47,7 @@ namespace SatelliteSite.OjUpdateModule.Services
         where TContext : DbContext
     {
         private TContext Context { get; }
-
+        
         public SolveRecordStore(TContext context)
         {
             Context = context;
@@ -66,6 +74,12 @@ namespace SatelliteSite.OjUpdateModule.Services
                 .WhereIf(grade.HasValue, s => s.Grade == grade)
                 .Select(s => new OjAccount(s))
                 .ToListAsync();
+        }
+
+        public Task<IPagedList<SolveRecord>> ListAsync(int currentPage, int takeCount)
+        {
+            return Context.Set<SolveRecord>()
+                .ToPagedListAsync(currentPage, takeCount);
         }
     }
 }

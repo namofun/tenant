@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SatelliteSite.OjUpdateModule.Models;
 using SatelliteSite.OjUpdateModule.Services;
 using System;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 namespace SatelliteSite.OjUpdateModule.Controllers
 {
     [Area("Tenant")]
+    [Authorize]
     public class ExternalRanklistController : ViewControllerBase
     {
         [HttpGet("/ranklist/{name}/{year?}")]
@@ -35,18 +37,21 @@ namespace SatelliteSite.OjUpdateModule.Controllers
         }
 
 
-        [HttpGet("/ranklist/{oj}/[action]")]
-        public IActionResult Refresh(string oj)
+        [HttpPost("/ranklist/{oj}/[action]")]
+        [ValidateAntiForgeryToken]
+        [AuditPoint(SatelliteSite.Entities.AuditlogType.Scoreboard)]
+        public async Task<IActionResult> Refresh(string oj)
         {
-            if (!OjUpdateService.OjList.ContainsKey(oj))
+            if (OjUpdateService.OjList.TryGetValue(oj ?? string.Empty, out var ojs) && !ojs.IsUpdating)
             {
-                return BadRequest();
+                await HttpContext.AuditAsync("requested refresh", "external", oj);
+                ojs.RequestUpdate();
+                StatusMessage = "Ranklist will be refreshed in minutes... Please refresh this page a minute later.";
+                return RedirectToAction(nameof(List), new { name = oj });
             }
             else
             {
-                OjUpdateService.OjList[oj].RequestUpdate();
-                return Message("Ranklist Refresh", "Ranklist will be refreshed in minutes...\n" +
-                    "Please refresh this page a minute later.");
+                return BadRequest();
             }
         }
     }

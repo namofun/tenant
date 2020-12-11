@@ -1,4 +1,7 @@
 ﻿@model RanklistViewModel
+@{ 
+    Layout = "_Layout";
+}
 
 <h2 class="mt-2">@ViewData["Title"]</h2>
 <h6 class="mb-3">
@@ -20,15 +23,19 @@
 else if (Model.LastUpdate == DateTimeOffset.UnixEpoch)
 {
     <div class="alert alert-danger" role="alert">
-        <b>Update failed. </b>Maybe @Model.OjName is unavailable now.
-        Click <a asp-action="Refresh" asp-route-oj="@Model.OjName" data-toggle="ajaxWindow" data-target="reqref">here</a> to refresh manually.
+        <form asp-action="Refresh" asp-route-oj="@Model.OjName" method="post" id="refreshform">
+            <b>Update failed. </b>Maybe @Model.OjName is unavailable now.
+            Click <a href="#" onclick="$('#refreshform').submit()">here</a> to refresh manually.
+        </form>
     </div>
 }
 else
 {
     <div class="alert alert-success" role="alert">
-        <b>Last Update </b>@Html.CstTime(Model.LastUpdate).
-        Click <a asp-action="Refresh" asp-route-oj="@Model.OjName" data-toggle="ajaxWindow" data-target="reqref">here</a> to refresh manually.
+        <form asp-action="Refresh" asp-route-oj="@Model.OjName" method="post" id="refreshform">
+            <b>Last Update </b>@Html.CstTime(Model.LastUpdate).
+            Click <a href="#" onclick="$('#refreshform').submit()">here</a> to refresh manually.
+        </form>
     </div>
 }
 

@@ -39,5 +39,16 @@ namespace SatelliteSite.OjUpdateModule
         {
             endpoints.MapControllers();
         }
+
+        public override void RegisterMenu(IMenuContributor menus)
+        {
+            menus.Submenu(MenuNameDefaults.DashboardUsers, menu =>
+            {
+                menu.HasEntry(300)
+                    .HasLink("Dashboard", "ExternalRanklist", "List")
+                    .HasTitle(string.Empty, "External OJ Ranklist")
+                    .RequireRoles("Administrator,Teacher");
+            });
+        }
     }
 }
