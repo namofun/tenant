@@ -21,6 +21,13 @@ namespace SatelliteSite.OjUpdateModule.Services
         Task<IPagedList<SolveRecord>> ListAsync(int currentPage, int takeCount);
 
         /// <summary>
+        /// Find the record by ID.
+        /// </summary>
+        /// <param name="id">The record ID.</param>
+        /// <returns>The task for fetching record.</returns>
+        Task<SolveRecord> FindAsync(int id);
+
+        /// <summary>
         /// Find all solve record for category.
         /// </summary>
         /// <param name="type">The category.</param>
@@ -28,11 +35,25 @@ namespace SatelliteSite.OjUpdateModule.Services
         Task<List<SolveRecord>> ListAsync(RecordType type);
 
         /// <summary>
+        /// Create the solve records.
+        /// </summary>
+        /// <param name="records">The solve records.</param>
+        /// <returns>The task for creating, with the page.</returns>
+        Task<int> CreateAsync(List<SolveRecord> records);
+
+        /// <summary>
         /// Update the solve record.
         /// </summary>
         /// <param name="record">The solve record.</param>
         /// <returns>The task for updating.</returns>
         Task UpdateAsync(SolveRecord record);
+
+        /// <summary>
+        /// Delete the solve record.
+        /// </summary>
+        /// <param name="record">The solve record.</param>
+        /// <returns>The task for deleting.</returns>
+        Task DeleteAsync(SolveRecord record);
 
         /// <summary>
         /// Find all OJ account model for category and grade.
@@ -63,7 +84,7 @@ namespace SatelliteSite.OjUpdateModule.Services
 
         public Task UpdateAsync(SolveRecord record)
         {
-            Context.Set<SolveRecord>().Add(record);
+            Context.Set<SolveRecord>().Update(record);
             return Context.SaveChangesAsync();
         }
 
@@ -80,6 +101,33 @@ namespace SatelliteSite.OjUpdateModule.Services
         {
             return Context.Set<SolveRecord>()
                 .ToPagedListAsync(currentPage, takeCount);
+        }
+
+        public Task<SolveRecord> FindAsync(int id)
+        {
+            return Context.Set<SolveRecord>()
+                .Where(s => s.Id == id)
+                .SingleOrDefaultAsync();
+        }
+
+        public Task DeleteAsync(SolveRecord record)
+        {
+            Context.Set<SolveRecord>().Remove(record);
+            return Context.SaveChangesAsync();
+        }
+
+        public async Task<int> CreateAsync(List<SolveRecord> records)
+        {
+            if (records.Count == 0)
+                return await Context.Set<SolveRecord>().CountAsync();
+
+            Context.Set<SolveRecord>().AddRange(records);
+            await Context.SaveChangesAsync();
+            var minId = records.Min(m => m.Id);
+
+            return await Context.Set<SolveRecord>()
+                .Where(s => s.Id <= minId)
+                .CountAsync();
         }
     }
 }

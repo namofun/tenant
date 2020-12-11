@@ -33,7 +33,7 @@
                 <td>@rec.NickName</td>
                 <td>@rec.Account</td>
                 <td>@(rec.Result?.ToString() ?? "N/A")</td>
-                <td><a asp-action="Edit" asp-route-id="@rec.Id" asp-route-page="@Model.CurrentPage" title="edit this record"><i class="fas fa-edit"></i></a></td>
+                <td><a asp-action="Edit" asp-route-id="@rec.Id" asp-route-page="@Model.CurrentPage" title="edit this record" data-toggle="ajaxWindow" data-target="editRec"><i class="fas fa-edit"></i></a></td>
                 <td><a asp-action="Delete" asp-route-id="@rec.Id" asp-route-page="@Model.CurrentPage" title="delete this record" data-toggle="ajaxWindow" data-target="deleteRec"><i class="fas fa-trash-alt"></i></a></td>
             </tr>
 }
