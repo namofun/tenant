@@ -24,6 +24,7 @@ namespace SatelliteSite.OjUpdateModule.Controllers
             ViewData["Title"] = title;
 
             var ojac = await store.ListAsync(oj.CategoryId, year);
+            ojac.Sort();
             return View(new RanklistViewModel
             {
                 OjName = name,
