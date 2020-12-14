@@ -66,6 +66,16 @@
     });
 </script>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary" title="Create new records"><i class="fas fa-plus"></i>&nbsp;Create</a>
-</p>
+<div class="dropdown mt-0">
+    <a asp-action="Create" class="btn btn-primary" title="Create new records">
+        <i class="fas fa-plus"></i>&nbsp;Create
+    </a>
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-trash-alt"></i>&nbsp;Cleanup
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" asp-action="Cleanup" asp-route-category="@((int)RecordType.Hdoj)">HDOJ</a>
+        <a class="dropdown-item" asp-action="Cleanup" asp-route-category="@((int)RecordType.Codeforces)">Codeforces</a>
+        <a class="dropdown-item" asp-action="Cleanup" asp-route-category="@((int)RecordType.Vjudge)">Vjudge</a>
+    </div>
+</div>

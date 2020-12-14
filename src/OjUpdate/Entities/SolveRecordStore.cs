@@ -56,6 +56,14 @@ namespace SatelliteSite.OjUpdateModule.Services
         Task DeleteAsync(SolveRecord record);
 
         /// <summary>
+        /// Delete the solve record.
+        /// </summary>
+        /// <param name="type">The solve record type.</param>
+        /// <param name="ids">The target IDs.</param>
+        /// <returns>The task for deleting, returning the deleted items.</returns>
+        Task<int> DeleteAsync(RecordType type, int[] ids);
+
+        /// <summary>
         /// Find all OJ account model for category and grade.
         /// </summary>
         /// <param name="type">The category.</param>
@@ -128,6 +136,13 @@ namespace SatelliteSite.OjUpdateModule.Services
             return await Context.Set<SolveRecord>()
                 .Where(s => s.Id <= minId)
                 .CountAsync();
+        }
+
+        public Task<int> DeleteAsync(RecordType type, int[] ids)
+        {
+            return Context.Set<SolveRecord>()
+                .Where(r => r.Category == type && ids.Contains(r.Id))
+                .BatchDeleteAsync();
         }
     }
 }
