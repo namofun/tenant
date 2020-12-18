@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.Host", "src\H
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.OjUpdateModule", "src\OjUpdate\SatelliteSite.OjUpdateModule.csproj", "{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.NewsModule", "src\NewsModule\SatelliteSite.NewsModule.csproj", "{D4C28A87-B1FD-492A-80B2-0DDA618362C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4C28A87-B1FD-492A-80B2-0DDA618362C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C28A87-B1FD-492A-80B2-0DDA618362C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C28A87-B1FD-492A-80B2-0DDA618362C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C28A87-B1FD-492A-80B2-0DDA618362C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{5859956B-FFBD-44B6-BB6B-37C1FCE28509} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 		{0E6C4392-717C-4F4A-8657-8A9AA1463B55} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 		{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
+		{D4C28A87-B1FD-492A-80B2-0DDA618362C6} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {000EA67D-DBD2-448C-9B2E-6393348CC090}

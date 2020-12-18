@@ -3,15 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <DescriptionAttach>The external OJ statistics</DescriptionAttach>
+    <DescriptionAttach>The tenant news</DescriptionAttach>
   </PropertyGroup>
 
   <Import Project="..\..\build\NugetPackage.props" />
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Markdig.Service" Version="0.18.3.1" />
     <PackageReference Include="SatelliteSite.Substrate" Version="$(SubstrateVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(AspNetCoreVersion)" />
   </ItemGroup>
 
 </Project>
