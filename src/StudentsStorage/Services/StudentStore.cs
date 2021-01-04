@@ -72,13 +72,10 @@ namespace Tenant.Services
 
         public Task<int> MergeAsync(Affiliation affiliation, Dictionary<string, string> students)
         {
-            return Students.MergeAsync(
-                sourceTable: students.Select(s => new { Id = $"{affiliation.Id}_{s.Key.Trim()}", Name = s.Value.Trim(), Aff = affiliation.Id }),
-                targetKey: s => s.Id,
-                sourceKey: s => s.Id,
-                updateExpression: (t, s) => new Student { Name = s.Name },
+            return Students.UpsertAsync(
+                sources: students.Select(s => new { Id = $"{affiliation.Id}_{s.Key.Trim()}", Name = s.Value.Trim(), Aff = affiliation.Id }),
                 insertExpression: s => new Student { Id = s.Id, Name = s.Name, AffiliationId = s.Aff },
-                delete: false);
+                updateExpression: (t, s) => new Student { Name = s.Name });
         }
 
         public Task DeleteAsync(Student student)
@@ -115,12 +112,9 @@ namespace Tenant.Services
 
         public Task<int> MergeAsync(Class @class, List<string> students)
         {
-            return ClassStudents.MergeAsync(
-                sourceTable: students.Select(s => new { ClassId = @class.Id, StudentId = $"{@class.AffiliationId}_{s}" }),
-                targetKey: s => new { s.StudentId, s.ClassId },
-                sourceKey: s => new { s.StudentId, s.ClassId },
-                insertExpression: s => new ClassStudent { StudentId = s.StudentId, ClassId = s.ClassId },
-                updateExpression: null, delete: false);
+            return ClassStudents.UpsertAsync(
+                sources: students.Select(s => new { ClassId = @class.Id, StudentId = $"{@class.AffiliationId}_{s}" }),
+                insertExpression: s => new ClassStudent { StudentId = s.StudentId, ClassId = s.ClassId });
         }
 
         public async Task<List<string>> CheckExistingStudentsAsync(Affiliation affiliation, List<string> students)
