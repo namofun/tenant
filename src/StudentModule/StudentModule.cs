@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SatelliteSite;
 using SatelliteSite.IdentityModule.Entities;
+using SatelliteSite.IdentityModule.Services;
 using Tenant.Entities;
 using Tenant.Services;
+
+[assembly: RoleDefinition(16, "Student", "student", "Verified Student")]
 
 namespace SatelliteSite.StudentModule
 {
@@ -25,6 +29,7 @@ namespace SatelliteSite.StudentModule
         {
             services.AddDbModelSupplier<TContext, StudentEntityConfiguration<TUser, TContext>>();
             services.AddScoped<IStudentStore, StudentStore<TUser, TContext>>();
+            services.AddStudentEmailTokenProvider<TUser>();
         }
 
         public override void RegisterEndpoints(IEndpointBuilder endpoints)
@@ -45,6 +50,14 @@ namespace SatelliteSite.StudentModule
                     .HasLink("Dashboard", "Classes", "List")
                     .HasTitle(string.Empty, "Student Groups")
                     .RequireRoles("Administrator");
+            });
+
+            menus.Menu(IdentityModule.ExtensionPointDefaults.UserDetailMenu, menu =>
+            {
+                menu.HasEntry(100)
+                    .HasLink("Tenant", "StudentVerify", "Main")
+                    .HasTitle("info", "Student verify")
+                    .RequireThat(c => c.HttpContext.User.GetUserName() == ((IUser)c.ViewData["User"]).UserName);
             });
         }
     }
