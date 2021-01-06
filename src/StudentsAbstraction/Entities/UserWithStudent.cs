@@ -5,7 +5,7 @@ namespace Tenant.Entities
     /// <summary>
     /// Support student feature with <see cref="IUser"/>.
     /// </summary>
-    public interface IUserWithStudent
+    public interface IUserWithStudent : IUser
     {
         /// <summary>
         /// The student ID

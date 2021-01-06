@@ -8,6 +8,7 @@
         /// <summary>
         /// The student ID
         /// </summary>
+        /// <remarks>Usually constructed as strings like <c>jlu_55171102</c>.</remarks>
         public string Id { get; set; }
 
         /// <summary>

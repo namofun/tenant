@@ -14,8 +14,7 @@ namespace SatelliteSite.NewsModule.Dashboards
     [Area("Dashboard")]
     [Authorize(Roles = "Administrator")]
     [Route("[area]/[controller]")]
-#warning Should change AuditPoint to News
-    [AuditPoint(AuditlogType.User)]
+    [AuditPoint(AuditlogType.News)]
     public class NewsController : ViewControllerBase
     {
         private INewsStore Store { get; }

@@ -19,6 +19,7 @@
             <div class="form-group">
                 <label asp-for="Abbreviation" class="required"></label>
                 <input asp-for="Abbreviation" required maxlength="10" class="form-control" />
+                <label asp-for="Abbreviation"><small class="text-muted">If this field is modified while student module is enabled, this will cause data error.</small></label>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="required"></label>
