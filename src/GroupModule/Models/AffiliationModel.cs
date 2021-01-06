@@ -18,6 +18,9 @@ namespace SatelliteSite.GroupModule.Models
         [Required]
         public string Abbreviation { get; set; }
 
+        [DisplayName("Student email suffix")]
+        public string EmailSuffix { get; set; }
+
         [DisplayName("Country Code")]
         public string CountryCode { get; set; }
 

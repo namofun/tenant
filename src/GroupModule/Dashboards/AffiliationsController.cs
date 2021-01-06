@@ -55,6 +55,7 @@ namespace SatelliteSite.GroupModule.Dashboards
                 CountryCode = aff.CountryCode,
                 Id = aff.Id,
                 Name = aff.Name,
+                EmailSuffix = aff.EmailSuffix,
             });
         }
 
@@ -94,12 +95,16 @@ namespace SatelliteSite.GroupModule.Dashboards
                 return RedirectToAction(nameof(Detail), new { affid = aff.Id });
             }
 
+            if (string.IsNullOrWhiteSpace(model.EmailSuffix))
+                model.EmailSuffix = null;
+
             var e = await Store.CreateAsync(new Affiliation
             {
                 Id = model.Id.Value,
                 Abbreviation = model.Abbreviation,
                 CountryCode = model.CountryCode,
                 Name = model.Name,
+                EmailSuffix = model.EmailSuffix,
             });
 
             await SolveLogo(model.Logo, model.Abbreviation);
@@ -116,10 +121,13 @@ namespace SatelliteSite.GroupModule.Dashboards
             if (aff == null) return NotFound();
 
             if (!ModelState.IsValid) return View(model);
+            if (string.IsNullOrWhiteSpace(model.EmailSuffix))
+                model.EmailSuffix = null;
 
             aff.Abbreviation = model.Abbreviation;
             aff.Name = model.Name;
             aff.CountryCode = model.CountryCode;
+            aff.EmailSuffix = model.EmailSuffix;
             await Store.UpdateAsync(aff);
 
             await SolveLogo(model.Logo, model.Abbreviation);

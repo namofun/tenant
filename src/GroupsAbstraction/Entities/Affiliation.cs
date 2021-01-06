@@ -21,6 +21,11 @@
         public string Abbreviation { get; set; }
 
         /// <summary>
+        /// The student email suffix of affiliation
+        /// </summary>
+        public string? EmailSuffix { get; set; }
+
+        /// <summary>
         /// The country code like <c>CHN</c>
         /// </summary>
         public string? CountryCode { get; set; } = "CHN";
