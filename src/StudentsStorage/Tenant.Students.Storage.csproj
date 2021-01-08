@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GroupsStorage\Tenant.Groups.Storage.csproj" />
     <ProjectReference Include="..\StudentsAbstraction\Tenant.Students.Abstraction.csproj" />
   </ItemGroup>
 
