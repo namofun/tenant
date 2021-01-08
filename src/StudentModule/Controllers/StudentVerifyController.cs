@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SatelliteSite.IdentityModule.Services;
+using SatelliteSite.Services;
 using SatelliteSite.StudentModule.Models;
 using System;
 using System.Linq;

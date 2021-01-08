@@ -1,4 +1,4 @@
-﻿using SatelliteSite.IdentityModule.Services;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Tenant.Entities
 {

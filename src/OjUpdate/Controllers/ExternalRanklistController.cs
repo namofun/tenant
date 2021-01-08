@@ -40,7 +40,7 @@ namespace SatelliteSite.OjUpdateModule.Controllers
 
         [HttpPost("/ranklist/{oj}/[action]")]
         [ValidateAntiForgeryToken]
-        [AuditPoint(SatelliteSite.Entities.AuditlogType.Scoreboard)]
+        [AuditPoint(AuditlogType.Scoreboard)]
         public async Task<IActionResult> Refresh(string oj)
         {
             if (OjUpdateService.OjList.TryGetValue(oj ?? string.Empty, out var ojs) && !ojs.IsUpdating)

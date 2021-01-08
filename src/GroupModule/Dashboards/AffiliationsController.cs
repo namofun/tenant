@@ -13,7 +13,7 @@ namespace SatelliteSite.GroupModule.Dashboards
     [Area("Dashboard")]
     [Authorize(Roles = "Administrator")]
     [Route("[area]/[controller]")]
-    [AuditPoint(Entities.AuditlogType.TeamAffiliation)]
+    [AuditPoint(AuditlogType.TeamAffiliation)]
     public class AffiliationsController : ViewControllerBase
     {
         private IAffiliationStore Store { get; }

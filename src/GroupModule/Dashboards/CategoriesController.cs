@@ -10,7 +10,7 @@ namespace SatelliteSite.GroupModule.Dashboards
     [Area("Dashboard")]
     [Authorize(Roles = "Administrator")]
     [Route("[area]/[controller]")]
-    [AuditPoint(Entities.AuditlogType.TeamCategory)]
+    [AuditPoint(AuditlogType.TeamCategory)]
     public class CategoriesController : ViewControllerBase
     {
         private ICategoryStore Store { get; }

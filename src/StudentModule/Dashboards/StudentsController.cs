@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SatelliteSite.IdentityModule.Services;
 using SatelliteSite.StudentModule.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace SatelliteSite.StudentModule.Dashboards
     [Area("Dashboard")]
     [Authorize(Roles = "Administrator,Teacher")]
     [Route("[area]/[controller]")]
-    [AuditPoint(Entities.AuditlogType.User)]
+    [AuditPoint(AuditlogType.Student)]
     public class StudentsController : TenantControllerBase
     {
         private const int ItemPerPage = 50;

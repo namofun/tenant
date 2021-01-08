@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using SatelliteSite.IdentityModule.Services;
 using System.Threading.Tasks;
 using Tenant.Entities;
 
@@ -8,7 +7,7 @@ namespace SatelliteSite.StudentModule
 {
     public class StudentEmailTokenProvider<TUser> :
         TotpSecurityStampBasedTokenProvider<TUser>
-        where TUser : class, IUser, IUserWithStudent
+        where TUser : class, IUserWithStudent
     {
         public override async Task<bool> CanGenerateTwoFactorTokenAsync(UserManager<TUser> manager, TUser user)
         {

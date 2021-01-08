@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SatelliteSite.GroupModule.Models;
-using SatelliteSite.IdentityModule.Services;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;

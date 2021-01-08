@@ -20,7 +20,7 @@ namespace Tenant.Entities
                 if (!usersDbSetType.IsConstructedGenericType) return null;
                 if (usersDbSetType.GetGenericTypeDefinition() != typeof(DbSet<>)) return null;
                 var userType = usersDbSetType.GetGenericArguments().Single();
-                if (!typeof(SatelliteSite.IdentityModule.Services.IUser).IsAssignableFrom(userType)) return null;
+                if (!typeof(Microsoft.AspNetCore.Identity.IUser).IsAssignableFrom(userType)) return null;
                 return userType;
             });
 

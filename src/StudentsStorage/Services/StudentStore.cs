@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SatelliteSite.IdentityModule.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ using Tenant.Entities;
 namespace Tenant.Services
 {
     public class StudentStore<TUser, TContext> : IStudentStore
-        where TUser : class, IUser, IUserWithStudent
+        where TUser : class, IUserWithStudent
         where TContext : DbContext
     {
         public TContext Context { get; }

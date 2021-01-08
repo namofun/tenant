@@ -1,6 +1,4 @@
-﻿using SatelliteSite.IdentityModule.Services;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Tenant.Entities;
 
 namespace Tenant.Services
@@ -10,7 +8,7 @@ namespace Tenant.Services
         internal static IQueryable<Student> JoinWithUser<TUser>(
             this IQueryable<Student> source,
             IQueryable<TUser> users)
-            where TUser : class, IUser, IUserWithStudent
+            where TUser : class, IUserWithStudent
         {
             return source
                 .OrderBy(s => s.Id)
