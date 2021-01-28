@@ -1,4 +1,3 @@
-using Markdig;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -25,13 +24,8 @@ namespace SatelliteSite
                 .AddModule<OjUpdateModule.OjUpdateModule<DefaultContext>>()
                 .AddModule<NewsModule.NewsModule<DefaultContext>>()
                 .AddModule<StudentModule.StudentModule<AspNetUser, Role, DefaultContext>>()
+                .AddModule<HostModule>()
                 .AddDatabaseMssql<DefaultContext>("UserDbConnection")
-                .ConfigureSubstrateDefaults<DefaultContext>(b =>
-                {
-                    b.ConfigureServices(services =>
-                    {
-                        services.AddMarkdown();
-                    });
-                });
+                .ConfigureSubstrateDefaults<DefaultContext>();
     }
 }

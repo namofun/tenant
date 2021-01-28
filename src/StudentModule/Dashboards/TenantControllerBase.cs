@@ -10,7 +10,7 @@ using Tenant.Services;
 
 namespace SatelliteSite.StudentModule.Dashboards
 {
-    public class TenantControllerBase : ViewControllerBase
+    public abstract class TenantControllerBase : ViewControllerBase
     {
         private Affiliation _affiliation;
         private const string _cookieName = "TenantId";

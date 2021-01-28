@@ -60,6 +60,13 @@ namespace Tenant.Services
         /// <summary>
         /// Find the student.
         /// </summary>
+        /// <param name="combinedId">The combined student ID.</param>
+        /// <returns>The task for finding student.</returns>
+        Task<(Affiliation, Student)?> FindStudentAsync(string combinedId);
+
+        /// <summary>
+        /// Find the student.
+        /// </summary>
         /// <param name="affiliation">The affiliation.</param>
         /// <param name="rawId">The raw student ID.</param>
         /// <returns>The task for finding student.</returns>

@@ -30,6 +30,7 @@ namespace SatelliteSite.StudentModule
         {
             services.AddDbModelSupplier<TContext, StudentEntityConfiguration<TUser, TContext>>();
             services.AddScoped<IStudentStore, StudentStore<TUser, TContext>>();
+            services.AddScoped<IUserClaimsProvider, StudentTenantClaimsProvider>();
             services.AddStudentEmailTokenProvider<TUser>();
         }
 

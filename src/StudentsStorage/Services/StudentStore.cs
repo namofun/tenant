@@ -134,5 +134,18 @@ namespace Tenant.Services
                 .BatchDeleteAsync();
             return count > 0;
         }
+
+        public async Task<(Affiliation, Student)?> FindStudentAsync(string combinedId)
+        {
+            var query =
+                from s in Students
+                where s.Id == combinedId
+                join a in Context.Set<Affiliation>() on s.AffiliationId equals a.Id
+                select new { s, a };
+
+            var result = await query.SingleOrDefaultAsync();
+            if (result == null) return null;
+            return (result.a, result.s);
+        }
     }
 }

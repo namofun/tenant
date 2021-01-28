@@ -73,7 +73,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             }
 
             await Store.DeleteAsync(stud);
-            await HttpContext.AuditAsync("deleted", $"student s{stuid}", string.IsNullOrEmpty(unlinked) ? null : $"unlink{unlinked}");
+            await HttpContext.AuditAsync("deleted", stud.Id, string.IsNullOrEmpty(unlinked) ? null : $"unlink{unlinked}");
             StatusMessage = $"Student ID {stuid} has been removed.";
             return RedirectToAction(nameof(List), new { page });
         }
@@ -148,7 +148,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             await UserManager.UpdateAsync(user);
             await UserManager.RemoveFromRoleAsync(user, "Student");
             StatusMessage = $"Student ID {stuid} has been unlinked with u{user.Id}.";
-            await HttpContext.AuditAsync("unlinked", $"u{user.Id}", user == null ? null : $"student s{stuid}");
+            await HttpContext.AuditAsync("unlinked", stud.Id, user == null ? null : $"u{user.Id}");
             return RedirectToAction(nameof(List), new { page });
         }
 
@@ -169,7 +169,7 @@ namespace SatelliteSite.StudentModule.Dashboards
                 user2.StudentVerified = true;
                 await UserManager.UpdateAsync(user);
                 await UserManager.AddToRoleAsync(user, "Student");
-                await HttpContext.AuditAsync("verified", $"student s{stuid}", user == null ? null : $"to u{user.Id}");
+                await HttpContext.AuditAsync("verified", stud.Id, user == null ? null : $"to u{user.Id}");
             }
 
             StatusMessage = $"Marked {user.UserName} (u{user.Id}) as verified student.";
