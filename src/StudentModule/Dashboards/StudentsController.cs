@@ -12,7 +12,7 @@ using Tenant.Services;
 namespace SatelliteSite.StudentModule.Dashboards
 {
     [Area("Dashboard")]
-    [Authorize(Roles = "Administrator,Teacher")]
+    [Authorize(Policy = "TenantAdmin")]
     [Route("[area]/[controller]")]
     [AuditPoint(AuditlogType.Student)]
     public class StudentsController : TenantControllerBase

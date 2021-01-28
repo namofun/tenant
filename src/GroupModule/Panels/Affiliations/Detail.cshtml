@@ -2,6 +2,7 @@
 @inject IMenuProvider Menu
 @{
     ViewData["Title"] = "Affiliation: " + Model.Name;
+    IReadOnlyList<Microsoft.AspNetCore.Identity.IUser> admin = ViewBag.Administrators;
 }
 
 <h2 class="mt-2">@ViewData["Title"]</h2>
@@ -23,5 +24,29 @@
     <a asp-route-affid="@Model.Id" asp-action="Edit" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i>&nbsp;Edit</a>
     <a asp-route-affid="@Model.Id" asp-action="Delete" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i>&nbsp;Delete</a>
 </p>
+
+<h3 class="mt-4">Tenant Administrators</h3>
+
+<div class="table-wrapper">
+    <table class="data-table table table-sm table-striped" style="width:auto">
+        <thead>
+            <tr role="row">
+                <th scope="col" class="sortable searchable">ID</th>
+                <th scope="col" class="sortable searchable">name</th>
+                <th><a asp-action="Assign" title="assign" data-toggle="ajaxWindow" data-target="assign" class="text-reset"><i class="fas fa-plus"></i></a></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in admin)
+            {
+                <tr asp-area="Account" asp-controller="Profile" asp-action="Show" asp-route-username="@user.UserName" role="row" data-toggle="gotoUrl">
+                    <td use-a style="min-width:3em">u@(user.Id)</td>
+                    <td use-a style="min-width:15em">@user.UserName</td>
+                    <td><a asp-action="Unassign" asp-route-userid="@user.Id" title="unassign" data-toggle="ajaxWindow" data-target="unassign"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @await Menu.Extend(TenantDefaults.AffiliationAttach).RenderAsync(Component, new { aff = Model })

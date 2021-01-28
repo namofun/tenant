@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ using Tenant.Services;
 
 namespace SatelliteSite.GroupModule
 {
-    public class GroupModule<TContext> : AbstractModule
+    public class GroupModule<TContext> : AbstractModule, IAuthorizationPolicyRegistry
         where TContext : DbContext
     {
         public override string Area => "Tenant";
@@ -21,8 +22,8 @@ namespace SatelliteSite.GroupModule
         public override void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<InfraStoreImpl<TContext>>();
-            services.AddScoped<IAffiliationStore>(s => s.GetRequiredService<InfraStoreImpl<TContext>>());
-            services.AddScoped<ICategoryStore>(s => s.GetRequiredService<InfraStoreImpl<TContext>>());
+            services.AddScopedUpcast<IAffiliationStore, InfraStoreImpl<TContext>>();
+            services.AddScopedUpcast<ICategoryStore, InfraStoreImpl<TContext>>();
             services.AddDbModelSupplier<TContext, InfraEntityConfiguration<TContext>>();
 
             if (configuration.GetValue<bool>("EnableTrainingTeam"))
@@ -61,6 +62,12 @@ namespace SatelliteSite.GroupModule
             });
 
             menus.Component(TenantDefaults.AffiliationAttach);
+        }
+
+        public void RegisterPolicies(IAuthorizationPolicyContainer container)
+        {
+            container.AddPolicy2("HasDashboard", b => b.AcceptClaim("tenant_admin"));
+            container.AddPolicy("TenantAdmin", b => b.RequireAssertion(c => c.User.IsTenantAdmin()));
         }
     }
 }

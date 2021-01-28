@@ -11,7 +11,7 @@ using Tenant.Services;
 namespace SatelliteSite.StudentModule.Dashboards
 {
     [Area("Dashboard")]
-    [Authorize(Roles = "Administrator,Teacher")]
+    [Authorize(Policy = "TenantAdmin")]
     [Route("[area]/[controller]")]
     public class ClassesController : TenantControllerBase
     {

@@ -46,12 +46,12 @@ namespace SatelliteSite.StudentModule
                 menu.HasEntry(250)
                     .HasLink("Dashboard", "Students", "List")
                     .HasTitle(string.Empty, "Students")
-                    .RequireRoles("Administrator");
+                    .RequireThat(ctx => ctx.HttpContext.User.IsTenantAdmin());
 
                 menu.HasEntry(251)
                     .HasLink("Dashboard", "Classes", "List")
                     .HasTitle(string.Empty, "Student Groups")
-                    .RequireRoles("Administrator");
+                    .RequireThat(ctx => ctx.HttpContext.User.IsTenantAdmin());
             });
 
             menus.Menu(IdentityModule.ExtensionPointDefaults.UserDetailMenu, menu =>
