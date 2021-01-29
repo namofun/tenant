@@ -8,7 +8,7 @@ using Tenant.Entities;
 
 namespace Tenant.Services
 {
-    public class GroupStoreImpl<TUser, TContext> : IGroupStore
+    public class GroupStoreImpl<TUser, TContext> : IGroupStore, IGroupQueryableStore
         where TUser : class, IUser
         where TContext : DbContext
     {
@@ -19,8 +19,8 @@ namespace Tenant.Services
 
         public GroupStoreImpl(TContext context) => Context = context;
 
-        private DbSet<GroupTeam> Teams => Context.Set<GroupTeam>();
-        private DbSet<GroupUser> Users => Context.Set<GroupUser>();
+        public IQueryable<GroupTeam> GroupTeams => Context.Set<GroupTeam>();
+        public IQueryable<GroupUser> GroupUsers => Context.Set<GroupUser>();
 
         private async Task<T> CreateEntityAsync<T>(T entity) where T : class
         {
@@ -52,13 +52,13 @@ namespace Tenant.Services
 
         public async Task<bool> CheckCreateAsync(IUser user)
         {
-            var count = await Teams.CountAsync(t => t.UserId == user.Id);
+            var count = await GroupTeams.CountAsync(t => t.UserId == user.Id);
             return count < MaxTeams;
         }
 
         public async Task<bool> CheckCreateAsync(GroupTeam team)
         {
-            var item = await Users.CountAsync(a => a.TeamId == team.Id);
+            var item = await GroupUsers.CountAsync(a => a.TeamId == team.Id);
             return item < MaxMembers;
         }
 
@@ -84,7 +84,7 @@ namespace Tenant.Services
 
         public Task<GroupTeam> FindByIdAsync(int id)
         {
-            return Teams
+            return GroupTeams
                 .Include(t => t.Affiliation)
                 .Where(t => t.Id == id)
                 .SingleOrDefaultAsync();
@@ -93,7 +93,7 @@ namespace Tenant.Services
         public Task<GroupUser?> IsInTeamAsync(IUser user, GroupTeam team)
         {
 #pragma warning disable CS8619
-            return Users
+            return GroupUsers
                 .Where(tu => tu.UserId == user.Id && tu.TeamId == team.Id)
                 .SingleOrDefaultAsync();
 #pragma warning restore CS8619
@@ -102,10 +102,10 @@ namespace Tenant.Services
         public async Task<ILookup<GroupTeam, GroupUser>> ListByUserAsync(int uid, bool active = false)
         {
             var query =
-                from ttu in Users
+                from ttu in GroupUsers
                 where ttu.UserId == uid && ttu.Accepted == true
-                join t in Teams on ttu.TeamId equals t.Id
-                join tu in Users on t.Id equals tu.TeamId
+                join t in GroupTeams on ttu.TeamId equals t.Id
+                join tu in GroupUsers on t.Id equals tu.TeamId
                 where tu.Accepted == true || !active
                 join u in Context.Set<TUser>() on tu.UserId equals u.Id
                 select new { t, tuu = new GroupUser(tu.TeamId, tu.UserId, tu.Accepted, u.UserName, u.Email) };
@@ -116,7 +116,7 @@ namespace Tenant.Services
         public Task<List<GroupUser>> ListMembersAsync(GroupTeam team, bool active = false)
         {
             var query =
-                from tu in Users
+                from tu in GroupUsers
                 where tu.TeamId == team.Id
                 where tu.Accepted == true || !active
                 join u in Context.Set<TUser>() on tu.UserId equals u.Id

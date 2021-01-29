@@ -8,9 +8,9 @@ using Tenant.Entities;
 
 namespace Tenant.Services
 {
-    public partial class InfraStoreImpl<TContext> : IAffiliationStore
+    public partial class InfraStoreImpl<TContext> : IAffiliationStore, IAffiliationQueryableStore
     {
-        private DbSet<Affiliation> Affiliations => Context.Set<Affiliation>();
+        public IQueryable<Affiliation> Affiliations => Context.Set<Affiliation>();
 
         Task<Affiliation> IAffiliationStore.CreateAsync(Affiliation entity) => CreateEntityAsync(entity);
 

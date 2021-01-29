@@ -36,6 +36,13 @@ namespace Tenant.Services
         Task<List<Class>> ListClassesAsync(Affiliation affiliation);
 
         /// <summary>
+        /// List teaching classes via affiliation IDs.
+        /// </summary>
+        /// <param name="affiliationIds">The affiliation IDs.</param>
+        /// <returns>The task for fetching teaching classes.</returns>
+        Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds);
+
+        /// <summary>
         /// List all students from teaching class.
         /// </summary>
         /// <param name="class">The teaching class.</param>

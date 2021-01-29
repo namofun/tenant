@@ -7,7 +7,7 @@ using Tenant.Entities;
 
 namespace Tenant.Services
 {
-    public class StudentStore<TUser, TContext> : IStudentStore
+    public class StudentStore<TUser, TContext> : IStudentStore, IStudentQueryableStore
         where TUser : class, IUserWithStudent
         where TContext : DbContext
     {
@@ -16,6 +16,11 @@ namespace Tenant.Services
         private DbSet<Class> Classes => Context.Set<Class>();
         private DbSet<Student> Students => Context.Set<Student>();
         private DbSet<ClassStudent> ClassStudents => Context.Set<ClassStudent>();
+        IQueryable<Student> IStudentQueryableStore.Students => Context.Set<Student>();
+        IQueryable<Class> IStudentQueryableStore.Classes => Context.Set<Class>();
+        IQueryable<ClassStudent> IStudentQueryableStore.ClassStudents => Context.Set<ClassStudent>();
+        IQueryable<IUserWithStudent> IStudentQueryableStore.Users => Context.Set<TUser>();
+
         public StudentStore(TContext context) => Context = context;
 
         public Task<Class> FindClassAsync(int id)
@@ -146,6 +151,14 @@ namespace Tenant.Services
             var result = await query.SingleOrDefaultAsync();
             if (result == null) return null;
             return (result.a, result.s);
+        }
+
+        public Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds)
+        {
+            return Classes
+                .Where(c => affiliationIds.Contains(c.AffiliationId))
+                .Select(c => new Class { AffiliationId = c.AffiliationId, Id = c.Id, Name = c.Affiliation.Name + " - " + c.Name })
+                .ToListAsync();
         }
     }
 }

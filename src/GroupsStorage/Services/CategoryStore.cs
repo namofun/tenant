@@ -8,9 +8,9 @@ using Tenant.Entities;
 
 namespace Tenant.Services
 {
-    public partial class InfraStoreImpl<TContext> : ICategoryStore
+    public partial class InfraStoreImpl<TContext> : ICategoryStore, ICategoryQueryableStore
     {
-        private DbSet<Category> Categories => Context.Set<Category>();
+        public IQueryable<Category> Categories => Context.Set<Category>();
 
         Task<Category> ICategoryStore.CreateAsync(Category entity) => CreateEntityAsync(entity);
 
