@@ -54,6 +54,25 @@ namespace SatelliteSite.StudentModule
                     .RequireThat(ctx => ctx.HttpContext.User.IsTenantAdmin());
             });
 
+            menus.Menu(MenuNameDefaults.DashboardNavbar, menu =>
+            {
+                menu.HasSubmenu(399, menu =>
+                {
+                    menu.HasLink("#")
+                        .HasTitle("fas fa-graduation-cap", "Schools")
+                        .RequireThat(c => c.HttpContext.User.IsTenantAdminOnly())
+                        .ActiveWhenController("Students,Classes");
+
+                    menu.HasEntry(0)
+                        .HasLink("Dashboard", "Students", "List")
+                        .HasTitle("fas fa-user-graduate fa-fw", "students");
+
+                    menu.HasEntry(1)
+                        .HasLink("Dashboard", "Classes", "List")
+                        .HasTitle("fas fa-school fa-fw", "student groups");
+                });
+            });
+
             menus.Menu(IdentityModule.ExtensionPointDefaults.UserDetailMenu, menu =>
             {
                 menu.HasEntry(100)

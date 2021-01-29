@@ -5,7 +5,7 @@
     var prefix = affiliation.Id + "_";
 }
 
-<h2 class="mt-2 mb-3">@ViewData["Title"]</h2>
+<h2 class="mt-2 mb-3">@ViewData["Title"] in @affiliation.Name</h2>
 
 <div class="d-none" id="paging">
     <pagination bs-current-page="Model.CurrentPage" bs-total-page="Model.TotalPage" />
@@ -73,4 +73,5 @@
 
 <p>
     <a asp-action="Add" class="btn btn-primary" data-toggle="ajaxWindow" data-target="addStud" title="add students"><i class="fas fa-plus"></i>&nbsp;Add</a>
+    <a asp-action="Switch" asp-controller="Tenants" asp-route-returnUrl="@Context.Request.Path.Value" class="btn btn-secondary" title="switch tenant"><i class="fas fa-globe-asia"></i>&nbsp;Switch tenant</a>
 </p>

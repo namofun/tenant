@@ -12,6 +12,14 @@ namespace SatelliteSite
     public static class TenantExtensions
     {
         /// <summary>
+        /// Whether the current user is only a tenent admin.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>The result.</returns>
+        public static bool IsTenantAdminOnly(this ClaimsPrincipal user)
+            => !user.IsInRole("Administrator") && user.HasClaim(c => c.Type == "tenant_admin");
+
+        /// <summary>
         /// Whether the current user is a tenent admin.
         /// </summary>
         /// <param name="user">The user.</param>

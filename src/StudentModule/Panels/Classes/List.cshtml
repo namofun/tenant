@@ -1,9 +1,10 @@
 ﻿@model List<Class>
 @{
     ViewData["Title"] = "Student Groups";
+    Affiliation affiliation = ViewBag.Affiliation;
 }
 
-<h2 class="mt-2 mb-3">@ViewData["Title"]</h2>
+<h2 class="mt-2 mb-3">@ViewData["Title"] in @affiliation.Name</h2>
 
 <div class="table-wrapper">
     <table class="data-table table table-sm table-striped" style="width:auto">
@@ -57,4 +58,5 @@
 
 <p>
     <a asp-action="Create" class="btn btn-primary" data-toggle="ajaxWindow" data-target="createGroup" title="create groups"><i class="fas fa-plus"></i>&nbsp;Create</a>
+    <a asp-action="Switch" asp-controller="Tenants" asp-route-returnUrl="@Context.Request.Path.Value" class="btn btn-secondary" title="switch tenant"><i class="fas fa-globe-asia"></i>&nbsp;Switch tenant</a>
 </p>
