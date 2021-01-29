@@ -48,7 +48,11 @@ namespace SatelliteSite.StudentModule.Dashboards
             }
             else
             {
-                HttpContext.Response.Cookies.Append(_cookieName, aff.Id.ToString());
+                HttpContext.Response.Cookies
+                    .Append(
+                        _cookieName,
+                        aff.Id.ToString(),
+                        new CookieBuilder { HttpOnly = true }.Build(HttpContext));
                 return Redirect(returnUrl);
             }
         }
