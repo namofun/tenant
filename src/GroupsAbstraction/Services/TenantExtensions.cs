@@ -22,8 +22,10 @@ namespace SatelliteSite
         /// <param name="user">The user.</param>
         /// <param name="affiliation">The tenant.</param>
         /// <returns>The result.</returns>
-        public static bool IsTenantAdmin(this ClaimsPrincipal user, Affiliation affiliation)
-            => user.IsInRole("Administrator") || user.HasClaim("tenant_admin", affiliation.Id.ToString());
+        public static bool IsTenantAdmin(this ClaimsPrincipal user, Affiliation? affiliation)
+            => affiliation != null
+                && (user.IsInRole("Administrator")
+                    || user.HasClaim("tenant_admin", affiliation.Id.ToString()));
 
         /// <summary>
         /// Create a claim for tenant admin.

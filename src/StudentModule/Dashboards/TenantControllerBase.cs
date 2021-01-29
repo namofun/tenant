@@ -13,7 +13,7 @@ namespace SatelliteSite.StudentModule.Dashboards
     public abstract class TenantControllerBase : ViewControllerBase
     {
         private Affiliation _affiliation;
-        private const string _cookieName = "TenantId";
+        protected const string _cookieName = ".AspNet.Tenant.CurrentTenant";
 
         protected Affiliation Affiliation => _affiliation;
 
@@ -21,16 +21,16 @@ namespace SatelliteSite.StudentModule.Dashboards
         {
             if (context.Controller != this) throw new NotImplementedException();
 
-            if (HttpContext.Session.GetInt32(_cookieName) is int tenantId)
+            if (HttpContext.Request.Cookies.TryGetValue(_cookieName, out var cookieValue)
+                && int.TryParse(cookieValue, out int tenantId))
             {
                 var service = HttpContext.RequestServices.GetRequiredService<IAffiliationStore>();
                 _affiliation = await service.FindAsync(tenantId);
-                // TODO: some permission check here.
             }
 
             var cad = (ControllerActionDescriptor)context.ActionDescriptor;
             var isSwitcher = cad.ControllerName == "Tenants" && cad.ActionName == "Switch";
-            if (_affiliation == null && !isSwitcher)
+            if (!isSwitcher && !User.IsTenantAdmin(_affiliation))
             {
                 var returnUrl = context.HttpContext.Request.Path.Value;
                 context.Result = RedirectToAction("Switch", "Tenants", new { returnUrl });

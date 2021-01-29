@@ -148,7 +148,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             await UserManager.UpdateAsync(user);
             await UserManager.RemoveFromRoleAsync(user, "Student");
             StatusMessage = $"Student ID {stuid} has been unlinked with u{user.Id}.";
-            await HttpContext.AuditAsync("unlinked", stud.Id, user == null ? null : $"u{user.Id}");
+            await HttpContext.AuditAsync("unlinked", stud.Id, $"u{user.Id}");
             return RedirectToAction(nameof(List), new { page });
         }
 
@@ -169,7 +169,7 @@ namespace SatelliteSite.StudentModule.Dashboards
                 user2.StudentVerified = true;
                 await UserManager.UpdateAsync(user);
                 await UserManager.AddToRoleAsync(user, "Student");
-                await HttpContext.AuditAsync("verified", stud.Id, user == null ? null : $"to u{user.Id}");
+                await HttpContext.AuditAsync("verified", stud.Id, $"to u{user.Id}");
             }
 
             StatusMessage = $"Marked {user.UserName} (u{user.Id}) as verified student.";
