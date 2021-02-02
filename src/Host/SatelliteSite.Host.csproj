@@ -7,14 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20201211073311_RemoveSolveRecordWithAffiliation.cs" />
-    <Compile Remove="Migrations\20201211073311_RemoveSolveRecordWithAffiliation.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="SatelliteSite.Substrate" Version="$(SubstrateVersion)" />
     <PackageReference Include="SatelliteSite.HostBuilder" Version="$(SubstrateVersion)" />
     <PackageReference Include="SatelliteSite.IdentityModule" Version="$(SubstrateVersion)" />
+    <PackageReference Include="SatelliteSite.TelemetryModule" Version="$(SubstrateVersion)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Bulk.SqlServer" Version="$(EFCoreBulkVersion)" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="$(AspNetCoreVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using SatelliteSite.IdentityModule.Entities;
 
@@ -24,8 +25,9 @@ namespace SatelliteSite
                 .AddModule<OjUpdateModule.OjUpdateModule<DefaultContext>>()
                 .AddModule<NewsModule.NewsModule<DefaultContext>>()
                 .AddModule<StudentModule.StudentModule<AspNetUser, Role, DefaultContext>>()
+                .AddModule<TelemetryModule.TelemetryModule>()
                 .AddModule<HostModule>()
-                .AddDatabaseMssql<DefaultContext>("UserDbConnection")
+                .AddDatabase<DefaultContext>((c, b) => b.UseSqlServer(c.GetConnectionString("UserDbConnection"), b => b.UseBulk()))
                 .ConfigureSubstrateDefaults<DefaultContext>();
     }
 }
