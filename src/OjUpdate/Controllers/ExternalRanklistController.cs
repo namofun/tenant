@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SatelliteSite.OjUpdateModule.Controllers
 {
     [Area("Tenant")]
-    [Authorize]
+    [Authorize(Policy = "ExternalRanklistReader")]
     public class ExternalRanklistController : ViewControllerBase
     {
         [HttpGet("/ranklist/{name}/{year?}")]

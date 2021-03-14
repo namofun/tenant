@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +34,14 @@ namespace SatelliteSite.OjUpdateModule
             services.AddHostedService<CfUpdateService>();
             services.AddHostedService<VjUpdateService>();
             services.AddDbModelSupplier<TContext, OjUpdateEntityConfiguration<TContext>>();
+
+            services.Configure<AuthorizationOptions>(options =>
+            {
+                if (options.GetPolicy("ExternalRanklistReader") == null)
+                {
+                    options.AddPolicy("ExternalRanklistReader", b => b.RequireAuthenticatedUser());
+                }
+            });
         }
 
         public override void RegisterEndpoints(IEndpointBuilder endpoints)
