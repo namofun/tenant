@@ -20,7 +20,7 @@
         <tbody>
             @foreach (var news in Model)
             {
-                <tr asp-area="Misc" asp-controller="Home" asp-action="News" asp-route-nid="@news.Id" data-toggle="gotoUrl" class="@(news.Active ? "" : "disabled")">
+                <tr asp-area="Tenant" asp-controller="News" asp-action="Show" asp-route-nid="@news.Id" data-toggle="gotoUrl" class="@(news.Active ? "" : "disabled")">
                     <td use-a>@news.Id</td>
                     <td use-a>@news.Title</td>
                     <td use-a>@Html.CstTime(news.LastUpdate)</td>
