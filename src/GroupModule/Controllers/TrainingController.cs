@@ -14,7 +14,6 @@ namespace SatelliteSite.GroupModule.Controllers
     [Area("Tenant")]
     [Authorize]
     [Route("teams")]
-    [AvailabilityModel]
     public class TrainingController : ViewControllerBase
     {
         private IUserManager UserManager { get; }

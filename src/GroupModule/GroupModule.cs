@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,13 @@ namespace SatelliteSite.GroupModule
                 newType = newType.MakeGenericType(userType, typeof(TContext));
                 services.Add(ServiceDescriptor.Scoped(typeof(IGroupStore), newType));
                 services.AddDbModelSupplier<TContext, TrainingTeamEntityConfiguration<TContext>>();
-                AvailabilityModelAttribute.Enabled = true;
+            }
+            else
+            {
+                services.AddSingleton(
+                    new FeatureAvailabilityConvention(
+                        false,
+                        typeof(Controllers.TrainingController)));
             }
         }
 
