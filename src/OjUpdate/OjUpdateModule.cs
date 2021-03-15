@@ -39,7 +39,7 @@ namespace SatelliteSite.OjUpdateModule
             {
                 if (options.GetPolicy("ExternalRanklistReader") == null)
                 {
-                    options.AddPolicy("ExternalRanklistReader", b => b.RequireAuthenticatedUser());
+                    options.AddPolicy("ExternalRanklistReader", b => b.RequireAssertion(_ => true));
                 }
             });
         }
