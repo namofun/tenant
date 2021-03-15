@@ -38,15 +38,16 @@ namespace SatelliteSite.OjUpdateModule.Services
         /// Create the solve records.
         /// </summary>
         /// <param name="records">The solve records.</param>
-        /// <returns>The task for creating, with the page.</returns>
+        /// <returns>The task for creating, returning the minimal record ID.</returns>
         Task<int> CreateAsync(List<SolveRecord> records);
 
         /// <summary>
         /// Update the solve record.
         /// </summary>
         /// <param name="record">The solve record.</param>
+        /// <param name="resultOnly">Whether to update the result only.</param>
         /// <returns>The task for updating.</returns>
-        Task UpdateAsync(SolveRecord record);
+        Task UpdateAsync(SolveRecord record, bool resultOnly);
 
         /// <summary>
         /// Delete the solve record.
@@ -80,20 +81,40 @@ namespace SatelliteSite.OjUpdateModule.Services
         public SolveRecordStore(TContext context)
         {
             Context = context;
-            context.ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         public Task<List<SolveRecord>> ListAsync(RecordType type)
         {
             return Context.Set<SolveRecord>()
                 .Where(s => s.Category == type)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
-        public Task UpdateAsync(SolveRecord record)
+        public Task UpdateAsync(SolveRecord record, bool resultOnly)
         {
-            Context.Set<SolveRecord>().Update(record);
-            return Context.SaveChangesAsync();
+            if (resultOnly)
+            {
+                return Context.Set<SolveRecord>()
+                    .Where(r => r.Id == record.Id)
+                    .BatchUpdateAsync(_ => new SolveRecord
+                    {
+                        Result = record.Result
+                    });
+            }
+            else
+            {
+                return Context.Set<SolveRecord>()
+                    .Where(r => r.Id == record.Id)
+                    .BatchUpdateAsync(_ => new SolveRecord
+                    {
+                        Account = record.Account,
+                        Category = record.Category,
+                        NickName = record.NickName,
+                        Grade = record.Grade,
+                        Result = null,
+                    });
+            }
         }
 
         public Task<List<OjAccount>> ListAsync(RecordType type, int? grade)
@@ -101,19 +122,22 @@ namespace SatelliteSite.OjUpdateModule.Services
             return Context.Set<SolveRecord>()
                 .Where(s => s.Category == type)
                 .WhereIf(grade.HasValue, s => s.Grade == grade)
-                .Select(s => new OjAccount(s))
+                .Select(s => new OjAccount(s.Account, s.NickName, s.Result, s.Grade))
                 .ToListAsync();
         }
 
         public Task<IPagedList<SolveRecord>> ListAsync(int currentPage, int takeCount)
         {
             return Context.Set<SolveRecord>()
+                .AsNoTracking()
+                .OrderBy(r => r.Id)
                 .ToPagedListAsync(currentPage, takeCount);
         }
 
         public Task<SolveRecord> FindAsync(int id)
         {
             return Context.Set<SolveRecord>()
+                .AsNoTracking()
                 .Where(s => s.Id == id)
                 .SingleOrDefaultAsync();
         }
@@ -127,7 +151,9 @@ namespace SatelliteSite.OjUpdateModule.Services
         public async Task<int> CreateAsync(List<SolveRecord> records)
         {
             if (records.Count == 0)
+            {
                 return await Context.Set<SolveRecord>().CountAsync();
+            }
 
             Context.Set<SolveRecord>().AddRange(records);
             await Context.SaveChangesAsync();

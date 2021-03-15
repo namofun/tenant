@@ -33,11 +33,19 @@ namespace SatelliteSite.OjUpdateModule.Models
         /// </summary>
         /// <param name="p">The solve record.</param>
         public OjAccount(SolveRecord p)
+            : this(p.Account, p.NickName, p.Result, p.Grade)
         {
-            Account = p.Account;
-            NickName = p.NickName;
-            Solved = p.Result;
-            Grade = p.Grade;
+        }
+
+        /// <summary>
+        /// Instantiate an <see cref="OjAccount"/>.
+        /// </summary>
+        public OjAccount(string account, string nickName, int? result, int grade)
+        {
+            Account = account;
+            NickName = nickName;
+            Solved = result;
+            Grade = grade;
         }
 
         /// <inheritdoc />

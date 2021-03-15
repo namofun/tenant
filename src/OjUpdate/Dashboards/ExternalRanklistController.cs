@@ -148,7 +148,7 @@ namespace SatelliteSite.OjUpdateModule.Dashboards
             item.Grade = model.Grade;
             item.NickName = model.NickName;
 
-            await Store.UpdateAsync(item);
+            await Store.UpdateAsync(item, resultOnly: false);
             StatusMessage = "Successfully updated.";
             return RedirectToAction(nameof(List), new { page });
         }

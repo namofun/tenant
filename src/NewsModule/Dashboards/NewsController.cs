@@ -1,7 +1,6 @@
 ﻿using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SatelliteSite.Entities;
 using SatelliteSite.NewsModule.Entities;
 using SatelliteSite.NewsModule.Models;
 using SatelliteSite.NewsModule.Services;

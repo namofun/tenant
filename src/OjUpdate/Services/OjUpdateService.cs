@@ -162,9 +162,13 @@ namespace SatelliteSite.OjUpdateModule.Services
             var conf = await registry.FindAsync(confName);
 
             if (conf == null)
+            {
                 Logger.LogError("No configuration added for OJ Update Service. Please check your migration.");
+            }
             else
+            {
                 LastUpdate = conf.Value.AsJson<DateTimeOffset?>();
+            }
         }
 
         /// <inheritdoc />
@@ -202,7 +206,7 @@ namespace SatelliteSite.OjUpdateModule.Services
                     foreach (var id in names)
                     {
                         await UpdateOne(httpClient, id, stoppingToken);
-                        await store.UpdateAsync(id);
+                        await store.UpdateAsync(id, resultOnly: true);
                     }
                 }
 
