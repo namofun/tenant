@@ -160,5 +160,24 @@ namespace Tenant.Services
                 .Select(c => new Class { AffiliationId = c.AffiliationId, Id = c.Id, Name = c.Affiliation.Name + " - " + c.Name })
                 .ToListAsync();
         }
+
+        public async Task<Class> CloneAsync(Class @class, string className)
+        {
+            var e = Classes.Add(new Class
+            {
+                Name = className,
+                AffiliationId = @class.AffiliationId,
+            });
+
+            await Context.SaveChangesAsync();
+            var @new = e.Entity;
+
+            await ClassStudents
+                .Where(cs => cs.ClassId == @class.Id)
+                .Select(cs => new ClassStudent { ClassId = @new.Id, StudentId = cs.StudentId })
+                .BatchInsertIntoAsync(ClassStudents);
+
+            return @new;
+        }
     }
 }

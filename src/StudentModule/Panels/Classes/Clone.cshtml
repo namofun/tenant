@@ -1,0 +1,21 @@
+﻿@model BatchAddModel
+@{
+    Layout = "_WindowLayout";
+    ViewData["Title"] = "Clone student groups";
+    ViewData["FormAjaxUpload"] = Url.Action("Clone");
+    Class from = ViewBag.Class;
+}
+
+<div class="text-danger" asp-validation-summary="All"></div>
+<div class="form-group">
+    <label id="old">Clone from</label>
+    <input id="old" class="form-control" readonly value="@from.Name" />
+</div>
+<div class="form-group">
+    <label asp-for="Batch">New student group name</label>
+    <input asp-for="Batch" autofocus required class="form-control" />
+</div>
+
+@section Footer {
+    <button type="submit" class="btn-primary btn">Clone</button>
+}

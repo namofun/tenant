@@ -66,6 +66,29 @@ namespace SatelliteSite.StudentModule.Dashboards
         }
 
 
+        [HttpGet("{clsid}/[action]")]
+        public async Task<IActionResult> Clone(int clsid)
+        {
+            var model = await Store.FindClassAsync(Affiliation, clsid);
+            if (model == null) return NotFound();
+            ViewBag.Class = model;
+
+            return Window(new BatchAddModel());
+        }
+
+
+        [HttpPost("{clsid}/[action]")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Clone(int clsid, BatchAddModel model)
+        {
+            var old = await Store.FindClassAsync(Affiliation, clsid);
+            if (old == null) return NotFound();
+
+            var @new = await Store.CloneAsync(old, model.Batch);
+            return RedirectToAction(nameof(Detail), new { clsid = @new.Id });
+        }
+
+
         [HttpGet("[action]")]
         public IActionResult Create()
         {

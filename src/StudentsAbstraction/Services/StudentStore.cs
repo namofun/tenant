@@ -102,6 +102,14 @@ namespace Tenant.Services
         Task DeleteAsync(Class @class);
 
         /// <summary>
+        /// Clone one class from store.
+        /// </summary>
+        /// <param name="class">The source class.</param>
+        /// <param name="className">The destination class name.</param>
+        /// <returns>The task for cloning classes.</returns>
+        Task<Class> CloneAsync(Class @class, string className);
+
+        /// <summary>
         /// Create a teaching class.
         /// </summary>
         /// <param name="affiliation">The affiliation.</param>
