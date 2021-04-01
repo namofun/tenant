@@ -28,11 +28,11 @@
 <h3 class="mt-4">Tenant Administrators</h3>
 
 <div class="table-wrapper">
-    <table class="data-table table table-sm table-striped" style="width:auto">
+    <table id="tenant-admins" class="data-table table table-sm table-striped" style="width:auto">
         <thead>
             <tr role="row">
-                <th scope="col" class="sortable searchable">ID</th>
-                <th scope="col" class="sortable searchable">name</th>
+                <th scope="col" style="min-width:3em" class="sortable searchable">ID</th>
+                <th scope="col" style="min-width:15em" class="sortable searchable">name</th>
                 <th><a asp-action="Assign" title="assign" data-toggle="ajaxWindow" data-target="assign" class="text-reset"><i class="fas fa-plus"></i></a></th>
             </tr>
         </thead>
@@ -40,13 +40,35 @@
             @foreach (var user in admin)
             {
                 <tr asp-area="Account" asp-controller="Profile" asp-action="Show" asp-route-username="@user.UserName" role="row" data-toggle="gotoUrl">
-                    <td use-a style="min-width:3em">u@(user.Id)</td>
-                    <td use-a style="min-width:15em">@user.UserName</td>
+                    <td use-a>u@(user.Id)</td>
+                    <td use-a>@user.UserName</td>
                     <td><a asp-action="Unassign" asp-route-userid="@user.Id" title="unassign" data-toggle="ajaxWindow" data-target="unassign"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+<script>
+    $().ready(function () {
+        $('#tenant-admins').DataTable({
+            "paging": false,
+            "searching": false,
+            "ordering": true,
+            "order": [],
+            "info": false,
+            "autoWidth": true,
+            "language": {
+                "searchPlaceholder": "filter table",
+                "search": "_INPUT_",
+            },
+            'aoColumnDefs': [
+                { aTargets: ['sortable'], bSortable: true },
+                { aTargets: ['searchable'], bSearchable: true },
+                { aTargets: ['_all'], bSortable: false, bSearchable: false }
+            ],
+        });
+    });
+</script>
 
 @await Menu.Extend(TenantDefaults.AffiliationAttach).RenderAsync(Component, new { aff = Model })
