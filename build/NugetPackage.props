@@ -4,8 +4,6 @@
 
   <PropertyGroup>
     <Description>UI kit for ASP.NET Core with moduling support. $(DescriptionAttach)</Description>
-    <AssemblyVersion>$(AspNetCoreVersion).0</AssemblyVersion>
-    <FileVersion>$(AspNetCoreVersion).0</FileVersion>
   </PropertyGroup>
 
 </Project>

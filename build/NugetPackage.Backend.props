@@ -4,8 +4,6 @@
 
   <PropertyGroup>
     <Description>Tenant support. $(DescriptionAttach)</Description>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
 </Project>
