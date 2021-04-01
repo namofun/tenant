@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SatelliteSite.Entities;
 using SatelliteSite.OjUpdateModule.Entities;
 using SatelliteSite.OjUpdateModule.Models;
 using SatelliteSite.OjUpdateModule.Services;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace SatelliteSite.OjUpdateModule.Dashboards
 {
     [Area("Dashboard")]
-    [Authorize(Roles = "Administrator,Teacher")]
+    [Authorize(Roles = "Administrator,TeamLeader")]
     [Route("[area]/[controller]")]
     [AuditPoint(AuditlogType.User)]
     public class ExternalRanklistController : ViewControllerBase

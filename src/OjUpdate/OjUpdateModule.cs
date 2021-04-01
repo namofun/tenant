@@ -8,6 +8,7 @@ using SatelliteSite;
 using SatelliteSite.OjUpdateModule.Services;
 using System;
 
+[assembly: RoleDefinition(17, "TeamLeader", "leader", "Team Leader")]
 [assembly: ConfigurationItem(0, "Tenant", "oj_Codeforces_update_time", typeof(DateTimeOffset?), null!, "Last update time of Codeforces.", IsPublic = false)]
 [assembly: ConfigurationItem(1, "Tenant", "oj_Vjudge_update_time", typeof(DateTimeOffset?), null!, "Last update time of Vjudge.", IsPublic = false)]
 [assembly: ConfigurationItem(2, "Tenant", "oj_Hdoj_update_time", typeof(DateTimeOffset?), null!, "Last update time of HDOJ.", IsPublic = false)]
@@ -56,7 +57,7 @@ namespace SatelliteSite.OjUpdateModule
                 menu.HasEntry(300)
                     .HasLink("Dashboard", "ExternalRanklist", "List")
                     .HasTitle(string.Empty, "External OJ Ranklist")
-                    .RequireRoles("Administrator,Teacher");
+                    .RequireRoles("Administrator,TeamLeader");
             });
         }
     }
