@@ -29,6 +29,11 @@ namespace Tenant.Entities
                 .HasForeignKey(e => e.AffiliationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            entity.HasMany<TUser>()
+                .WithOne()
+                .HasForeignKey(e => e.StudentId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             entity.Ignore(e => e.UserName);
             entity.Ignore(e => e.Email);
             entity.Ignore(e => e.UserId);
