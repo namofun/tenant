@@ -13,6 +13,8 @@
                 <th style="min-width:2em" scope="col" class="sortable searchable">ID</th>
                 <th style="min-width:10em" scope="col" class="sortable searchable">name</th>
                 <th style="min-width:3em" scope="col" class="sortable searchable">count</th>
+                <th style="min-width:6em" scope="col" class="sortable">create time</th>
+                <th style="min-width:4em" scope="col" class="sortable searchable">creator</th>
                 <th></th>
             </tr>
         </thead>
@@ -21,8 +23,10 @@
             {
                 <tr asp-action="Detail" asp-route-clsid="@stu.Id" role="row" data-toggle="gotoUrl">
                     <td use-a>@stu.Id</td>
-                    <td use-a>@stu.Name</td>
+                    <td use-a><i asp-show-if="@(!stu.UserId.HasValue)" class="fas fa-tag" title="Shared"></i> @stu.Name</td>
                     <td use-a>@stu.Count</td>
+                    <td use-a>@Html.CstTime(stu.CreationTime)</td>
+                    <td use-a>@(stu.UserName ?? "N/A")</td>
                     <td><a asp-action="Delete" asp-route-clsid="@stu.Id" title="delete this group" data-toggle="ajaxWindow" data-target="deleteGroup"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             }

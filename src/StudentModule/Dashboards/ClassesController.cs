@@ -73,18 +73,19 @@ namespace SatelliteSite.StudentModule.Dashboards
             if (model == null) return NotFound();
             ViewBag.Class = model;
 
-            return Window(new BatchAddModel());
+            return Window(new CreateClassModel());
         }
 
 
         [HttpPost("{clsid}/[action]")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Clone(int clsid, BatchAddModel model)
+        public async Task<IActionResult> Clone(int clsid, CreateClassModel model)
         {
             var old = await Store.FindClassAsync(Affiliation, clsid);
             if (old == null) return NotFound();
 
-            var @new = await Store.CloneAsync(old, model.Batch, null, null);
+            var userId = !model.IsShared ? int.Parse(User.GetUserId()) : default(int?);
+            var @new = await Store.CloneAsync(old, model.ClassName, userId, User.GetUserName());
             return RedirectToAction(nameof(Detail), new { clsid = @new.Id });
         }
 
@@ -92,19 +93,20 @@ namespace SatelliteSite.StudentModule.Dashboards
         [HttpGet("[action]")]
         public IActionResult Create()
         {
-            return Window(new BatchAddModel());
+            return Window(new CreateClassModel());
         }
 
 
         [HttpPost("[action]")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(BatchAddModel model)
+        public async Task<IActionResult> Create(CreateClassModel model)
         {
-            if (string.IsNullOrWhiteSpace(model.Batch))
+            if (string.IsNullOrWhiteSpace(model.ClassName))
                 ModelState.AddModelError("model", "Class Name should not be empty.");
             if (!ModelState.IsValid) return Window(model);
 
-            var cls = await Store.CreateAsync(Affiliation, model.Batch, null, null);
+            var userId = !model.IsShared ? int.Parse(User.GetUserId()) : default(int?);
+            var cls = await Store.CreateAsync(Affiliation, model.ClassName, userId, User.GetUserName());
             return RedirectToAction(nameof(Detail), new { clsid = cls.Id });
         }
 

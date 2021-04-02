@@ -1,4 +1,4 @@
-﻿@model BatchAddModel
+﻿@model CreateClassModel
 @{
     Layout = "_WindowLayout";
     ViewData["Title"] = "Clone student groups";
@@ -12,8 +12,14 @@
     <input id="old" class="form-control" readonly value="@from.Name" />
 </div>
 <div class="form-group">
-    <label asp-for="Batch">New student group name</label>
-    <input asp-for="Batch" autofocus required class="form-control" />
+    <label asp-for="ClassName">New student group name</label>
+    <input asp-for="ClassName" autofocus required class="form-control" />
+</div>
+<div class="form-group">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" asp-for="IsShared">
+        <label class="custom-control-label" asp-for="IsShared">Shared to other teachers</label>
+    </div>
 </div>
 
 @section Footer {
