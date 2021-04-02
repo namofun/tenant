@@ -3,6 +3,7 @@
     ViewData["Title"] = $"Group g{Model.Id}";
     IPagedList<Student> studs = ViewBag.Students;
     var prefix = Model.AffiliationId + "_";
+    int uid = int.Parse(User.GetUserId());
 }
 
 <h2 class="mt-2 mb-3">@ViewData["Title"]</h2>
@@ -22,7 +23,7 @@
 
 <p>
     <a asp-action="Clone" class="btn btn-info" data-toggle="ajaxWindow" data-target="cloneClass" title="clone class"><i class="fas fa-clone"></i>&nbsp;Clone</a>
-    <a asp-action="Delete" class="btn btn-danger" data-toggle="ajaxWindow" data-target="deleteClass" title="delete class"><i class="fas fa-trash-alt"></i>&nbsp;Delete</a>
+    <a asp-show-if="@(Model.UserId == null || Model.UserId == uid)" asp-action="Delete" class="btn btn-danger" data-toggle="ajaxWindow" data-target="deleteClass" title="delete class"><i class="fas fa-trash-alt"></i>&nbsp;Delete</a>
 </p>
 
 <h3 class="mt-3">Students in g@(Model.Id)</h3>
@@ -87,6 +88,6 @@
     });
 </script>
 
-<p>
+<p asp-show-if="@(Model.UserId == null || Model.UserId == uid)">
     <a asp-action="Add" class="btn btn-primary" data-toggle="ajaxWindow" data-target="addStud" title="add students"><i class="fas fa-plus"></i>&nbsp;Add</a>
 </p>

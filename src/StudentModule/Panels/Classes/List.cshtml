@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Student Groups";
     Affiliation affiliation = ViewBag.Affiliation;
+    bool all = ViewBag.ShowAll;
+    int uid = int.Parse(User.GetUserId());
 }
 
 <h2 class="mt-2 mb-3">@ViewData["Title"] in @affiliation.Name</h2>
@@ -27,7 +29,7 @@
                     <td use-a>@stu.Count</td>
                     <td use-a>@Html.CstTime(stu.CreationTime)</td>
                     <td use-a>@(stu.UserName ?? "N/A")</td>
-                    <td><a asp-action="Delete" asp-route-clsid="@stu.Id" title="delete this group" data-toggle="ajaxWindow" data-target="deleteGroup"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><a asp-show-if="@(stu.UserId == null || stu.UserId == uid)" asp-action="Delete" asp-route-clsid="@stu.Id" title="delete this group" data-toggle="ajaxWindow" data-target="deleteGroup"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             }
         </tbody>
@@ -38,15 +40,23 @@
     .text-decoration-del { text-decoration: line-through; }
 </style>
 
+<div class="d-none" id="all-switcher-src">
+    <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+        <a asp-route-all="false" class="btn btn-outline-secondary @(all ? "" : "active")">Only Mine</a>
+        <a asp-route-all="true" class="btn btn-outline-secondary @(all ? "active" : "")">All</a>
+    </div>
+</div>
+
 <script>
     $().ready(function () {
         $('.data-table').DataTable({
             "paging": false,
             "searching": true,
             "ordering": true,
-            "order": [[0, 'asc']],
+            "order": [[0, 'desc']],
             "info": false,
             "autoWidth": true,
+            "dom": "<'row'<'#all-switcher.col-sm-12 col-md-6'><'col-sm-12 col-md-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
             "language": {
                 "searchPlaceholder": "filter table",
                 "search": "_INPUT_",
@@ -57,6 +67,8 @@
                 { aTargets: ['_all'], bSortable: false, bSearchable: false }
             ],
         });
+
+        $('#all-switcher').html($('#all-switcher-src').html())
     });
 </script>
 

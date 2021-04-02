@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Tenant.Entities;
 
 namespace Tenant.Services
@@ -43,5 +45,17 @@ namespace Tenant.Services
         public static IStudentQueryableStore GetQueryableStore(this IStudentStore store)
             => store as IStudentQueryableStore
                 ?? throw new InvalidOperationException("This store is not a IQueryable store.");
+
+        /// <summary>
+        /// List teaching classes via affiliation.
+        /// </summary>
+        /// <param name="store">The <see cref="IStudentStore"/>.</param>
+        /// <param name="affiliation">The affiliation.</param>
+        /// <param name="filters">The filters on classes.</param>
+        /// <returns>The task for fetching teaching classes.</returns>
+        public static Task<List<Class>> ListClassesAsync(this IStudentStore store, Affiliation affiliation, int? filters)
+            => filters == null
+                ? store.ListClassesAsync(affiliation)
+                : store.ListClassesAsync(affiliation, c => c.UserId == null || c.UserId == filters);
     }
 }
