@@ -84,7 +84,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             var old = await Store.FindClassAsync(Affiliation, clsid);
             if (old == null) return NotFound();
 
-            var @new = await Store.CloneAsync(old, model.Batch);
+            var @new = await Store.CloneAsync(old, model.Batch, null, null);
             return RedirectToAction(nameof(Detail), new { clsid = @new.Id });
         }
 
@@ -104,7 +104,7 @@ namespace SatelliteSite.StudentModule.Dashboards
                 ModelState.AddModelError("model", "Class Name should not be empty.");
             if (!ModelState.IsValid) return Window(model);
 
-            var cls = await Store.CreateAsync(Affiliation, model.Batch);
+            var cls = await Store.CreateAsync(Affiliation, model.Batch, null, null);
             return RedirectToAction(nameof(Detail), new { clsid = cls.Id });
         }
 

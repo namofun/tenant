@@ -54,6 +54,14 @@ namespace Tenant.Entities
                 .HasForeignKey(e => e.AffiliationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            entity.Property(e => e.UserName)
+                .HasMaxLength(128);
+
+            entity.HasOne<TUser>()
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             entity.Ignore(e => e.Count);
         }
 

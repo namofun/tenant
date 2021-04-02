@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tenant.Entities;
 
@@ -32,15 +34,17 @@ namespace Tenant.Services
         /// List teaching classes via affiliation.
         /// </summary>
         /// <param name="affiliation">The affiliation.</param>
+        /// <param name="filters">The filters on classes.</param>
         /// <returns>The task for fetching teaching classes.</returns>
-        Task<List<Class>> ListClassesAsync(Affiliation affiliation);
+        Task<List<Class>> ListClassesAsync(Affiliation affiliation, Expression<Func<Class, bool>>? filters = null);
 
         /// <summary>
         /// List teaching classes via affiliation IDs.
         /// </summary>
         /// <param name="affiliationIds">The affiliation IDs.</param>
+        /// <param name="filters">The filters on classes.</param>
         /// <returns>The task for fetching teaching classes.</returns>
-        Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds);
+        Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds, Expression<Func<Class, bool>>? filters = null);
 
         /// <summary>
         /// List all students from teaching class.
@@ -106,16 +110,20 @@ namespace Tenant.Services
         /// </summary>
         /// <param name="class">The source class.</param>
         /// <param name="className">The destination class name.</param>
+        /// <param name="userId">The creator user ID.</param>
+        /// <param name="userName">The creator user name.</param>
         /// <returns>The task for cloning classes.</returns>
-        Task<Class> CloneAsync(Class @class, string className);
+        Task<Class> CloneAsync(Class @class, string className, int? userId, string? userName);
 
         /// <summary>
         /// Create a teaching class.
         /// </summary>
         /// <param name="affiliation">The affiliation.</param>
         /// <param name="className">The class name.</param>
+        /// <param name="userId">The creator user ID.</param>
+        /// <param name="userName">The creator user name.</param>
         /// <returns>The task for creating class.</returns>
-        Task<Class> CreateAsync(Affiliation affiliation, string className);
+        Task<Class> CreateAsync(Affiliation affiliation, string className, int? userId, string? userName);
 
         /// <summary>
         /// Batch add students to the class.

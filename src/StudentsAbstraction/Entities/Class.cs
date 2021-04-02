@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Tenant.Entities
 {
@@ -21,6 +22,22 @@ namespace Tenant.Entities
         /// The teaching class name
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The creation time of class
+        /// </summary>
+        public DateTimeOffset CreationTime { get; set; }
+
+        /// <summary>
+        /// The user ID of creator
+        /// </summary>
+        /// <remarks><c>null</c> when this is publicly visible.</remarks>
+        public int? UserId { get; set; }
+
+        /// <summary>
+        /// The user name of creator
+        /// </summary>
+        public string? UserName { get; set; }
 
         /// <summary>
         /// [Ignore] The count of students

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tenant.Entities;
 
@@ -35,11 +37,21 @@ namespace Tenant.Services
                 .ToListAsync();
         }
 
-        public Task<List<Class>> ListClassesAsync(Affiliation affiliation)
+        public Task<List<Class>> ListClassesAsync(Affiliation affiliation, Expression<Func<Class, bool>>? filters = null)
         {
             return Classes
                 .Where(c => c.AffiliationId == affiliation.Id)
-                .Select(c => new Class { AffiliationId = c.AffiliationId, Count = c.Students.Count, Id = c.Id, Name = c.Name })
+                .WhereIf(filters != null, filters)
+                .Select(c => new Class
+                {
+                    AffiliationId = c.AffiliationId,
+                    Count = c.Students.Count,
+                    Id = c.Id,
+                    Name = c.Name,
+                    CreationTime = c.CreationTime,
+                    UserId = c.UserId,
+                    UserName = c.UserName,
+                })
                 .ToListAsync();
         }
 
@@ -102,13 +114,16 @@ namespace Tenant.Services
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<Class> CreateAsync(Affiliation affiliation, string className)
+        public async Task<Class> CreateAsync(Affiliation affiliation, string className, int? userId, string? userName)
         {
             var e = Classes.Add(new Class
             {
                 Name = className,
                 AffiliationId = affiliation.Id,
+                CreationTime = DateTimeOffset.Now,
                 Affiliation = affiliation,
+                UserId = userId,
+                UserName = userName,
             });
 
             await Context.SaveChangesAsync();
@@ -153,20 +168,31 @@ namespace Tenant.Services
             return (result.a, result.s);
         }
 
-        public Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds)
+        public Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds, Expression<Func<Class, bool>>? filters = null)
         {
             return Classes
-                .Where(c => affiliationIds.Contains(c.AffiliationId))
-                .Select(c => new Class { AffiliationId = c.AffiliationId, Id = c.Id, Name = c.Affiliation.Name + " - " + c.Name })
+                .WhereIf(affiliationIds != null, c => affiliationIds.Contains(c.AffiliationId))
+                .WhereIf(filters != null, filters)
+                .Select(c => new Class
+                {
+                    AffiliationId = c.AffiliationId,
+                    Id = c.Id,
+                    Name = c.Affiliation.Name + " - " + c.Name,
+                    UserId = c.UserId,
+                    UserName = c.UserName,
+                })
                 .ToListAsync();
         }
 
-        public async Task<Class> CloneAsync(Class @class, string className)
+        public async Task<Class> CloneAsync(Class @class, string className, int? userId, string? userName)
         {
             var e = Classes.Add(new Class
             {
                 Name = className,
                 AffiliationId = @class.AffiliationId,
+                CreationTime = DateTimeOffset.Now,
+                UserId = userId,
+                UserName = userName,
             });
 
             await Context.SaveChangesAsync();
