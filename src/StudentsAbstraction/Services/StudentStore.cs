@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tenant.Entities;
@@ -148,5 +149,19 @@ namespace Tenant.Services
         /// <param name="student">The student.</param>
         /// <returns>Task for checking whether kick succeeded.</returns>
         Task<bool> KickAsync(Class @class, Student student);
+
+        /// <summary>
+        /// Lists the administrators by affiliation.
+        /// </summary>
+        /// <param name="affiliation">The affiliation entity.</param>
+        /// <returns>The user-role lookup.</returns>
+        Task<IReadOnlyList<IUser>> GetAdministratorsAsync(Affiliation affiliation);
+
+        /// <summary>
+        /// Lists the roles of administrators by affiliation.
+        /// </summary>
+        /// <param name="affiliation">The affiliation entity.</param>
+        /// <returns>The role lookup.</returns>
+        Task<ILookup<int, string>> GetAdministratorRolesAsync(Affiliation affiliation);
     }
 }

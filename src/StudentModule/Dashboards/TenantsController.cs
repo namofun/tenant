@@ -10,17 +10,24 @@ namespace SatelliteSite.StudentModule.Dashboards
 {
     [Area("Dashboard")]
     [Authorize(Policy = "TenantAdmin")]
-    [Route("[area]/affiliations/tenant-switch")]
     public class TenantsController : TenantControllerBase
     {
-        private IAffiliationStore Store { get; }
-        public TenantsController(IAffiliationStore store) => Store = store;
-
-
-        [HttpGet]
-        public async Task<IActionResult> Switch(string returnUrl)
+        [HttpGet("/[area]/affiliations/current")]
+        public async Task<IActionResult> Current(
+            [FromServices] IStudentStore store)
         {
-            var affs = await Store.ListAsync();
+            ViewBag.Administrators = await store.GetAdministratorsAsync(Affiliation);
+            ViewBag.UserRoles = await store.GetAdministratorRolesAsync(Affiliation);
+            return View(Affiliation);
+        }
+
+
+        [HttpGet("/[area]/affiliations/tenant-switch")]
+        public async Task<IActionResult> Switch(
+            string returnUrl,
+            [FromServices] IAffiliationStore store)
+        {
+            var affs = await store.ListAsync();
 
             if (!User.IsInRole("Administrator"))
             {
@@ -33,13 +40,14 @@ namespace SatelliteSite.StudentModule.Dashboards
         }
 
 
-        [HttpPost]
+        [HttpPost("/[area]/affiliations/tenant-switch")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Switch(
             [Required] string returnUrl,
-            [Required] int tenantId)
+            [Required] int tenantId,
+            [FromServices] IAffiliationStore store)
         {
-            var aff = await Store.FindAsync(tenantId);
+            var aff = await store.FindAsync(tenantId);
 
             if (!User.IsTenantAdmin(aff))
             {

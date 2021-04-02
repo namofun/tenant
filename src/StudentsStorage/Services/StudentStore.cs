@@ -9,8 +9,9 @@ using Tenant.Entities;
 
 namespace Tenant.Services
 {
-    public class StudentStore<TUser, TContext> : IStudentStore, IStudentQueryableStore
+    public class StudentStore<TUser, TRole, TContext> : IStudentStore, IStudentQueryableStore
         where TUser : class, IUserWithStudent
+        where TRole : class, IRole
         where TContext : DbContext
     {
         public TContext Context { get; }
@@ -204,6 +205,26 @@ namespace Tenant.Services
                 .BatchInsertIntoAsync(ClassStudents);
 
             return @new;
+        }
+
+        public async Task<IReadOnlyList<IUser>> GetAdministratorsAsync(Affiliation affiliation)
+        {
+            var claimValue = affiliation.Id.ToString();
+            return await Context.Set<IdentityUserClaim<int>>()
+                .Where(c => c.ClaimType == "tenant_admin" && c.ClaimValue == claimValue)
+                .Join(Users, c => c.UserId, u => u.Id, (c, u) => u)
+                .ToListAsync();
+        }
+
+        public Task<ILookup<int, string>> GetAdministratorRolesAsync(Affiliation affiliation)
+        {
+            var claimValue = affiliation.Id.ToString();
+            return Context.Set<IdentityUserClaim<int>>()
+                .Where(c => c.ClaimType == "tenant_admin" && c.ClaimValue == claimValue)
+                .Join(Users, c => c.UserId, u => u.Id, (c, u) => u)
+                .Join(Context.Set<IdentityUserRole<int>>(), u => u.Id, ur => ur.UserId, (u, ur) => ur)
+                .Join(Context.Set<TRole>(), ur => ur.RoleId, r => r.Id, (ur, r) => new { ur.UserId, r.Name, r.ShortName })
+                .ToLookupAsync(k => k.UserId, v => v.Name);
         }
     }
 }

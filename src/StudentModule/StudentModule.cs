@@ -29,7 +29,7 @@ namespace SatelliteSite.StudentModule
         public override void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbModelSupplier<TContext, StudentEntityConfiguration<TUser, TContext>>();
-            services.AddScoped<IStudentStore, StudentStore<TUser, TContext>>();
+            services.AddScoped<IStudentStore, StudentStore<TUser, TRole, TContext>>();
             services.AddScoped<IUserClaimsProvider, StudentTenantClaimsProvider>();
             services.AddStudentEmailTokenProvider<TUser>();
         }
