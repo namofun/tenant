@@ -72,7 +72,11 @@ namespace SatelliteSite.StudentModule.Controllers
             if (user.StudentId != null)
             {
                 var list = user.StudentId.Split('_');
-                aff = affiliations.FirstOrDefault(a => a.Id.ToString() == list[0]);
+                if (int.TryParse(list[0], out int affId))
+                {
+                    aff = await _affiliationStore.FindAsync(affId);
+                }
+
                 rawStudId = list[1];
                 if (aff == null) throw new ApplicationException("Unknown foreign key configured.");
                 student = await _studentStore.FindStudentAsync(aff, rawStudId);
@@ -159,14 +163,20 @@ namespace SatelliteSite.StudentModule.Controllers
         }
 
 
-        [HttpGet("/profile/{username}/send-student-email")]
+        [HttpPost("/profile/{username}/send-student-email")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendStudentEmail(string username)
         {
             var user = await GetUserAsync();
             if (!user.HasUserName(username)) return NotFound();
 
-            if (user.StudentId == null)
+            if (user.StudentVerified)
+            {
+                StatusMessage = "Student already verified.";
+                return RedirectToAction(nameof(Main));
+            }
+
+            if (user.StudentEmail == null)
             {
                 StatusMessage = "Error no student email set.";
                 return RedirectToAction(nameof(Main));
