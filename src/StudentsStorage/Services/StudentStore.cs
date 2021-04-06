@@ -232,6 +232,7 @@ namespace Tenant.Services
             return Classes
                 .Where(c => c.AffiliationId == affiliation.Id)
                 .WhereIf(filters != null, filters)
+                .OrderByDescending(c => c.Id)
                 .Select(c => new Class
                 {
                     AffiliationId = c.AffiliationId,
@@ -250,6 +251,7 @@ namespace Tenant.Services
             return Classes
                 .WhereIf(affiliationIds != null, c => affiliationIds.Contains(c.AffiliationId))
                 .WhereIf(filters != null, filters)
+                .OrderByDescending(c => c.Id)
                 .Select(c => new Class
                 {
                     AffiliationId = c.AffiliationId,

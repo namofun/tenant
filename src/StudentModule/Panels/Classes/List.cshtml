@@ -1,4 +1,4 @@
-﻿@model List<Class>
+﻿@model IPagedList<Class>
 @{
     ViewData["Title"] = "Student Groups";
     Affiliation affiliation = ViewBag.Affiliation;
@@ -41,22 +41,28 @@
 </style>
 
 <div class="d-none" id="all-switcher-src">
-    <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-        <a asp-route-all="false" class="btn btn-outline-secondary @(all ? "" : "active")">Only Mine</a>
-        <a asp-route-all="true" class="btn btn-outline-secondary @(all ? "active" : "")">All</a>
+    <div class="text-right">
+        <div class="btn-group btn-group-sm btn-group-toggle text-left" data-toggle="buttons">
+            <a asp-route-all="false" class="btn btn-outline-secondary @(all ? "" : "active")">Only Mine</a>
+            <a asp-route-all="true" class="btn btn-outline-secondary @(all ? "active" : "")">All</a>
+        </div>
     </div>
+</div>
+
+<div class="d-none" id="pager-src">
+    <pagination class="mb-1" bs-current-page="Model.CurrentPage" bs-total-page="Model.TotalPage" />
 </div>
 
 <script>
     $().ready(function () {
         $('.data-table').DataTable({
             "paging": false,
-            "searching": true,
+            "searching": false,
             "ordering": true,
             "order": [[0, 'desc']],
             "info": false,
             "autoWidth": true,
-            "dom": "<'row'<'#all-switcher.col-sm-12 col-md-6'><'col-sm-12 col-md-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            "dom": "<'row'<'#pager.col-sm-12 col-md-6'p><'#all-switcher.col-sm-12 col-md-6'>><'row'<'col-sm-12'tr>><'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'f>>",
             "language": {
                 "searchPlaceholder": "filter table",
                 "search": "_INPUT_",
@@ -68,7 +74,8 @@
             ],
         });
 
-        $('#all-switcher').html($('#all-switcher-src').html())
+        $('#all-switcher').html($('#all-switcher-src').html());
+        $('#pager').html($('#pager-src').html());
     });
 </script>
 

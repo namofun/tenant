@@ -21,11 +21,12 @@ namespace SatelliteSite.StudentModule.Dashboards
 
 
         [HttpGet]
-        public async Task<IActionResult> List(bool all = false)
+        public async Task<IActionResult> List(int page = 1, bool all = false)
         {
+            if (page <= 0) return BadRequest();
             ViewBag.ShowAll = all;
             var userId = all ? default(int?) : int.Parse(User.GetUserId());
-            var model = await Store.ListClassesAsync(Affiliation, userId);
+            var model = await Store.ListClassesAsync(Affiliation, page, 20, userId);
             return View(model);
         }
 
