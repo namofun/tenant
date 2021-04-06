@@ -48,6 +48,26 @@ namespace Tenant.Services
         Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds, Expression<Func<Class, bool>>? filters = null);
 
         /// <summary>
+        /// List teaching classes via affiliation.
+        /// </summary>
+        /// <param name="affiliation">The affiliation.</param>
+        /// <param name="page">The current page.</param>
+        /// <param name="pageCount">The count per page.</param>
+        /// <param name="filters">The filters on classes.</param>
+        /// <returns>The task for fetching teaching classes.</returns>
+        Task<IPagedList<Class>> ListClassesAsync(Affiliation affiliation, int page, int pageCount, Expression<Func<Class, bool>>? filters = null);
+
+        /// <summary>
+        /// List teaching classes via affiliation IDs.
+        /// </summary>
+        /// <param name="affiliationIds">The affiliation IDs.</param>
+        /// <param name="page">The current page.</param>
+        /// <param name="pageCount">The count per page.</param>
+        /// <param name="filters">The filters on classes.</param>
+        /// <returns>The task for fetching teaching classes.</returns>
+        Task<IPagedList<Class>> ListClassesAsync(IEnumerable<int> affiliationIds, int page, int pageCount, Expression<Func<Class, bool>>? filters = null);
+
+        /// <summary>
         /// List all students from teaching class.
         /// </summary>
         /// <param name="class">The teaching class.</param>

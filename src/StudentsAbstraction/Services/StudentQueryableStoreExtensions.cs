@@ -57,5 +57,19 @@ namespace Tenant.Services
             => filters == null
                 ? store.ListClassesAsync(affiliation)
                 : store.ListClassesAsync(affiliation, c => c.UserId == null || c.UserId == filters);
+
+        /// <summary>
+        /// List teaching classes via affiliation.
+        /// </summary>
+        /// <param name="store">The <see cref="IStudentStore"/>.</param>
+        /// <param name="affiliation">The affiliation.</param>
+        /// <param name="page">The current page.</param>
+        /// <param name="pageCount">The count per page.</param>
+        /// <param name="filters">The filters on classes.</param>
+        /// <returns>The task for fetching teaching classes.</returns>
+        public static Task<IPagedList<Class>> ListClassesAsync(this IStudentStore store, Affiliation affiliation, int page, int pageCount, int? filters)
+            => filters == null
+                ? store.ListClassesAsync(affiliation, page, pageCount)
+                : store.ListClassesAsync(affiliation, page, pageCount, c => c.UserId == null || c.UserId == filters);
     }
 }

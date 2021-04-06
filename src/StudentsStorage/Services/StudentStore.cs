@@ -226,5 +226,39 @@ namespace Tenant.Services
                 .Join(Context.Set<TRole>(), ur => ur.RoleId, r => r.Id, (ur, r) => new { ur.UserId, r.Name, r.ShortName })
                 .ToLookupAsync(k => k.UserId, v => v.Name);
         }
+
+        public Task<IPagedList<Class>> ListClassesAsync(Affiliation affiliation, int page, int pageCount, Expression<Func<Class, bool>>? filters = null)
+        {
+            return Classes
+                .Where(c => c.AffiliationId == affiliation.Id)
+                .WhereIf(filters != null, filters)
+                .Select(c => new Class
+                {
+                    AffiliationId = c.AffiliationId,
+                    Count = c.Students.Count,
+                    Id = c.Id,
+                    Name = c.Name,
+                    CreationTime = c.CreationTime,
+                    UserId = c.UserId,
+                    UserName = c.UserName,
+                })
+                .ToPagedListAsync(page, pageCount);
+        }
+
+        public Task<IPagedList<Class>> ListClassesAsync(IEnumerable<int> affiliationIds, int page, int pageCount, Expression<Func<Class, bool>>? filters = null)
+        {
+            return Classes
+                .WhereIf(affiliationIds != null, c => affiliationIds.Contains(c.AffiliationId))
+                .WhereIf(filters != null, filters)
+                .Select(c => new Class
+                {
+                    AffiliationId = c.AffiliationId,
+                    Id = c.Id,
+                    Name = c.Affiliation.Name + " - " + c.Name,
+                    UserId = c.UserId,
+                    UserName = c.UserName,
+                })
+                .ToPagedListAsync(page, pageCount);
+        }
     }
 }
