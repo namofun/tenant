@@ -13,11 +13,14 @@ namespace SatelliteSite.StudentModule.Dashboards
     [Area("Dashboard")]
     [Authorize(Policy = "TenantAdmin")]
     [Route("[area]/[controller]")]
+    [AuditPoint(AuditlogType.Student)]
     public class ClassesController : TenantControllerBase
     {
         private const int ItemPerPage = 50;
         private IStudentStore Store { get; }
         public ClassesController(IStudentStore store) => Store = store;
+        private bool ValidateClass(Tenant.Entities.Class @class) =>
+            @class.UserId == null || @class.UserId == int.Parse(User.GetUserId());
 
 
         [HttpGet]
@@ -35,6 +38,7 @@ namespace SatelliteSite.StudentModule.Dashboards
         public async Task<IActionResult> Delete(int clsid)
         {
             var model = await Store.FindClassAsync(Affiliation, clsid);
+            if (!ValidateClass(model)) return NotFound();
             if (model == null) return NotFound();
 
             return AskPost(
@@ -50,9 +54,11 @@ namespace SatelliteSite.StudentModule.Dashboards
         public async Task<IActionResult> Delete(int clsid, bool post = true)
         {
             var @class = await Store.FindClassAsync(Affiliation, clsid);
+            if (!ValidateClass(@class)) return NotFound();
             if (@class == null) return NotFound();
 
             await Store.DeleteAsync(@class);
+            await HttpContext.AuditAsync("delete", null, $"class {clsid}");
             return RedirectToAction(nameof(List));
         }
 
@@ -89,6 +95,7 @@ namespace SatelliteSite.StudentModule.Dashboards
 
             var userId = !model.IsShared ? int.Parse(User.GetUserId()) : default(int?);
             var @new = await Store.CloneAsync(old, model.ClassName, userId, User.GetUserName());
+            await HttpContext.AuditAsync("cloned class", null, $"from {clsid} to {@new.Id}");
             return RedirectToAction(nameof(Detail), new { clsid = @new.Id });
         }
 
@@ -110,6 +117,7 @@ namespace SatelliteSite.StudentModule.Dashboards
 
             var userId = !model.IsShared ? int.Parse(User.GetUserId()) : default(int?);
             var cls = await Store.CreateAsync(Affiliation, model.ClassName, userId, User.GetUserName());
+            await HttpContext.AuditAsync("created class", null, $"class {cls.Id}");
             return RedirectToAction(nameof(Detail), new { clsid = cls.Id });
         }
 
@@ -156,6 +164,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             }
 
             await Store.MergeAsync(@class, intersects);
+            await HttpContext.AuditAsync("joined", "# of " + intersects.Count, $"class {clsid}");
 
             if (ModelState.IsValid)
             {
@@ -176,6 +185,7 @@ namespace SatelliteSite.StudentModule.Dashboards
         public async Task<IActionResult> Kick(int clsid, string stuid)
         {
             var model = await Store.FindClassAsync(Affiliation, clsid);
+            if (!ValidateClass(model)) return NotFound();
             var stud = await Store.FindStudentAsync(Affiliation, stuid);
             if (model == null || stud == null) return NotFound();
 
@@ -192,12 +202,19 @@ namespace SatelliteSite.StudentModule.Dashboards
         public async Task<IActionResult> Kick(int clsid, string stuid, bool post = true)
         {
             var @class = await Store.FindClassAsync(Affiliation, clsid);
+            if (!ValidateClass(@class)) return NotFound();
             var stud = await Store.FindStudentAsync(Affiliation, stuid);
 
             if (await Store.KickAsync(@class, stud))
+            {
+                await HttpContext.AuditAsync("be kicked", stud.Id, $"from {clsid}");
                 StatusMessage = $"Kicked student {stuid} from group g{clsid}.";
+            }
             else
+            {
                 StatusMessage = "Error occurred when kicking student.";
+            }
+
             return RedirectToAction(nameof(Detail));
         }
     }

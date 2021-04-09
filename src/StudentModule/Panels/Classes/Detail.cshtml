@@ -50,7 +50,7 @@
                     <td>@stuid</td>
                     <td>@stu.Name</td>
                     <td class="@(stu.IsVerified.GetValueOrDefault() ? "" : "text-decoration-del")" use-a>@stu.UserName</td>
-                    <td><a asp-action="Kick" asp-route-stuid="@stuid" title="kick this student from this group" data-toggle="ajaxWindow" data-target="deleteStud"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><a asp-show-if="@(Model.UserId == null || Model.UserId == uid)" asp-action="Kick" asp-route-stuid="@stuid" title="kick this student from this group" data-toggle="ajaxWindow" data-target="deleteStud"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             }
         </tbody>
