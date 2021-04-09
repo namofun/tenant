@@ -60,7 +60,13 @@ namespace SatelliteSite.StudentModule.Dashboards
                     .Append(
                         _cookieName,
                         aff.Id.ToString(),
-                        new CookieBuilder { HttpOnly = true }.Build(HttpContext));
+                        new CookieBuilder
+                        {
+                            HttpOnly = true,
+                            SameSite = SameSiteMode.Lax
+                        }
+                        .Build(HttpContext));
+
                 return Redirect(returnUrl);
             }
         }
