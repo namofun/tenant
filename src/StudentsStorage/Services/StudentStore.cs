@@ -92,6 +92,7 @@ namespace Tenant.Services
 
         public Task<int> MergeAsync(Affiliation affiliation, Dictionary<string, string> students)
         {
+            if (students.Count == 0) return Task.FromResult(0);
             return Students.UpsertAsync(
                 sources: students.Select(s => new { Id = $"{affiliation.Id}_{s.Key.Trim()}", Name = s.Value.Trim(), Aff = affiliation.Id }),
                 insertExpression: s => new Student { Id = s.Id, Name = s.Name, AffiliationId = s.Aff },
@@ -135,6 +136,7 @@ namespace Tenant.Services
 
         public Task<int> MergeAsync(Class @class, List<string> students)
         {
+            if (students.Count == 0) return Task.FromResult(0);
             return ClassStudents.UpsertAsync(
                 sources: students.Select(s => new { ClassId = @class.Id, StudentId = $"{@class.AffiliationId}_{s}" }),
                 insertExpression: s => new ClassStudent { StudentId = s.StudentId, ClassId = s.ClassId });
