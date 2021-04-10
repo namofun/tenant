@@ -7,6 +7,7 @@ namespace Tenant.Entities
     public class StudentEntityConfiguration<TUser, TContext> :
         EntityTypeConfigurationSupplier<TContext>,
         IEntityTypeConfiguration<Student>,
+        IEntityTypeConfiguration<VerifyCode>,
         IEntityTypeConfiguration<Class>,
         IEntityTypeConfiguration<ClassStudent>
         where TUser : User, IUserWithStudent
@@ -80,6 +81,29 @@ namespace Tenant.Entities
                 .WithMany(e => e.Students)
                 .HasForeignKey(e => e.ClassId)
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        public void Configure(EntityTypeBuilder<VerifyCode> entity)
+        {
+            entity.ToTable("TenantVerifyCodes");
+
+            entity.HasKey(e => e.Id);
+
+            entity.HasOne<Affiliation>()
+                .WithMany()
+                .HasForeignKey(e => e.AffiliationId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(e => e.Code);
+
+            entity.Property(e => e.Code)
+                .HasMaxLength(8)
+                .IsUnicode(false);
+
+            entity.HasOne<TUser>()
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

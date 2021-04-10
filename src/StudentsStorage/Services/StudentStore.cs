@@ -18,11 +18,13 @@ namespace Tenant.Services
         private DbSet<TUser> Users => Context.Set<TUser>();
         private DbSet<Class> Classes => Context.Set<Class>();
         private DbSet<Student> Students => Context.Set<Student>();
+        private DbSet<VerifyCode> VerifyCodes => Context.Set<VerifyCode>();
         private DbSet<ClassStudent> ClassStudents => Context.Set<ClassStudent>();
         IQueryable<Student> IStudentQueryableStore.Students => Context.Set<Student>();
         IQueryable<Class> IStudentQueryableStore.Classes => Context.Set<Class>();
         IQueryable<ClassStudent> IStudentQueryableStore.ClassStudents => Context.Set<ClassStudent>();
         IQueryable<IUserWithStudent> IStudentQueryableStore.Users => Context.Set<TUser>();
+        IQueryable<VerifyCode> IStudentQueryableStore.VerifyCodes => Context.Set<VerifyCode>();
 
         public StudentStore(TContext context) => Context = context;
 
@@ -261,6 +263,57 @@ namespace Tenant.Services
                     UserName = c.UserName,
                 })
                 .ToPagedListAsync(page, pageCount);
+        }
+
+        private string GenerateVerifyCode(int length = 6)
+        {
+            const string CodePoint = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            var random = new Random();
+            Span<char> code = stackalloc char[length];
+            for (int i = 0; i < length; i++) code[i] = CodePoint[random.Next(CodePoint.Length)];
+            return new string(code);
+        }
+
+        public async Task<VerifyCode> CreateVerifyCodeAsync(Affiliation affiliation, int userId)
+        {
+            string code;
+            do code = GenerateVerifyCode();
+            while (await VerifyCodes.AnyAsync(c => c.Code == code && c.IsValid));
+
+            var e = VerifyCodes.Add(new VerifyCode
+            {
+                AffiliationId = affiliation.Id,
+                CreationTime = DateTimeOffset.Now,
+                IsValid = true,
+                RedeemCount = 0,
+                UserId = userId,
+                Code = code,
+            });
+
+            await Context.SaveChangesAsync();
+            return e.Entity;
+        }
+
+        public async Task<IReadOnlyList<VerifyCode>> GetVerifyCodesAsync(Affiliation affiliation, int? userId = null)
+        {
+            return await VerifyCodes
+                .Where(c => c.AffiliationId == affiliation.Id && c.IsValid)
+                .WhereIf(userId.HasValue, c => c.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<bool> RedeemCodeAsync(Affiliation affiliation, string code)
+        {
+            return 1 == await VerifyCodes
+                .Where(c => c.AffiliationId == affiliation.Id && c.IsValid && c.Code == code)
+                .BatchUpdateAsync(c => new VerifyCode { RedeemCount = c.RedeemCount + 1 });
+        }
+
+        public async Task<bool> InvalidateCodeAsync(Affiliation affiliation, string code)
+        {
+            return 1 == await VerifyCodes
+                .Where(c => c.AffiliationId == affiliation.Id && c.IsValid && c.Code == code)
+                .BatchUpdateAsync(_ => new VerifyCode { IsValid = false });
         }
     }
 }

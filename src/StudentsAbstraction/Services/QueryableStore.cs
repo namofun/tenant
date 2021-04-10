@@ -24,6 +24,11 @@ namespace Tenant.Services
         IQueryable<ClassStudent> ClassStudents { get; }
 
         /// <summary>
+        /// Gets the query navigation for <see cref="VerifyCode"/>s.
+        /// </summary>
+        IQueryable<VerifyCode> VerifyCodes { get; }
+
+        /// <summary>
         /// Gets the query navigation for <see cref="IUserWithStudent"/>s.
         /// </summary>
         IQueryable<IUserWithStudent> Users { get; }

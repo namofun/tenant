@@ -183,5 +183,37 @@ namespace Tenant.Services
         /// <param name="affiliation">The affiliation entity.</param>
         /// <returns>The role lookup.</returns>
         Task<ILookup<int, string>> GetAdministratorRolesAsync(Affiliation affiliation);
+
+        /// <summary>
+        /// Creates a verify code for inviting students.
+        /// </summary>
+        /// <param name="affiliation">The affiliation entity.</param>
+        /// <param name="userId">The user ID of creator.</param>
+        /// <returns>The created verify code entity.</returns>
+        Task<VerifyCode> CreateVerifyCodeAsync(Affiliation affiliation, int userId);
+
+        /// <summary>
+        /// Gets all of the verify codes for this affiliations.
+        /// </summary>
+        /// <param name="affiliation">The affiliation entity.</param>
+        /// <param name="userId">The creator user ID.</param>
+        /// <returns>The list of verify codes.</returns>
+        Task<IReadOnlyList<VerifyCode>> GetVerifyCodesAsync(Affiliation affiliation, int? userId = null);
+
+        /// <summary>
+        /// Redeems the verify code and check whether this is a valid code.
+        /// </summary>
+        /// <param name="affiliation">The affiliation entity.</param>
+        /// <param name="code">The verify code.</param>
+        /// <returns>Whether the code exists.</returns>
+        Task<bool> RedeemCodeAsync(Affiliation affiliation, string code);
+
+        /// <summary>
+        /// Marks the verify code as invalid.
+        /// </summary>
+        /// <param name="affiliation">The affiliation entity.</param>
+        /// <param name="code">The verify code.</param>
+        /// <returns>Whether the code exists.</returns>
+        Task<bool> InvalidateCodeAsync(Affiliation affiliation, string code);
     }
 }
