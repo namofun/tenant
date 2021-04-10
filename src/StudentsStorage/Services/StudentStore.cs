@@ -267,7 +267,7 @@ namespace Tenant.Services
                 .ToPagedListAsync(page, pageCount);
         }
 
-        private string GenerateVerifyCode(int length = 6)
+        private string GenerateVerifyCode(int length = 8)
         {
             const string CodePoint = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             var random = new Random();

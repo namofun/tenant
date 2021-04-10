@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace SatelliteSite.StudentModule.Dashboards
 {
     [Area("Dashboard")]
     [Authorize(Policy = "TenantAdmin")]
+    [AuditPoint(AuditlogType.Affiliation)]
     public class TenantsController : TenantControllerBase
     {
         [HttpGet("/[area]/affiliations/current")]
@@ -70,6 +72,36 @@ namespace SatelliteSite.StudentModule.Dashboards
 
                 return Redirect(returnUrl);
             }
+        }
+
+
+        [HttpGet("/[area]/affiliations/current/verify-codes/create")]
+        public IActionResult CreateVerifyCode(string returnUrl = null)
+        {
+            return AskPost(
+                title: "Create student verify code",
+                message: "You can share verify codes to the unverified students.\n" +
+                    "They can use this code to verify their student identity.\n" +
+                    "And it is preferred to keep only one active code for one teacher.\n" +
+                    "Please invalidate the code since its usage is finished.\n" +
+                    "Are you sure to create a student verify code?",
+                routeValues: new { returnUrl });
+        }
+
+
+        [HttpPost("/[area]/affiliations/current/verify-codes/create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateVerifyCode(
+            [FromServices] IStudentStore store,
+            [FromQuery] string returnUrl = null)
+        {
+            var userId = int.Parse(User.GetUserId());
+            var code = await store.CreateVerifyCodeAsync(Affiliation, userId);
+            await HttpContext.AuditAsync("create verify code", Affiliation.Id.ToString(), code.Code);
+
+            return Url.IsLocalUrl(returnUrl)
+                ? (IActionResult)Redirect(returnUrl)
+                : RedirectToAction(nameof(Current));
         }
     }
 }

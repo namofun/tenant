@@ -110,7 +110,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             if (!ModelState.IsValid) return Window(model);
 
             int rows = await Store.MergeAsync(Affiliation, adds);
-            await HttpContext.AuditAsync("merge", "students");
+            await HttpContext.AuditAsync("merge", "# of " + adds.Count);
             StatusMessage = $"{rows} students updated or added.";
             return RedirectToAction(nameof(List), new { page = 1 });
         }

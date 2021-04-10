@@ -11,7 +11,7 @@
 <div class="alert alert-primary" style="max-width:35em">
     <razor asp-show-if="codes.Count == 0">
         Currently you have no student verify code.
-        <a class="alert-link">Create one &raquo;</a>
+        <a class="alert-link" asp-controller="Tenants" asp-action="CreateVerifyCode" asp-route-returnUrl="@ViewData["RefreshUrl2"]" data-toggle="ajaxWindow">Create one &raquo;</a>
     </razor>
     <razor asp-show-if="codes.Count > 0">
         You can share verify codes to the unverified students.
