@@ -30,6 +30,7 @@ namespace SatelliteSite.StudentModule.Dashboards
             ViewBag.ShowAll = all;
             var userId = all ? default(int?) : int.Parse(User.GetUserId());
             var model = await Store.ListClassesAsync(Affiliation, page, 20, userId);
+            if (!all) ViewBag.Codes = await Store.GetVerifyCodesAsync(Affiliation, userId);
             return View(model);
         }
 

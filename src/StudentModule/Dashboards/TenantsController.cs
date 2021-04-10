@@ -18,6 +18,7 @@ namespace SatelliteSite.StudentModule.Dashboards
         {
             ViewBag.Administrators = await store.GetAdministratorsAsync(Affiliation);
             ViewBag.UserRoles = await store.GetAdministratorRolesAsync(Affiliation);
+            ViewBag.VerifyCodes = await store.GetVerifyCodesAsync(Affiliation, validOnly: false);
             return View(Affiliation);
         }
 

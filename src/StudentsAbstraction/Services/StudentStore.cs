@@ -197,8 +197,9 @@ namespace Tenant.Services
         /// </summary>
         /// <param name="affiliation">The affiliation entity.</param>
         /// <param name="userId">The creator user ID.</param>
+        /// <param name="validOnly">Whether to include valid codes only.</param>
         /// <returns>The list of verify codes.</returns>
-        Task<IReadOnlyList<VerifyCode>> GetVerifyCodesAsync(Affiliation affiliation, int? userId = null);
+        Task<IReadOnlyList<VerifyCode>> GetVerifyCodesAsync(Affiliation affiliation, int? userId = null, bool validOnly = true);
 
         /// <summary>
         /// Redeems the verify code and check whether this is a valid code.

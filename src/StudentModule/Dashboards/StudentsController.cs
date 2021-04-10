@@ -33,6 +33,7 @@ namespace SatelliteSite.StudentModule.Dashboards
         {
             if (page < 1) page = 1;
             var model = await Store.ListStudentsAsync(Affiliation, page, ItemPerPage);
+            ViewBag.Codes = await Store.GetVerifyCodesAsync(Affiliation, int.Parse(User.GetUserId()));
             return View(model);
         }
 

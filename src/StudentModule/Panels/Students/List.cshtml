@@ -2,10 +2,32 @@
 @{
     ViewData["Title"] = "Students";
     Affiliation affiliation = ViewBag.Affiliation;
+    IReadOnlyList<VerifyCode> codes = ViewBag.Codes;
     var prefix = affiliation.Id + "_";
 }
 
 <h2 class="mt-2 mb-3">@ViewData["Title"] in @affiliation.Name</h2>
+
+<div class="alert alert-primary" style="max-width:35em">
+    <razor asp-show-if="codes.Count == 0">
+        Currently you have no student verify code.
+        <a class="alert-link">Create one &raquo;</a>
+    </razor>
+    <razor asp-show-if="codes.Count > 0">
+        You can share verify codes to the unverified students.
+        They can use this code to verify their student identity.
+        <ul class="mb-0 mt-2">
+            @foreach (var code in codes)
+            {
+            <li>
+                <b style="font-family:Consolas,monospace">@code.Code</b>
+                : Used @code.RedeemCount times,
+                <a href="#">invalidate</a>
+            </li>
+            }
+        </ul>
+    </razor>
+</div>
 
 <div class="d-none" id="paging">
     <pagination bs-current-page="Model.CurrentPage" bs-total-page="Model.TotalPage" />
@@ -15,7 +37,7 @@
     <table class="data-table table table-sm table-striped" style="width:auto">
         <thead>
             <tr role="row">
-                <th style="min-width:3em" scope="col" class="sortable searchable">ID</th>
+                <th style="min-width:5em" scope="col" class="sortable searchable">ID</th>
                 <th style="min-width:4em" scope="col" class="sortable searchable">name</th>
                 <th style="min-width:5em" scope="col" class="sortable searchable">user</th>
                 <th style="min-width:10em" scope="col" class="sortable searchable">email</th>

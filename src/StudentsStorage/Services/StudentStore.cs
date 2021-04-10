@@ -296,10 +296,11 @@ namespace Tenant.Services
             return e.Entity;
         }
 
-        public async Task<IReadOnlyList<VerifyCode>> GetVerifyCodesAsync(Affiliation affiliation, int? userId = null)
+        public async Task<IReadOnlyList<VerifyCode>> GetVerifyCodesAsync(Affiliation affiliation, int? userId = null, bool validOnly = true)
         {
             return await VerifyCodes
-                .Where(c => c.AffiliationId == affiliation.Id && c.IsValid)
+                .Where(c => c.AffiliationId == affiliation.Id)
+                .WhereIf(validOnly, c => c.IsValid)
                 .WhereIf(userId.HasValue, c => c.UserId == userId)
                 .ToListAsync();
         }

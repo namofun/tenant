@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "Affiliation: " + Model.Name;
     IReadOnlyList<Microsoft.AspNetCore.Identity.IUser> admin = ViewBag.Administrators;
+    var userNames = admin.ToDictionary(k => k.Id, v => v.UserName);
     ILookup<int, string> userRoles = ViewBag.UserRoles;
+    IReadOnlyList<VerifyCode> codes = ViewBag.VerifyCodes;
 }
 
 <h2 class="mt-2">@ViewData["Title"]</h2>
@@ -45,9 +47,37 @@
     </table>
 </div>
 
+<h3 class="mt-4">Verify Codes</h3>
+
+<div class="table-wrapper">
+    <table id="verify-codes" class="data-table table table-sm table-striped" style="width:auto">
+        <thead>
+            <tr role="row">
+                <th scope="col" style="min-width:3em" class="sortable searchable">ID</th>
+                <th scope="col" style="min-width:5em" class="sortable searchable">code</th>
+                <th scope="col" style="min-width:9em" class="sortable searchable">time</th>
+                <th scope="col" style="min-width:5em" class="sortable searchable"># of used</th>
+                <th scope="col" style="min-width:5em" class="sortable searchable">owner</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var code in codes)
+            {
+                <tr role="row">
+                    <td>@code.Id</td>
+                    <td class="@(code.IsValid ? "" : "ignore")">@code.Code</td>
+                    <td>@code.CreationTime</td>
+                    <td>@code.RedeemCount</td>
+                    <td>@userNames.GetValueOrDefault(code.UserId, "UNKNOWN") (u@(code.UserId))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <script>
     $().ready(function () {
-        $('#tenant-admins').DataTable({
+        $('.data-table').DataTable({
             "paging": false,
             "searching": false,
             "ordering": true,
