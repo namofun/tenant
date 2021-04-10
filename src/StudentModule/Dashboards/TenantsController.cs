@@ -98,6 +98,40 @@ namespace SatelliteSite.StudentModule.Dashboards
             var userId = int.Parse(User.GetUserId());
             var code = await store.CreateVerifyCodeAsync(Affiliation, userId);
             await HttpContext.AuditAsync("create verify code", Affiliation.Id.ToString(), code.Code);
+            StatusMessage = "Verify code created successfully: " + code.Code;
+
+            return Url.IsLocalUrl(returnUrl)
+                ? (IActionResult)Redirect(returnUrl)
+                : RedirectToAction(nameof(Current));
+        }
+
+
+        [HttpGet("/[area]/affiliations/current/verify-codes/invalidate")]
+        public IActionResult InvalidateVerifyCode(
+            [FromQuery] string code,
+            [FromQuery] string returnUrl = null)
+        {
+            if (code == null) return BadRequest();
+            return AskPost(
+                title: "Invalidate student verify code",
+                message: "After invalidating the code, students can't be verified through this code.\n" +
+                    "Are you sure to invalidate this verify code?",
+                routeValues: new { code, returnUrl });
+        }
+
+
+        [HttpPost("/[area]/affiliations/current/verify-codes/invalidate")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InvalidateVerifyCode(
+            [FromQuery] string code,
+            [FromServices] IStudentStore store,
+            [FromQuery] string returnUrl = null)
+        {
+            if (code == null) return BadRequest();
+            bool ok = await store.InvalidateCodeAsync(Affiliation, code);
+            if (!ok) return NotFound();
+            await HttpContext.AuditAsync("invalidate verify code", Affiliation.Id.ToString(), code);
+            StatusMessage = "Verify code invalidated successfully: " + code;
 
             return Url.IsLocalUrl(returnUrl)
                 ? (IActionResult)Redirect(returnUrl)

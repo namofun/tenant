@@ -22,7 +22,8 @@
             <li>
                 <b style="font-family:Consolas,monospace">@code.Code</b>
                 : Used @code.RedeemCount times,
-                <a href="#">invalidate</a>
+                created since @code.CreationTime.ToString("d"),
+                <a asp-controller="Tenants" asp-action="InvalidateVerifyCode" asp-route-code="@code.Code" asp-route-returnUrl="@ViewData["RefreshUrl2"]" data-toggle="ajaxWindow">invalidate</a>
             </li>
             }
         </ul>

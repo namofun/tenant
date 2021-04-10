@@ -97,8 +97,7 @@ namespace Tenant.Entities
             entity.HasIndex(e => e.Code);
 
             entity.Property(e => e.Code)
-                .HasMaxLength(8)
-                .IsUnicode(false);
+                .HasMaxLength(16);
 
             entity.HasOne<TUser>()
                 .WithMany()
