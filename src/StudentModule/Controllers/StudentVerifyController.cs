@@ -87,7 +87,7 @@ namespace SatelliteSite.StudentModule.Controllers
                 StudentName = student?.Name,
                 StudentId = rawStudId,
                 Email = user.StudentEmail,
-                IsEmailConfirmed = user.StudentVerified,
+                PendingConfirm = user.StudentId == null ? default(bool?) : !user.StudentVerified,
                 AffiliationId = aff?.Id ?? 0,
             });
         }
@@ -95,14 +95,15 @@ namespace SatelliteSite.StudentModule.Controllers
 
         [HttpPost("/profile/{username}/student-verify")]
         [ValidateAntiForgeryToken]
+        [AuditPoint(AuditlogType.Student)]
         public async Task<IActionResult> Main(string username, StudentVerifyModel model)
         {
             var user = await GetUserAsync();
             if (!user.HasUserName(username)) return NotFound();
             var affiliations = await _affiliationStore.ListAsync(a => a.EmailSuffix != null);
             ViewBag.Affiliations = affiliations;
-
-            if (!ModelState.IsValid) return View(model);
+            model.PendingConfirm = user.StudentId == null ? default(bool?) : !user.StudentVerified;
+            if (model.VerifyOption != 0 && model.VerifyOption != 1) return BadRequest();
 
             if (user.StudentVerified)
             {
@@ -110,61 +111,113 @@ namespace SatelliteSite.StudentModule.Controllers
                 return RedirectToAction(nameof(Main));
             }
 
-            if (string.IsNullOrEmpty(model.Email))
+            if (!ModelState.IsValid) return View(model);
+
+            if (user.StudentId == null && string.IsNullOrWhiteSpace(model.StudentId))
+                return Fail(
+                    "StudentId",
+                    "You must fill in the student ID to continue verification.");
+
+            if (model.VerifyOption == 0 && string.IsNullOrWhiteSpace(model.Email))
+                return Fail(
+                    "Email",
+                    "You must fill in the student email address to continue verification.");
+
+            if (model.VerifyOption == 1 && string.IsNullOrWhiteSpace(model.VerifyCode))
+                return Fail(
+                    "VerifyCode",
+                    "You must fill in the verification code to continue verification.");
+
+            if (string.IsNullOrEmpty(model.StudentId))
             {
                 user.StudentId = null;
                 user.StudentEmail = null;
+                user.StudentVerified = false;
                 await _userManager.UpdateAsync(user);
+                // This time, student is not in Student role.
+                // When student is verified and in role, they cannot reach here.
                 StatusMessage = "Previous verification cleared.";
                 return RedirectToAction(nameof(Main));
             }
 
             Affiliation aff = affiliations.FirstOrDefault(a => a.Id == model.AffiliationId);
             if (aff == null)
-            {
-                ModelState.AddModelError("XYS.StudentInfo",
+                return Fail(
+                    "AffiliationId",
                     "The selected school value is invalid. Please check it carefully.");
-                return View(model);
-            }
 
-            if (!model.Email.EndsWith(aff.EmailSuffix))
-            {
-                ModelState.AddModelError("XYS.EmailType",
+            if (model.VerifyOption == 0 && !model.Email.EndsWith(aff.EmailSuffix))
+                return Fail(
+                    "XYS.VerifyCount",
                     "The domain of your student email address is not permitted. " +
                     "If you believe this is a mistake, please contact your tenant administrator.");
-                return View(model);
-            }
 
             Student student = await _studentStore.FindStudentAsync(aff, model.StudentId);
             if (student == null || student.Name != model.StudentName.Trim())
-            {
-                ModelState.AddModelError("XYS.StudentInfo",
+                return Fail(
+                    "XYS.VerifyCount",
                     "Your name or ID is invalid. " +
                     "If you believe this is a mistake, please contact your tenant administrator.");
-                return View(model);
-            }
 
             var users2 = await _studentStore.FindUserByStudentAsync(student);
             var users = users2.Cast<IUserWithStudent>().SingleOrDefault(u => u.StudentEmail != null);
             if (users != null && users.Id != user.Id)
-            {
-                ModelState.AddModelError("XYS.VerifyCount",
+                return Fail(
+                    "XYS.VerifyCount",
                     "Your student has been verified by other account. " +
                     "If you believe this is a mistake, please contact your tenant administrator.");
-                return View(model);
+
+            user.StudentEmail = null;
+            user.StudentVerified = false;
+            user.StudentId = student.Id;
+
+            if (model.VerifyOption == 0)
+            {
+                user.StudentEmail = model.Email;
+            }
+            else if (model.VerifyOption == 1)
+            {
+                if (!await _studentStore.RedeemCodeAsync(aff, model.VerifyCode.Trim()))
+                {
+                    return Fail(
+                        "VerifyCode",
+                        "The provided invitation code is invalid. " +
+                        "If you believe this is a mistake, please contact your tenant administrator.");
+                }
+                else
+                {
+                    user.StudentVerified = true;
+                }
             }
 
-            user.StudentEmail = model.Email;
-            user.StudentId = student.Id;
             await _userManager.UpdateAsync(user);
-            await SendConfirmationEmailsAsync(user);
-            StatusMessage = "Verification email sent. Please check your email.";
-            return RedirectToAction(nameof(Main));
+
+            if (model.VerifyOption == 0)
+            {
+                await SendConfirmationEmailsAsync(user);
+                await HttpContext.AuditAsync("send verification email", user.StudentId, "to " + user.StudentEmail);
+                StatusMessage = "Verification email sent. Please check your email.";
+                return RedirectToAction(nameof(Main));
+            }
+            else
+            {
+                await _userManager.AddToRoleAsync(user, "Student");
+                await HttpContext.AuditAsync("verified", student.Id, "via code " + model.VerifyCode.Trim());
+                StatusMessage = "Verification succeeded.";
+                return RedirectToAction(nameof(Main));
+            }
+
+            IActionResult Fail(string key, string val)
+            {
+                ModelState.AddModelError(key, val);
+                return View(model);
+            }
         }
 
 
         [HttpPost("/profile/{username}/send-student-email")]
         [ValidateAntiForgeryToken]
+        [AuditPoint(AuditlogType.Student)]
         public async Task<IActionResult> SendStudentEmail(string username)
         {
             var user = await GetUserAsync();
@@ -183,6 +236,7 @@ namespace SatelliteSite.StudentModule.Controllers
             }
 
             await SendConfirmationEmailsAsync(user);
+            await HttpContext.AuditAsync("send verification email", user.StudentId, "to " + user.StudentEmail);
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToAction(nameof(Main));
         }
@@ -190,6 +244,7 @@ namespace SatelliteSite.StudentModule.Controllers
 
         [HttpGet("/account/verify-student-email")]
         [AllowAnonymous]
+        [AuditPoint(AuditlogType.Student)]
         public async Task<IActionResult> ConfirmEmail(int userId, string code)
         {
             if (code == null) return NotFound();
@@ -207,6 +262,7 @@ namespace SatelliteSite.StudentModule.Controllers
                 user.StudentVerified = true;
                 var result = await _userManager.UpdateAsync(user);
                 await _userManager.AddToRoleAsync(user, "Student");
+                await HttpContext.AuditAsync("verified", user.StudentId, "via email " + user.StudentEmail);
                 return View(result.Succeeded ? "ConfirmEmail" : "ConfirmEmailError");
             }
             else

@@ -5,7 +5,6 @@ namespace SatelliteSite.StudentModule.Models
     public class StudentVerifyModel
     {
         [Display(Name = "Student ID")]
-        [Required]
         public string StudentId { get; set; }
 
         [Display(Name = "Affiliation")]
@@ -17,11 +16,18 @@ namespace SatelliteSite.StudentModule.Models
         [Required]
         public string StudentName { get; set; }
 
-        public bool IsEmailConfirmed { get; set; }
+        public bool? PendingConfirm { get; set; }
 
         [EmailAddress]
         [Display(Name = "Student Email")]
-        [Required]
         public string Email { get; set; }
+
+        [DataType(DataType.Text)]
+        [MaxLength(10)]
+        [Display(Name = "Verification Code")]
+        public string VerifyCode { get; set; }
+
+        [Display(Name = "Verification type")]
+        public int VerifyOption { get; set; }
     }
 }

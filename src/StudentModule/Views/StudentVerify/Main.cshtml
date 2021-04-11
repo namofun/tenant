@@ -12,8 +12,11 @@
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
 @{ TempData["StatusMessage"] = null; }
-<div asp-show-if="Model.IsEmailConfirmed" class="alert alert-primary" role="alert">
+<div asp-show-if="Model.PendingConfirm == false" class="alert alert-primary" role="alert">
     You are now verified student.
+</div>
+<div asp-show-if="Model.PendingConfirm == true" class="alert alert-primary" role="alert">
+    If you want to cancel the student verification progress, please clean the field of student ID and save.
 </div>
 
 <form method="post">
@@ -32,15 +35,58 @@
         <label asp-for="StudentId"></label>
         <input asp-for="StudentId" class="form-control" />
     </div>
-    <div class="form-group">
+    <div class="form-group" asp-show-if="Model.PendingConfirm != false">
+        <label asp-for="VerifyOption" class="d-block"></label>
+        <div class="custom-control custom-radio d-inline-block">
+            <input type="radio" id="VerifyOption-0" value="0" name="VerifyOption" class="custom-control-input VerifyOption-input" />
+            <label class="custom-control-label" for="VerifyOption-0">Student Email</label>
+        </div>
+        <div class="custom-control custom-radio d-inline-block ml-2">
+            <input type="radio" id="VerifyOption-1" value="1" name="VerifyOption" class="custom-control-input VerifyOption-input" />
+            <label class="custom-control-label" for="VerifyOption-1">Invitation Code</label>
+        </div>
+    </div>
+    <div class="form-group" id="student-email-box" asp-show-if="Model.PendingConfirm != false || !string.IsNullOrWhiteSpace(Model.Email)">
         <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <button asp-show-if="Model.Email != null && !Model.IsEmailConfirmed" asp-action="SendStudentEmail" class="btn btn-link">Send verification email</button>
+        <input asp-for="Email" required class="form-control" />
+        <button asp-show-if="Model.Email != null && Model.PendingConfirm == true" asp-action="SendStudentEmail" class="btn btn-link">Send verification email</button>
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <button asp-show-if="!Model.IsEmailConfirmed" type="submit" class="btn btn-primary">Save</button>
+    <div class="form-group d-none" id="verify-code-box" asp-show-if="Model.PendingConfirm != false">
+        <label asp-for="VerifyCode"></label>
+        <input asp-for="VerifyCode" required class="form-control" />
+        <span asp-validation-for="VerifyCode" class="text-danger"></span>
+    </div>
+    <button asp-show-if="Model.PendingConfirm != false" disabled id="submit-button" type="submit" class="btn btn-primary">Save</button>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script asp-show-if="Model.PendingConfirm != false">
+    $(function () {
+        let $changeFunction = function () {
+            let val = $('input:radio[name="VerifyOption"]:checked').val();
+            if (val == 0) {
+                $('#student-email-box').removeClass('d-none').attr('required', true);
+                $('#verify-code-box').removeClass('d-none').addClass('d-none').attr('required', false);
+                $('#submit-button').attr('disabled', false);
+            }
+            else if (val == 1) {
+                $('#student-email-box').removeClass('d-none').addClass('d-none').attr('required', false);
+                $('#verify-code-box').removeClass('d-none').attr('required', true);
+                $('#submit-button').attr('disabled', false);
+            }
+            else {
+                $('#student-email-box').removeClass('d-none').addClass('d-none').attr('required', true);
+                $('#verify-code-box').removeClass('d-none').addClass('d-none').attr('required', true);
+                $('#submit-button').attr('disabled', true);
+            }
+        };
+
+        $('.VerifyOption-input').change($changeFunction);
+        $('#VerifyOption-@Model.VerifyOption').attr('checked', true);
+        $changeFunction();
+    });
+    </script>
 }
