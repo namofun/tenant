@@ -174,8 +174,15 @@ namespace Tenant.Services
         /// Lists the administrators by affiliation.
         /// </summary>
         /// <param name="affiliation">The affiliation entity.</param>
-        /// <returns>The user-role lookup.</returns>
+        /// <returns>The user list.</returns>
         Task<IReadOnlyList<IUser>> GetAdministratorsAsync(Affiliation affiliation);
+
+        /// <summary>
+        /// Lists the tenants administrated by user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>The affiliation list</returns>
+        Task<IReadOnlyList<Affiliation>> GetAffiliationsForUserAsync(IUser user);
 
         /// <summary>
         /// Lists the roles of administrators by affiliation.

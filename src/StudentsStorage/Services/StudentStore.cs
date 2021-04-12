@@ -318,5 +318,21 @@ namespace Tenant.Services
                 .Where(c => c.AffiliationId == affiliation.Id && c.IsValid && c.Code == code)
                 .BatchUpdateAsync(_ => new VerifyCode { IsValid = false });
         }
+
+        public async Task<IReadOnlyList<Affiliation>> GetAffiliationsForUserAsync(IUser user)
+        {
+            var claims = await Context.Set<IdentityUserClaim<int>>()
+                .Where(c => c.ClaimType == "tenant_admin" && c.UserId == user.Id)
+                .Select(c => c.ClaimValue)
+                .ToListAsync();
+
+            var affId = new List<int>();
+            foreach (var cv in claims) if (int.TryParse(cv, out int afi)) affId.Add(afi);
+            return affId.Count == 0
+                ? (IReadOnlyList<Affiliation>)Array.Empty<Affiliation>()
+                : await Context.Set<Affiliation>()
+                    .Where(a => affId.Contains(a.Id))
+                    .ToListAsync();
+        }
     }
 }
