@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SatelliteSite.GroupModule.Models
+namespace SatelliteSite.StudentModule.Models
 {
     public class TenantAssignModel
     {

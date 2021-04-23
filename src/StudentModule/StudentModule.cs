@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SatelliteSite;
 using SatelliteSite.IdentityModule.Entities;
+using SatelliteSite.StudentModule.Components.AffiliationAdministrator;
 using System;
 using Tenant.Entities;
 using Tenant.Services;
@@ -80,6 +81,9 @@ namespace SatelliteSite.StudentModule
                     .HasTitle("info", "Student verify")
                     .RequireThat(c => c.HttpContext.User.GetUserName() == ((IUser)c.ViewData["User"]).UserName);
             });
+
+            menus.Component("Component_AffiliationAttach")
+                .HasComponent<AffiliationAdministratorViewComponent>(0);
         }
     }
 }
