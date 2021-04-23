@@ -5,9 +5,6 @@
     IUser user = ViewBag.User;
 }
 
-<div class="row ml-0 mr-0 ml-md-4 mr-md-4 mt-4 pb-5">
-<div class="col-12">
-
 <h4>Members</h4>
 <partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
 @{ TempData["StatusMessage"] = null; }
@@ -45,6 +42,3 @@
     <button type="submit" asp-action="Accept" class="btn btn-success">Accept invitation</button>
     <button type="submit" asp-action="Reject" class="btn btn-danger">Reject invitation</button>
 </form>
-
-</div>
-</div>

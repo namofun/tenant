@@ -1,51 +1,26 @@
 ﻿@model GroupTeam
 @{
-    Layout = "_Layout";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["UseCardTheme"] = true;
+    ViewData["CompactMode"] = true;
 }
 
-@section Banner  {
-    <style type="text/css">
-        #jlucpcid {
-            max-width: 768px;
-        }
-
-        #jlucpcid-super-banner {
-            background-color: #f2f2f2;
-        }
-
-        @@media (min-width: 768px) {
-            #jlucpcid {
-                box-shadow: 0px 0.12rem 0.25rem rgba(0,0,0,0.075) !important;
-                background-color: #ffffff;
-                border-radius: 0.25rem !important;
-                border: 1px solid rgba(0, 0, 0, 0.125);
-            }
-
-            #jlucpcid-super-banner {
-                border-top-left-radius: 0.23rem !important;
-                border-top-right-radius: 0.23rem !important;
-            }
-
-            body {
-                background-color: #f7f8f9;
-            }
-        }
-    </style>
-    <div class="container-fluid mt-md-4 mb-4 pl-0 pr-0" id="jlucpcid">
-        <div id="jlucpcid-super-banner">
-            <div class="container-fluid d-flex pt-4 pb-4 pl-md-4 pr-md-4">
-                <div class="avatar @(Model.Affiliation.Abbreviation == "null" ? "d-none" : "")">
-                    <img src="~/images/affiliations/@(Model.Affiliation.Abbreviation).png" style="width:100%;max-width:5em" />
-                </div>
-                <div class="plan ml-3 mt-auto mb-auto pt-2">
-                    <h2><a asp-action="Detail" class="text-reset text-decoration-none">@Model.TeamName</a></h2>
-                    <h6 class="text-muted">Created on @Model.Time.ToString("yyyy-MM-dd")</h6>
-                </div>
-            </div>
+<div class="card window-card container-fluid card-fill" style="max-width:768px">
+<div class="card-head">
+    <div class="container-fluid d-flex pt-4 pb-4 pl-md-4 pr-md-4">
+        <div class="avatar @(Model.Affiliation.Abbreviation == "null" ? "d-none" : "")">
+            <img src="~/images/affiliations/@(Model.Affiliation.Abbreviation).png" style="width:100%;max-width:5em" />
         </div>
-        @RenderBody()
+        <div class="plan ml-4 mt-auto mb-auto">
+            <h2><a asp-action="Detail" class="text-reset text-decoration-none">@Model.TeamName</a></h2>
+            <h6 class="text-muted mb-0">Created on @Model.Time.ToString("yyyy-MM-dd")</h6>
+        </div>
     </div>
-}
+</div>
+<div class="card-body">
+    @RenderBody()
+</div>
+</div>
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
