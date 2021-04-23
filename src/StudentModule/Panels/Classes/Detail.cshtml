@@ -49,19 +49,13 @@
                 <tr asp-controller="Users" asp-action="Detail" asp-route-uid="@stu.UserId" role="row" data-toggle="gotoUrl">
                     <td>@stuid</td>
                     <td>@stu.Name</td>
-                    <td class="@(stu.IsVerified.GetValueOrDefault() ? "" : "text-decoration-del")" use-a>@stu.UserName</td>
+                    <td class="@(stu.IsVerified.GetValueOrDefault() ? "" : "ignore")" use-a>@stu.UserName</td>
                     <td><a asp-show-if="@(Model.UserId == null || Model.UserId == uid)" asp-action="Kick" asp-route-stuid="@stuid" title="kick this student from this group" data-toggle="ajaxWindow" data-target="deleteStud"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
-<style>
-    .text-decoration-del {
-        text-decoration: line-through;
-    }
-</style>
 
 <script>
     $().ready(function () {
