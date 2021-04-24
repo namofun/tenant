@@ -8,10 +8,10 @@
 <div class="card window-card container-fluid card-fill" style="max-width:768px">
 <div class="card-head">
     <div class="container-fluid d-flex pt-4 pb-4 pl-md-4 pr-md-4">
-        <div class="avatar @(Model.Affiliation.Abbreviation == "null" ? "d-none" : "")">
+        <div class="avatar mr-3 @(Model.Affiliation.Abbreviation == "null" ? "d-none" : "")">
             <img src="~/images/affiliations/@(Model.Affiliation.Abbreviation).png" style="width:100%;max-width:5em" />
         </div>
-        <div class="plan ml-4 mt-auto mb-auto">
+        <div class="plan ml-3 mt-auto mb-auto">
             <h2><a asp-action="Detail" class="text-reset text-decoration-none">@Model.TeamName</a></h2>
             <h6 class="text-muted mb-0">Created on @Model.Time.ToString("yyyy-MM-dd")</h6>
         </div>

@@ -9,32 +9,50 @@
 <partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
 @{ TempData["StatusMessage"] = null; }
 
+<style>
+.member-cell {
+  width: 6em;
+  margin-right: 10px;
+}
+
+.member-cell > a {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
+
 <div class="d-flex text-center mb-3">
     @foreach (var u in Model.Users.Where(u => u.Accepted == true))
     {
-        <a asp-area="Account" asp-controller="Profile" asp-action="Show" asp-route-username="@u.UserName" style="width:6em;margin-right:10px;text-decoration:none;color:black">
-            <img gravatar-email="@u.UserEmail" style="width:6em;margin-bottom:0.25em" />
-            @u.UserName
+    <span class="member-cell">
+        <a asp-route="AccountProfile" asp-route-username="@u.UserName">
+            <img gravatar-email="@u.UserEmail" style="width:6em" class="mb-1" />
         </a>
+        <user uid="@u.UserId" username="@u.UserName" />
+    </span>
     }
 </div>
 
 <razor asp-show-if="Model.Users.Any(u => u.Accepted != true) && Model.Users.Any(u => u.UserId == user.Id)">
-    <h4>Inactive Members</h4>
+<h4>Inactive Members</h4>
 
-    <div class="d-flex text-center mb-3">
-        @foreach (var u in Model.Users.Where(u => u.Accepted != true))
-        {
-            <a asp-area="Account" asp-controller="Profile" asp-action="Show" asp-route-username="@u.UserName" style="width:6em;margin-right:10px;text-decoration:none;color:black">
-                <img gravatar-email="@u.UserEmail" style="width:6em;margin-bottom:0.25em" />
-                @u.UserName <razor asp-show-if="u.Accepted.HasValue">(&times;)</razor><razor asp-show-if="!u.Accepted.HasValue">(?)</razor>
-            </a>
-        }
-    </div>
+<div class="d-flex text-center mb-3">
+    @foreach (var u in Model.Users.Where(u => u.Accepted != true))
+    {
+    <span class="member-cell">
+        <a asp-route="AccountProfile" asp-route-username="@u.UserName">
+            <img gravatar-email="@u.UserEmail" style="width:6em" class="mb-1" />
+        </a>
+        <user uid="@u.UserId" username="@u.UserName" />
+        <razor asp-show-if="u.Accepted.HasValue">(&times;)</razor>
+        <razor asp-show-if="!u.Accepted.HasValue">(?)</razor>
+    </span>
+    }
+</div>
 </razor>
 
 <p asp-show-if="Model.UserId == user.Id" class="mt-4 mb-0">
-    <a asp-action="Edit" class="btn btn-primary">Edit team</a>
+    <a asp-action="Edit" class="btn btn-success">Edit team</a>
     <a asp-action="Dismiss" data-toggle="ajaxWindow" data-target="dismissTeam" class="btn btn-danger">Delete team</a>
 </p>
 

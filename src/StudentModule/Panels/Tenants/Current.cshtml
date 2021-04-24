@@ -37,7 +37,7 @@
         <tbody>
             @foreach (var user in admin)
             {
-                <tr asp-area="Account" asp-controller="Profile" asp-action="Show" asp-route-username="@user.UserName" role="row" data-toggle="gotoUrl">
+                <tr asp-route="AccountProfile" asp-route-username="@user.UserName" role="row" data-toggle="gotoUrl">
                     <td use-a>u@(user.Id)</td>
                     <td use-a>@user.UserName</td>
                     <td use-a><tags color="secondary" list="@string.Join(',', userRoles[user.Id].OrderBy(a => a))" /></td>
