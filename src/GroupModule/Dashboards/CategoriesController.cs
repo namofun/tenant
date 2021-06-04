@@ -23,7 +23,7 @@ namespace SatelliteSite.GroupModule.Dashboards
         {
             var cond = Expr.Of<Category>(null)
                 .CombineIf(!showAll, c => c.ContestId == null);
-
+            ViewBag.ShowAll = showAll;
             return View(await Store.ListAsync(cond));
         }
 

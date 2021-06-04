@@ -1,9 +1,10 @@
 ﻿@model List<Category>
 @{
     ViewData["Title"] = "Categories";
+    bool showAll = ViewBag.ShowAll;
 }
 
-<h2 class="mt-2">@ViewData["Title"]</h2>
+<h2 class="mt-2 mb-3">@ViewData["Title"]</h2>
 
 <div class="table-wrapper">
     <table class="data-table table table-sm table-striped" style="width:auto">
@@ -11,6 +12,7 @@
             <tr role="row">
                 <th scope="col" class="sortable searchable">ID</th>
                 <th scope="col" class="sortable searchable">sort</th>
+                <th asp-show-if="showAll" scope="col" class="sortable searchable">cid</th>
                 <th scope="col" class="sortable searchable">name</th>
                 <th scope="col" class="sortable searchable">color</th>
                 <th scope="col" class="sortable">visible</th>
@@ -24,6 +26,7 @@
                 <tr asp-action="Detail" asp-route-catid="@cat.Id" style="background:@cat.Color" role="row" data-target="gotoUrl">
                     <td use-a>@cat.Id</td>
                     <td use-a>@cat.SortOrder</td>
+                    <td asp-show-if="showAll" data-order="@(cat.ContestId ?? -1)" use-a>@(cat.ContestId.HasValue ? $"c{cat.ContestId.Value}" : "all")</td>
                     <td use-a>@cat.Name</td>
                     <td use-a>@cat.Color</td>
                     <td use-a>@(cat.IsPublic ? "yes" : "no")</td>
@@ -33,6 +36,13 @@
             }
         </tbody>
     </table>
+</div>
+
+<div class="d-none" id="all-switcher-src">
+    <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+        <a asp-route-showAll="false" class="btn btn-outline-secondary @(showAll ? "" : "active")">Common</a>
+        <a asp-route-showAll="true" class="btn btn-outline-secondary @(showAll ? "active" : "")">All</a>
+    </div>
 </div>
 
 <script>
@@ -54,6 +64,8 @@
                 { aTargets: ['_all'], bSortable: false, bSearchable: false }
             ],
         });
+
+        $('.dataTables_wrapper .row:first-child .col-md-6:first-child').html($('#all-switcher-src').html());
     });
 </script>
 
