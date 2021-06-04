@@ -25,6 +25,8 @@ namespace Tenant.Entities
 
             entity.HasIndex(e => e.IsPublic);
 
+            entity.HasIndex(e => e.ContestId);
+
             entity.HasData(
                 new Category { Id = -1, Name = "System", Color = "#ff2bea", IsPublic = false, SortOrder = 9 },
                 new Category { Id = -2, Name = "Self-Registered", Color = "#33cc44", IsPublic = true, SortOrder = 8 },

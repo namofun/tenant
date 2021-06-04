@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SatelliteSite.GroupModule.Models;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Tenant.Entities;
 using Tenant.Services;
@@ -18,9 +19,12 @@ namespace SatelliteSite.GroupModule.Dashboards
 
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(bool showAll = false)
         {
-            return View(await Store.ListAsync());
+            var cond = Expr.Of<Category>(null)
+                .CombineIf(!showAll, c => c.ContestId == null);
+
+            return View(await Store.ListAsync(cond));
         }
 
 

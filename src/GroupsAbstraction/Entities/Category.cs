@@ -16,6 +16,11 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// The affiliated contest ID, null if global
+        /// </summary>
+        public int? ContestId { get; set; }
+
+        /// <summary>
         /// The category color
         /// </summary>
         public string Color { get; set; }
