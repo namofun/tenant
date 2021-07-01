@@ -35,6 +35,11 @@
         /// </summary>
         public bool IsPublic { get; set; }
 
+        /// <summary>
+        /// Whether this category is for eligible participants
+        /// </summary>
+        public bool IsEligible { get; set; }
+
 #pragma warning disable CS8618
         /// <summary>
         /// Initialize a category entity.

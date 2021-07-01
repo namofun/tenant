@@ -30,7 +30,7 @@ namespace Tenant.Entities
             entity.HasData(
                 new Category { Id = -1, Name = "System", Color = "#ff2bea", IsPublic = false, SortOrder = 9 },
                 new Category { Id = -2, Name = "Self-Registered", Color = "#33cc44", IsPublic = true, SortOrder = 8 },
-                new Category { Id = -3, Name = "Participants", Color = "#ffffff", IsPublic = true, SortOrder = 0 },
+                new Category { Id = -3, Name = "Participants", Color = "#ffffff", IsPublic = true, SortOrder = 0, IsEligible = true },
                 new Category { Id = -4, Name = "Observers", Color = "#ffcc33", IsPublic = true, SortOrder = 0 },
                 new Category { Id = -5, Name = "Organisation", Color = "#ff99cc", IsPublic = true, SortOrder = 1 },
                 new Category { Id = -6, Name = "Companies", Color = "#96d5ff", IsPublic = true, SortOrder = 1 });

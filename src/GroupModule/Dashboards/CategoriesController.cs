@@ -57,6 +57,7 @@ namespace SatelliteSite.GroupModule.Dashboards
                 SortOrder = cat.SortOrder,
                 IsPublic = cat.IsPublic,
                 Name = cat.Name,
+                IsEligible = cat.IsEligible,
             });
         }
 
@@ -71,6 +72,7 @@ namespace SatelliteSite.GroupModule.Dashboards
                 SortOrder = model.SortOrder,
                 IsPublic = model.IsPublic,
                 Name = model.Name,
+                IsEligible = model.IsEligible,
             });
 
             await HttpContext.AuditAsync("created", $"{e.Id}");
@@ -90,6 +92,7 @@ namespace SatelliteSite.GroupModule.Dashboards
             cat.IsPublic = model.IsPublic;
             cat.Name = model.Name;
             cat.SortOrder = model.SortOrder;
+            cat.IsEligible = model.IsEligible;
 
             await Store.UpdateAsync(cat);
             await HttpContext.AuditAsync("updated", $"{catid}");

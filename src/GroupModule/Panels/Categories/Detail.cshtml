@@ -13,6 +13,7 @@
             <tr><th>Sortorder</th><td>@Model.SortOrder</td></tr>
             <tr><th>Color</th><td style="background:@Model.Color">@Model.Color</td></tr>
             <tr><th>Visible</th><td>@(Model.IsPublic ? "Yes" : "No")</td></tr>
+            <tr><th>Eligible</th><td>@(Model.IsEligible ? "Yes" : "No")</td></tr>
         </table>
     </div>
 </div>

@@ -20,5 +20,8 @@ namespace SatelliteSite.GroupModule.Models
 
         [DisplayName("Is Public")]
         public bool IsPublic { get; set; }
+
+        [DisplayName("Eligible for rating")]
+        public bool IsEligible { get; set; }
     }
 }

@@ -16,6 +16,7 @@
                 <th scope="col" class="sortable searchable">name</th>
                 <th scope="col" class="sortable searchable">color</th>
                 <th scope="col" class="sortable">visible</th>
+                <th scope="col" class="sortable">eligible</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -30,6 +31,7 @@
                     <td use-a>@cat.Name</td>
                     <td use-a>@cat.Color</td>
                     <td use-a>@(cat.IsPublic ? "yes" : "no")</td>
+                    <td use-a>@(cat.IsEligible ? "yes" : "no")</td>
                     <td><a asp-action="Edit" asp-route-catid="@cat.Id" title="edit this category"><i class="fas fa-edit"></i></a></td>
                     <td><a asp-action="Delete" asp-route-catid="@cat.Id" data-toggle="ajaxWindow" title="delete this category"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
