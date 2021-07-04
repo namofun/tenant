@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <DescriptionAttach>The country flags assets</DescriptionAttach>
   </PropertyGroup>
+
+  <Import Project="..\..\build\NugetPackage.props" />
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GroupModule\SatelliteSite.GroupModule.csproj" />
   </ItemGroup>
 
