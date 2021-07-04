@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.OjUpdateModul
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SatelliteSite.NewsModule", "src\NewsModule\SatelliteSite.NewsModule.csproj", "{D4C28A87-B1FD-492A-80B2-0DDA618362C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tenant.Connector.CountryFlag", "src\GroupsCountryFlag\Tenant.Connector.CountryFlag.csproj", "{A0011F71-106D-4123-A089-E205685C6B7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{D4C28A87-B1FD-492A-80B2-0DDA618362C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C28A87-B1FD-492A-80B2-0DDA618362C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C28A87-B1FD-492A-80B2-0DDA618362C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0011F71-106D-4123-A089-E205685C6B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0011F71-106D-4123-A089-E205685C6B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0011F71-106D-4123-A089-E205685C6B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0011F71-106D-4123-A089-E205685C6B7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{0E6C4392-717C-4F4A-8657-8A9AA1463B55} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 		{1D8CDD78-3E40-4E1C-8E1B-3A1599EFB180} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 		{D4C28A87-B1FD-492A-80B2-0DDA618362C6} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
+		{A0011F71-106D-4123-A089-E205685C6B7E} = {37978533-6CEF-46D7-8A00-D4C403E9A1BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {000EA67D-DBD2-448C-9B2E-6393348CC090}
