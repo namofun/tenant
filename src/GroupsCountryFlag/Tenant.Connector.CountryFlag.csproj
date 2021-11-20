@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <DescriptionAttach>The country flags assets</DescriptionAttach>
+    <StaticWebAssetBasePath>/lib/country-flags</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <Import Project="..\..\build\NugetPackage.props" />
@@ -12,18 +13,5 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\GroupModule\SatelliteSite.GroupModule.csproj" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
-      SetStaticWebAssetsBasePath;
-      $(ResolveCurrentProjectStaticWebAssetsInputsDependsOn)
-    </ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
-  </PropertyGroup>
-
-  <Target Name="SetStaticWebAssetsBasePath">
-    <PropertyGroup>
-      <StaticWebAssetBasePath>/lib/country-flags</StaticWebAssetBasePath>
-    </PropertyGroup>
-  </Target>
 
 </Project>

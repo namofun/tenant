@@ -16,12 +16,12 @@ namespace Tenant.Services
 
         Task IAffiliationStore.DeleteAsync(Affiliation entity) => DeleteEntityAsync(entity);
 
-        Task<Affiliation> IAffiliationStore.FindAsync(int id)
+        Task<Affiliation?> IAffiliationStore.FindAsync(int id)
         {
             return Affiliations.Where(a => a.Id == id).SingleOrDefaultAsync();
         }
 
-        Task<Affiliation> IAffiliationStore.FindAsync(string externalId)
+        Task<Affiliation?> IAffiliationStore.FindAsync(string externalId)
         {
             return Affiliations.Where(a => a.Abbreviation == externalId).SingleOrDefaultAsync();
         }

@@ -45,14 +45,14 @@ namespace Tenant.Services
         /// </summary>
         /// <param name="id">The entity id.</param>
         /// <returns>The find task.</returns>
-        Task<Affiliation> FindAsync(int id);
+        Task<Affiliation?> FindAsync(int id);
 
         /// <summary>
         /// Find the entity.
         /// </summary>
         /// <param name="externalId">The external id.</param>
         /// <returns>The find task.</returns>
-        Task<Affiliation> FindAsync(string externalId);
+        Task<Affiliation?> FindAsync(string externalId);
 
         /// <summary>
         /// List the entities by predicate.

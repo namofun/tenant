@@ -87,7 +87,7 @@ namespace Tenant.Services
         /// <param name="affiliation">The affiliation.</param>
         /// <param name="id">The teaching class ID.</param>
         /// <returns>The teaching class.</returns>
-        Task<Class> FindClassAsync(Affiliation affiliation, int id);
+        Task<Class?> FindClassAsync(Affiliation affiliation, int id);
 
         /// <summary>
         /// Find the student.

@@ -28,7 +28,7 @@ namespace Tenant.Services
 
         public StudentStore(TContext context) => Context = context;
 
-        public Task<Class> FindClassAsync(int id)
+        public Task<Class?> FindClassAsync(int id)
         {
             return Classes.Where(s => s.Id == id).SingleOrDefaultAsync();
         }
@@ -111,7 +111,7 @@ namespace Tenant.Services
             return Context.SaveChangesAsync();
         }
 
-        public Task<Class> FindClassAsync(Affiliation affiliation, int id)
+        public Task<Class?> FindClassAsync(Affiliation affiliation, int id)
         {
             return Classes
                 .Where(s => s.Id == id && s.AffiliationId == affiliation.Id)
@@ -176,7 +176,7 @@ namespace Tenant.Services
         public Task<List<Class>> ListClassesAsync(IEnumerable<int> affiliationIds, Expression<Func<Class, bool>>? filters = null)
         {
             return Classes
-                .WhereIf(affiliationIds != null, c => affiliationIds.Contains(c.AffiliationId))
+                .WhereIf(affiliationIds != null, c => affiliationIds!.Contains(c.AffiliationId))
                 .WhereIf(filters != null, filters)
                 .Select(c => new Class
                 {
@@ -253,7 +253,7 @@ namespace Tenant.Services
         public Task<IPagedList<Class>> ListClassesAsync(IEnumerable<int> affiliationIds, int page, int pageCount, Expression<Func<Class, bool>>? filters = null)
         {
             return Classes
-                .WhereIf(affiliationIds != null, c => affiliationIds.Contains(c.AffiliationId))
+                .WhereIf(affiliationIds != null, c => affiliationIds!.Contains(c.AffiliationId))
                 .WhereIf(filters != null, filters)
                 .OrderByDescending(c => c.Id)
                 .Select(c => new Class

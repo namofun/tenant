@@ -44,7 +44,7 @@ namespace Tenant.Services
         /// </summary>
         /// <param name="id">The team ID.</param>
         /// <returns>The fetching task.</returns>
-        Task<GroupTeam> FindByIdAsync(int id);
+        Task<GroupTeam?> FindByIdAsync(int id);
 
         /// <summary>
         /// List the team members.

@@ -16,7 +16,7 @@ namespace Tenant.Services
 
         Task ICategoryStore.DeleteAsync(Category entity) => DeleteEntityAsync(entity);
 
-        Task<Category> ICategoryStore.FindAsync(int id)
+        Task<Category?> ICategoryStore.FindAsync(int id)
         {
             return Categories.Where(c => c.Id == id).SingleOrDefaultAsync();
         }

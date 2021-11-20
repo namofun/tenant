@@ -45,7 +45,7 @@ namespace Tenant.Services
         /// </summary>
         /// <param name="id">The entity id.</param>
         /// <returns>The find task.</returns>
-        Task<Category> FindAsync(int id);
+        Task<Category?> FindAsync(int id);
 
         /// <summary>
         /// List the entities by predicate.

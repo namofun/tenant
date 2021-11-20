@@ -82,7 +82,7 @@ namespace Tenant.Services
             });
         }
 
-        public Task<GroupTeam> FindByIdAsync(int id)
+        public Task<GroupTeam?> FindByIdAsync(int id)
         {
             return GroupTeams
                 .Include(t => t.Affiliation)
@@ -92,11 +92,9 @@ namespace Tenant.Services
 
         public Task<GroupUser?> IsInTeamAsync(IUser user, GroupTeam team)
         {
-#pragma warning disable CS8619
             return GroupUsers
                 .Where(tu => tu.UserId == user.Id && tu.TeamId == team.Id)
                 .SingleOrDefaultAsync();
-#pragma warning restore CS8619
         }
 
         public async Task<ILookup<GroupTeam, GroupUser>> ListByUserAsync(int uid, bool active = false)
