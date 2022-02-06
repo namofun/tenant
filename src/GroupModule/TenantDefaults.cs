@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Tenant.Connector.CountryFlag")]
 namespace SatelliteSite.GroupModule
 {
     public static class TenantDefaults

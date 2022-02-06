@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SatelliteSite.Services;
+using Microsoft.Extensions.Mailing;
 using SatelliteSite.StudentModule.Models;
 using System;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Tenant.Entities;
 using Tenant.Services;
@@ -54,7 +55,10 @@ namespace SatelliteSite.StudentModule.Controllers
                 values: new { userId = user.Id, code, area = "Tenant" },
                 protocol: Request.Scheme);
 
-            await _emailSender.SendEmailConfirmationAsync(user.StudentEmail, callbackUrl);
+            await _emailSender.SendEmailAsync(
+                user.StudentEmail,
+                "Confirm your student eligibility",
+                "Please confirm your student eligibility by clicking this link: <a href='" + HtmlEncoder.Default.Encode(callbackUrl) + "'>link</a>");
         }
 
 
