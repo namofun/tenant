@@ -24,6 +24,7 @@
     <ProjectReference Include="..\NewsModule\SatelliteSite.NewsModule.csproj" />
     <ProjectReference Include="..\OjUpdate\SatelliteSite.OjUpdateModule.csproj" />
     <ProjectReference Include="..\StudentModule\SatelliteSite.StudentModule.csproj" />
+    <ProjectReference Include="..\Telemetry\SatelliteSite.TelemetryModule.csproj" />
   </ItemGroup>
 
 </Project>
