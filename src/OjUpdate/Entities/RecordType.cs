@@ -10,6 +10,7 @@ namespace SatelliteSite.OjUpdateModule.Entities
         /// <summary>
         /// <c>acm.hdu.edu.cn</c>
         /// </summary>
+        [Obsolete("HDOJ is offline")]
         Hdoj,
 
         /// <summary>

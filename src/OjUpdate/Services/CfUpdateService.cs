@@ -4,6 +4,8 @@ using SatelliteSite.OjUpdateModule.Entities;
 using System;
 using System.Net.Http;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SatelliteSite.OjUpdateModule.Services
 {
@@ -79,6 +81,37 @@ namespace SatelliteSite.OjUpdateModule.Services
             if (obj == null || obj.Status != "OK" || obj.Result?.Length != 1)
                 return null; // User not ready?
             return obj.Result[0].Rating ?? -1000;
+        }
+
+        /// <inheritdoc />
+        protected override async Task UpdateOne(
+            HttpClient httpClient,
+            SolveRecord id,
+            CancellationToken stoppingToken)
+        {
+            int attempt = 0;
+
+            do
+            {
+                try
+                {
+                    await base.UpdateOne(httpClient, id, stoppingToken);
+                    attempt = int.MaxValue;
+                }
+                catch (System.Text.Json.JsonException)
+                {
+                    attempt++;
+                    if (attempt < 3)
+                    {
+                        await Task.Delay(1000, stoppingToken);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            while (attempt >= 3);
         }
     }
 }

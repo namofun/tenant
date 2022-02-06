@@ -10,6 +10,7 @@ namespace SatelliteSite.OjUpdateModule.Services
     /// <summary>
     /// The update service for <see cref="RecordType.Hdoj"/>.
     /// </summary>
+    [Obsolete]
     public class HdojUpdateService : OjUpdateService
     {
         /// <summary>

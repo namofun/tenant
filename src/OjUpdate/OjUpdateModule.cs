@@ -11,7 +11,8 @@ using System;
 [assembly: RoleDefinition(17, "TeamLeader", "leader", "Team Leader")]
 [assembly: ConfigurationItem(0, "Tenant", "oj_Codeforces_update_time", typeof(DateTimeOffset?), null!, "Last update time of Codeforces.", IsPublic = false)]
 [assembly: ConfigurationItem(1, "Tenant", "oj_Vjudge_update_time", typeof(DateTimeOffset?), null!, "Last update time of Vjudge.", IsPublic = false)]
-[assembly: ConfigurationItem(2, "Tenant", "oj_Hdoj_update_time", typeof(DateTimeOffset?), null!, "Last update time of HDOJ.", IsPublic = false)]
+// [assembly: ConfigurationItem(2, "Tenant", "oj_Hdoj_update_time", typeof(DateTimeOffset?), null!, "Last update time of HDOJ.", IsPublic = false)]
+// [assembly: ConfigurationItem(3, "Tenant", "oj_Poj_update_time", typeof(DateTimeOffset?), null!, "Last update time of POJ.", IsPublic = false)]
 
 namespace SatelliteSite.OjUpdateModule
 {
@@ -31,7 +32,6 @@ namespace SatelliteSite.OjUpdateModule
 
             OjUpdateService.SleepLength = length;
             services.AddScoped<ISolveRecordStore, SolveRecordStore<TContext>>();
-            services.AddHostedService<HdojUpdateService>();
             services.AddHostedService<CfUpdateService>();
             services.AddHostedService<VjUpdateService>();
             services.AddDbModelSupplier<TContext, OjUpdateEntityConfiguration<TContext>>();
