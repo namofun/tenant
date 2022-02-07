@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/namofun/tenant</RepositoryUrl>
     <Authors>yang-er</Authors>
     <Version>1.0.0</Version>
-    <PackageVersion>1.0.$(PreviewBuild)</PackageVersion>
+    <PackageVersion>1.1.$(PreviewBuild)</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
