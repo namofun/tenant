@@ -1,4 +1,4 @@
-﻿namespace Tenant.Entities
+﻿namespace Xylab.Tenant.Entities
 {
     /// <summary>
     /// The entity class for user in training teams.

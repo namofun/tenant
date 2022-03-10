@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Tenant.Entities
+namespace Xylab.Tenant.Entities
 {
     /// <summary>
     /// The entity class for training teams.

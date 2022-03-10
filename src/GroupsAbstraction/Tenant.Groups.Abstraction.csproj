@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <RootNamespace>Tenant</RootNamespace>
+    <RootNamespace>Xylab.Tenant</RootNamespace>
+    <AssemblyName>Xylab.Tenant.Groups.Abstraction</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DescriptionAttach>The groups and teams abstraction</DescriptionAttach>
   </PropertyGroup>
