@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SatelliteSite.IdentityModule.Entities;
 
-namespace Tenant.Entities
+namespace Xylab.Tenant.Entities
 {
     public class StudentEntityConfiguration<TUser, TContext> :
         EntityTypeConfigurationSupplier<TContext>,

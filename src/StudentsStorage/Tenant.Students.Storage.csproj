@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <DescriptionAttach>The students storage implementation</DescriptionAttach>
-    <RootNamespace>Tenant</RootNamespace>
+    <RootNamespace>Xylab.Tenant</RootNamespace>
+    <AssemblyName>Xylab.Tenant.Students.Storage</AssemblyName>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
