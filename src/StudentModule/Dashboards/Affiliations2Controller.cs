@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SatelliteSite.StudentModule.Models;
 using System.Threading.Tasks;
-using Tenant.Services;
+using Xylab.Tenant.Services;
 
 namespace SatelliteSite.StudentModule.Dashboards
 {

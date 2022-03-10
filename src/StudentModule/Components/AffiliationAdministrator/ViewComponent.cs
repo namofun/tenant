@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Tenant.Entities;
+using Xylab.Tenant.Entities;
 
 namespace SatelliteSite.StudentModule.Components.AffiliationAdministrator
 {

@@ -9,8 +9,8 @@ using SatelliteSite;
 using SatelliteSite.IdentityModule.Entities;
 using SatelliteSite.StudentModule.Components.AffiliationAdministrator;
 using System;
-using Tenant.Entities;
-using Tenant.Services;
+using Xylab.Tenant.Entities;
+using Xylab.Tenant.Services;
 
 [assembly: RoleDefinition(16, "Student", "student", "Verified Student")]
 

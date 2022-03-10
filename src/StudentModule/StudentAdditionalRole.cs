@@ -4,8 +4,8 @@ using SatelliteSite.IdentityModule.Models;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Tenant.Entities;
-using Tenant.Services;
+using Xylab.Tenant.Entities;
+using Xylab.Tenant.Services;
 
 namespace SatelliteSite.StudentModule
 {

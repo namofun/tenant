@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tenant.Services;
+using Xylab.Tenant.Services;
 
 namespace SatelliteSite.StudentModule.Dashboards
 {
@@ -19,7 +19,7 @@ namespace SatelliteSite.StudentModule.Dashboards
         private const int ItemPerPage = 50;
         private IStudentStore Store { get; }
         public ClassesController(IStudentStore store) => Store = store;
-        private bool ValidateClass(Tenant.Entities.Class @class) =>
+        private bool ValidateClass(Xylab.Tenant.Entities.Class @class) =>
             @class.UserId == null || @class.UserId == int.Parse(User.GetUserId());
 
 

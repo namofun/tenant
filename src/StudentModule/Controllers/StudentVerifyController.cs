@@ -7,8 +7,8 @@ using System;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Tenant.Entities;
-using Tenant.Services;
+using Xylab.Tenant.Entities;
+using Xylab.Tenant.Services;
 
 namespace SatelliteSite.StudentModule.Controllers
 {

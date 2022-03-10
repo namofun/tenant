@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
-using Tenant.Entities;
+using Xylab.Tenant.Entities;
 
 namespace SatelliteSite.StudentModule
 {
