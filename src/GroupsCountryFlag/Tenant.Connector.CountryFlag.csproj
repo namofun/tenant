@@ -5,6 +5,7 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <DescriptionAttach>The country flags assets</DescriptionAttach>
     <StaticWebAssetBasePath>/lib/country-flags</StaticWebAssetBasePath>
+    <AssemblyName>Xylab.Tenant.Connector.CountryFlag</AssemblyName>
   </PropertyGroup>
 
   <Import Project="..\..\build\NugetPackage.props" />

@@ -2,10 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: AffiliateTo(
-    typeof(Tenant.Connector.CountryFlag.CountryFlagConnector),
+    typeof(Xylab.Tenant.Connector.CountryFlag.CountryFlagConnector),
     typeof(SatelliteSite.GroupModule.GroupModule<>))]
 
-namespace Tenant.Connector.CountryFlag
+namespace Xylab.Tenant.Connector.CountryFlag
 {
     public class CountryFlagConnector : AbstractConnector
     {
