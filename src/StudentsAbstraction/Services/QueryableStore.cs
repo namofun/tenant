@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Tenant.Entities;
+using Xylab.Tenant.Entities;
 
-namespace Tenant.Services
+namespace Xylab.Tenant.Services
 {
     /// <summary>
     /// The queryable store for <see cref="Student"/>, <see cref="Class"/> and <see cref="ClassStudent"/>.

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Tenant.Entities;
+using Xylab.Tenant.Entities;
 
-namespace Tenant.Services
+namespace Xylab.Tenant.Services
 {
     /// <summary>
     /// The store interface for <see cref="Student"/>.

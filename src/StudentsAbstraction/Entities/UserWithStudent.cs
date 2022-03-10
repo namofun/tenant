@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Tenant.Entities
+namespace Xylab.Tenant.Entities
 {
     /// <summary>
     /// Support student feature with <see cref="IUser"/>.
