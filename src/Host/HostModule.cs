@@ -1,9 +1,7 @@
-﻿using Markdig;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SatelliteSite.Services;
 using System.Threading.Tasks;
 
 namespace SatelliteSite
@@ -18,17 +16,9 @@ namespace SatelliteSite
 
         public override void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMarkdown();
-
             services.ConfigureIdentityAdvanced(options =>
             {
                 options.ShortenedClaimName = true;
-            });
-
-            services.Configure<ApplicationInsightsDisplayOptions>(options =>
-            {
-                options.ApiKey = configuration["AppInsights:Key"] ?? "DEMO_KEY";
-                options.ApplicationId = configuration["AppInsights:App"] ?? "DEMO_APP";
             });
         }
 

@@ -22,10 +22,7 @@ namespace SatelliteSite
                 .MarkDomain<Program>()
                 .AddModule<IdentityModule.IdentityModule<AspNetUser, Role, DefaultContext>>()
                 .AddModule<GroupModule.GroupModule<DefaultContext>>()
-                .AddModule<OjUpdateModule.OjUpdateModule<DefaultContext>>()
-                .AddModule<NewsModule.NewsModule<DefaultContext>>()
                 .AddModule<StudentModule.StudentModule<AspNetUser, Role, DefaultContext>>()
-                .AddModule<TelemetryModule.TelemetryModule>()
                 .AddModule<HostModule>()
                 .AddDatabase<DefaultContext>((c, b) => b.UseSqlServer(c.GetConnectionString("UserDbConnection"), b => b.UseBulk()))
                 .ConfigureSubstrateDefaults<DefaultContext>();
