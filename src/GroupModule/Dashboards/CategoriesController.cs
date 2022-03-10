@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SatelliteSite.GroupModule.Models;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Tenant.Entities;
-using Tenant.Services;
+using Xylab.Tenant.Entities;
+using Xylab.Tenant.Services;
 
 namespace SatelliteSite.GroupModule.Dashboards
 {

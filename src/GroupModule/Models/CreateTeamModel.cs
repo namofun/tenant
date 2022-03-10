@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Tenant.Entities;
+using Xylab.Tenant.Entities;
 
 namespace SatelliteSite.GroupModule.Models
 {

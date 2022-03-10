@@ -6,8 +6,8 @@ using SatelliteSite.GroupModule.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using Tenant.Entities;
-using Tenant.Services;
+using Xylab.Tenant.Entities;
+using Xylab.Tenant.Services;
 
 namespace SatelliteSite.GroupModule.Controllers
 {

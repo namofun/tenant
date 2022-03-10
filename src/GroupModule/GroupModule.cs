@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using Tenant.Entities;
-using Tenant.Services;
+using Xylab.Tenant.Entities;
+using Xylab.Tenant.Services;
 
 namespace SatelliteSite.GroupModule
 {
