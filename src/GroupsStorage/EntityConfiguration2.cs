@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Linq;
 
-namespace Tenant.Entities
+namespace Xylab.Tenant.Entities
 {
     public class TrainingTeamEntityConfiguration<TContext> :
         EntityTypeConfigurationSupplier<TContext>,

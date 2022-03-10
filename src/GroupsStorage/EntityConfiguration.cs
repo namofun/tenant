@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Tenant.Entities
+namespace Xylab.Tenant.Entities
 {
     public class InfraEntityConfiguration<TContext> :
         EntityTypeConfigurationSupplier<TContext>,

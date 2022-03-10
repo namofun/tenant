@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tenant.Entities;
+using Xylab.Tenant.Entities;
 
-namespace Tenant.Services
+namespace Xylab.Tenant.Services
 {
     public class GroupStoreImpl<TUser, TContext> : IGroupStore, IGroupQueryableStore
         where TUser : class, IUser

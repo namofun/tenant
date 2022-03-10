@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace Tenant.Services
+namespace Xylab.Tenant.Services
 {
     public partial class InfraStoreImpl<TContext>
         where TContext : DbContext
