@@ -14,11 +14,6 @@ Ideas come from DOMjudge, Bootstrap UI, demands from classes and daily use.
 - [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FTenant.Students.Abstraction%2Fshields-io.json)](https://nuget.xylab.fun/packages/Tenant.Students.Abstraction): Commonly used interfaces and entities (Student, Class, Invitation Code)
 - [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FTenant.Students.Storage%2Fshields-io.json)](https://nuget.xylab.fun/packages/Tenant.Students.Storage): Default storage interface implementation in Entity Framework Core
 - [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FSatelliteSite.StudentModule%2Fshields-io.json)](https://nuget.xylab.fun/packages/SatelliteSite.StudentModule): Student management module for Substrate
-- [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FSatelliteSite.NewsModule%2Fshields-io.json)](https://nuget.xylab.fun/packages/SatelliteSite.NewsModule): News module for Substrate
-- [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FSatelliteSite.OjUpdateModule%2Fshields-io.json)](https://nuget.xylab.fun/packages/SatelliteSite.OjUpdateModule): External OJ statistics spider module for Substrate
-- [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FSatelliteSite.JobsCore%2Fshields-io.json)](https://nuget.xylab.fun/packages/SatelliteSite.JobsCore): Abstractions of workflow runtime
-- [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FSatelliteSite.JobsModule%2Fshields-io.json)](https://nuget.xylab.fun/packages/SatelliteSite.JobsModule): In-app running workflow runtime
-- [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fnuget.xylab.fun%2Fapi%2Fpackage%2FSatelliteSite.TelemetryModule%2Fshields-io.json)](https://nuget.xylab.fun/packages/SatelliteSite.TelemetryModule): Azure Application Insights data visualization
 
 ## Contributor
 
